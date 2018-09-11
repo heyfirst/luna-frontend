@@ -12,7 +12,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
-import { Link } from 'react-static'
+import { NavLink as Link } from 'react-static'
 
 class LunaNavbar extends React.Component {
   constructor(props) {
@@ -37,20 +37,20 @@ class LunaNavbar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <Link to="/topics/">
-                  <NavLink href="/topics/">Problems</NavLink>
+                <Link className="nav-link" to="/topics/">
+                  Problems
                 </Link>
               </NavItem>
               <NavItem>
-                <Link to="/challenge/">
-                  <NavLink href="/challenge/">Challenge</NavLink>
+                <Link className="nav-link" to="/challenge/">
+                  Challenge
                 </Link>
               </NavItem>
             </Nav>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <Link to="/login/">
-                  <NavLink href="/login/">Login</NavLink>
+                <Link className="nav-link" to="/login/">
+                  Login
                 </Link>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
