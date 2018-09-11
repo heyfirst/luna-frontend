@@ -1,0 +1,1 @@
+export * from 'react-static-plugin-styled-components'
