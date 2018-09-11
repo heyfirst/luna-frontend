@@ -72,13 +72,100 @@ const PTask = styled.div`
 
 class Topic extends React.Component {
   state = {
-    topics: []
+    topics: [],
+    userScore: {},
   }
 
   async componentWillMount() {
     const topics = await TopicService.getAllTopic().then(resp => resp.data.results)
+    const userScore = 99 // Mock Data userScore
     this.setState({
-      topics
+      topics,
+      userScore
+    })
+  }
+
+  // Function คำนวณ Progressbar
+  percentageCalc = (taskCount, totalTask) => {
+    const total = (taskCount / totalTask) * 100
+    return total
+  }
+  
+  // Function เช็ค topic_name ที่เป็นไลน์เดียวกัน
+  isMustShowInline = (topic) => {
+    return topic.topic_name === 'Loop' || topic.topic_name === 'Condition'
+  }
+
+  // Function เช็ค Score ของ User เกินเกณฑ์หรือไม่
+  isScoreOverNinetyNine = (topic) => {
+    return topic.pk > 0 &&
+      topic.pk <= this.state.userScore &&
+      this.state.userScore > 99 //Mock เกณฑ์ Score
+  }
+
+  // ส่วนของตัวการ์ด
+  Card = (topic, percentage) => {
+    return (
+      <div className="row">
+        <div className="col-sm-3 card-image">
+          <CardImage>
+            {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ?
+              <ImgHidden />
+              : <picture>
+                <PictureImg
+                  className="img-fluid rounded mx-auto d-block"
+                  src={PadlockImage}
+                />
+              </picture>
+            }
+          </CardImage>
+        </div>
+        <CardBody className="col-sm-7 card-body">
+          <h4>{topic.topic_name}</h4>
+          <p>Lorem Ipsum is not simply random text.</p>
+          <CardProgress className="progress">
+            <CardProgressBar percentage={percentage} className="progress-bar" />
+          </CardProgress>
+        </CardBody>
+        <CardBodyAlignCenter className="col-sm-2 card-body align-self-center">
+          <PTask className="mb-0 task">
+            {this.state.userScore}
+            /150 {/* Mock คะแนนเต็มของ topic*/}
+              </PTask>
+        </CardBodyAlignCenter>
+      </div>
+    )
+  }
+
+  // Function เช็ค Card ไหนต้องส้ราง Link
+  linkCard = (topic, percentage) => (
+    <div>
+      {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ?
+        <Link to={`/topic/${topic.pk}`} key={topic.pk}>
+          {this.Card(topic, percentage)}
+        </Link> :
+        this.Card(topic, percentage)
+      }
+    </div>
+  )
+
+  // Function เช็ค Topic ไหนเป็นไลน์เดียวกัน
+  topicsInline = () => {
+    return this.state.topics.map((topic) => {
+      const percentage = this.percentageCalc(100, 150)
+      if (this.isMustShowInline(topic)) {
+        return (
+          <DivCardInline className="card d-inline-flex">
+            {this.linkCard(topic, percentage)}
+          </DivCardInline>
+        )
+      } else {
+        return (
+          <DivCard className="card w-50" key={topic.pk}>
+            {this.linkCard(topic, percentage)}
+          </DivCard>
+        )
+      }
     })
   }
 
@@ -87,38 +174,7 @@ class Topic extends React.Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-10 offset-1 mt-4">
-            {this.state.topics.map(topic => (
-              <Link to={`/topics/${topic.pk}`} key={topic.pk}>
-                <DivCard className="card w-50">
-                  <div className="row">
-                    <div className="col-sm-3 card-image">
-                      <CardImage>
-                        <picture>
-                          <PictureImg
-                            className="img-fluid rounded mx-auto d-block"
-                            src={PadlockImage}
-                          />
-                        </picture>
-                      </CardImage>
-                    </div>
-                    <CardBody className="col-sm-7 card-body">
-                      <h4>{topic.topic_name}</h4>
-                      <p>Lorem Ipsum is not simply random text.</p>
-                      {/* <p>{props.e.description}</p> */}
-                      <CardProgress className="progress">
-                        <CardProgressBar percentage={`100`} className="progress-bar" />
-                      </CardProgress>
-                    </CardBody>
-                    <CardBodyAlignCenter className="col-sm-2 card-body align-self-center">
-                      <PTask className="mb-0 task">
-                        {`100`}
-                        /150
-                      </PTask>
-                    </CardBodyAlignCenter>
-                  </div>
-                </DivCard>
-              </Link>
-            ))}
+            {this.topicsInline()}
           </div>
         </div>
       </div>
