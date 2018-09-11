@@ -1,61 +1,50 @@
 import React from 'react'
-import { Router, Link } from 'react-static'
-import styled, { injectGlobal } from 'styled-components'
+import { Route, Switch, withRouter, Redirect } from 'react-static'
 import { hot } from 'react-hot-loader'
-//
-import Routes from 'react-static-routes'
+import * as R from 'ramda'
+import { observer, inject } from 'mobx-react'
 
-injectGlobal`
-  body {
-    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-      'Lucida Grande', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-  }
-`
+import Layout from './components/Core/Layout'
+import LunaNavbar from './components/Core/Navbar'
 
-const AppStyles = styled.div`
-  a {
-    text-decoration: none;
-    color: #108db8;
-    font-weight: bold;
-  }
+import './App.css'
+import NotFound from './containers/404'
+import Login from './containers/Login'
+import TopicPage from './containers/TopicPage'
+import Home from './containers/Home'
+import TaskListPage from './containers/TaskListPage'
+import TaskPage from './containers/TaskPage'
 
-  nav {
-    width: 100%;
-    background: #108db8;
-
-    a {
-      color: white;
-      padding: 1rem;
-      display: inline-block;
-    }
+@inject('user')
+@observer
+class App extends React.Component {
+  state = {
+    loading: true
   }
 
-  .content {
-    padding: 1rem;
+  render() {
+    return (
+      <Layout>
+        <LunaNavbar />
+        <Route
+          path="/:url*"
+          exact
+          strict
+          render={props => <Redirect to={`${props.location.pathname}/`} />}
+        />
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/topics" component={TopicPage} />
+          <Route exact path="/topics/:topicID" component={TaskListPage} />
+          <Route exact path="/tasks/:taskID" component={TaskPage} />
+          <Route component={NotFound} />
+        </Switch>
+      </Layout>
+    )
   }
-
-  img {
-    max-width: 100%;
-  }
-`
-
-const App = () => (
-  <Router>
-    <AppStyles>
-      <nav>
-        <Link exact to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/blog">Blog</Link>
-      </nav>
-      <div className="content">
-        <Routes />
-      </div>
-    </AppStyles>
-  </Router>
-)
-
-export default hot(module)(App)
+}
+export default R.compose(
+  hot(module),
+  withRouter
+)(App)

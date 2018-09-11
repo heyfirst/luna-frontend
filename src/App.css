@@ -1,0 +1,43 @@
+@import '~antd/dist/antd.css';
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.ant-table {
+  font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+.ant-input {
+  height: 36px;
+}
+
+.ant-form-explain {
+  margin-top: 2px;
+}
+
+/* Fix label overflow in mobile  */
+@media screen and (max-width: 768px) {
+  .ant-form-item-label {
+    white-space: normal;
+  }
+}
