@@ -4,6 +4,7 @@ import { Link } from 'react-static'
 
 import PadlockImage from '../static/images/padlock.png'
 import TopicService from '../services/TopicService'
+import requireAuth from '../utils/requireAuth'
 
 const DivCard = styled.div`
   margin-bottom: 1.4375rem;
@@ -70,10 +71,11 @@ const PTask = styled.div`
   color: black;
 `
 
+@requireAuth()
 class Topic extends React.Component {
   state = {
     topics: [],
-    userScore: {},
+    userScore: {}
   }
 
   async componentWillMount() {
@@ -90,17 +92,15 @@ class Topic extends React.Component {
     const total = (taskCount / totalTask) * 100
     return total
   }
-  
+
   // Function เช็ค topic_name ที่เป็นไลน์เดียวกัน
-  isMustShowInline = (topic) => {
+  isMustShowInline = topic => {
     return topic.topic_name === 'Loop' || topic.topic_name === 'Condition'
   }
 
   // Function เช็ค Score ของ User เกินเกณฑ์หรือไม่
-  isScoreOverNinetyNine = (topic) => {
-    return topic.pk > 0 &&
-      topic.pk <= this.state.userScore &&
-      this.state.userScore > 99 //Mock เกณฑ์ Score
+  isScoreOverNinetyNine = topic => {
+    return topic.pk > 0 && topic.pk <= this.state.userScore && this.state.userScore > 99 //Mock เกณฑ์ Score
   }
 
   // ส่วนของตัวการ์ด
@@ -109,15 +109,13 @@ class Topic extends React.Component {
       <div className="row">
         <div className="col-sm-3 card-image">
           <CardImage>
-            {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ?
+            {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ? (
               <ImgHidden />
-              : <picture>
-                <PictureImg
-                  className="img-fluid rounded mx-auto d-block"
-                  src={PadlockImage}
-                />
+            ) : (
+              <picture>
+                <PictureImg className="img-fluid rounded mx-auto d-block" src={PadlockImage} />
               </picture>
-            }
+            )}
           </CardImage>
         </div>
         <CardBody className="col-sm-7 card-body">
@@ -131,7 +129,7 @@ class Topic extends React.Component {
           <PTask className="mb-0 task">
             {this.state.userScore}
             /150 {/* Mock คะแนนเต็มของ topic*/}
-              </PTask>
+          </PTask>
         </CardBodyAlignCenter>
       </div>
     )
@@ -140,18 +138,19 @@ class Topic extends React.Component {
   // Function เช็ค Card ไหนต้องส้ราง Link
   linkCard = (topic, percentage) => (
     <div>
-      {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ?
-        <Link to={`/topic/${topic.pk}`} key={topic.pk}>
+      {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ? (
+        <Link to={`/topics/${topic.pk}`} key={topic.pk}>
           {this.Card(topic, percentage)}
-        </Link> :
+        </Link>
+      ) : (
         this.Card(topic, percentage)
-      }
+      )}
     </div>
   )
 
   // Function เช็ค Topic ไหนเป็นไลน์เดียวกัน
   topicsInline = () => {
-    return this.state.topics.map((topic) => {
+    return this.state.topics.map(topic => {
       const percentage = this.percentageCalc(100, 150)
       if (this.isMustShowInline(topic)) {
         return (
@@ -173,9 +172,7 @@ class Topic extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-sm-10 offset-1 mt-4">
-            {this.topicsInline()}
-          </div>
+          <div className="col-sm-10 offset-1 mt-4">{this.topicsInline()}</div>
         </div>
       </div>
     )

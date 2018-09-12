@@ -19,6 +19,7 @@ class Login extends React.Component {
           const { accessToken } = fbResponse.authResponse
           console.log(accessToken)
           await this.props.user.login(accessToken)
+          await this.props.history.replace('/')
         }
       },
       { scope: 'email,public_profile', auth_type: 'rerequest' }
