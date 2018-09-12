@@ -12,27 +12,35 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
-import { NavLink as Link } from 'react-static'
+import { NavLink as Link, withRouter } from 'react-static'
+import { observer, inject } from 'mobx-react'
 
+@withRouter
+@inject('user')
+@observer
 class LunaNavbar extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.toggle = this.toggle.bind(this)
-    this.state = {
-      isOpen: false
-    }
+  state = {
+    isOpen: false
   }
-  toggle() {
+
+  logout = async () => {
+    await this.props.user.logout()
+    await window.location.replace('/login')
+  }
+
+  toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
+
   render() {
     return (
       <Navbar color="dark" dark expand="md">
         <div className="container">
-          <NavbarBrand href="/">Luna</NavbarBrand>
+          <Link className="navbar-brand" to="/">
+            Luna
+          </Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
@@ -48,22 +56,27 @@ class LunaNavbar extends React.Component {
               </NavItem>
             </Nav>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Link className="nav-link" to="/login/">
-                  Login
-                </Link>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Profile
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Profile</DropdownItem>
-                </DropdownMenu>
-                <DropdownMenu right>
-                  <DropdownItem>Logout</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {!this.props.user.authenticated ? (
+                <NavItem>
+                  <Link className="nav-link" to="/login/">
+                    Login
+                  </Link>
+                </NavItem>
+              ) : (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Profile
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <Link to="/profile/">
+                      <DropdownItem>Profile</DropdownItem>
+                    </Link>
+                  </DropdownMenu>
+                  <DropdownMenu right>
+                    <DropdownItem onClick={() => this.logout()}>Logout</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
             </Nav>
           </Collapse>
         </div>
