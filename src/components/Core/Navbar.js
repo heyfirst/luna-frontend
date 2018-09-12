@@ -3,10 +3,8 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -69,10 +67,8 @@ class LunaNavbar extends React.Component {
                   </DropdownToggle>
                   <DropdownMenu right>
                     <Link to="/profile/">
-                      <DropdownItem>Profile</DropdownItem>
+                      <DropdownItem>My Profile</DropdownItem>
                     </Link>
-                  </DropdownMenu>
-                  <DropdownMenu right>
                     <DropdownItem onClick={() => this.logout()}>Logout</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
