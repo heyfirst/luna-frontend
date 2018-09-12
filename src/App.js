@@ -3,7 +3,7 @@ import { Route, Switch, withRouter, Redirect } from 'react-static'
 import { hot } from 'react-hot-loader'
 import * as R from 'ramda'
 import { observer, inject } from 'mobx-react'
-
+import { message } from 'antd'
 import Layout from './components/Core/Layout'
 import LunaNavbar from './components/Core/Navbar'
 
@@ -14,6 +14,7 @@ import TopicPage from './containers/TopicPage'
 import Home from './containers/Home'
 import TaskListPage from './containers/TaskListPage'
 import TaskPage from './containers/TaskPage'
+import ProfilePage from './containers/ProfilePage'
 
 @inject('user')
 @observer
@@ -28,9 +29,9 @@ class App extends React.Component {
       .getProfile()
       .then(async () => {
         if (!this.props.user.authenticated) {
-          await this.props.history.replace('/login')
           await this.props.user.setLoginIn(false)
         } else {
+          message.info(`สวัสดี! คุณ ${this.props.user.user.first_name}`)
           await this.props.user.setLoginIn(false)
         }
       })
@@ -59,6 +60,7 @@ class App extends React.Component {
           <Route exact path="/topics" component={TopicPage} />
           <Route exact path="/topics/:topicID" component={TaskListPage} />
           <Route exact path="/tasks/:taskID" component={TaskPage} />
+          <Route exact path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
       </Layout>
