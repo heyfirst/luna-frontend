@@ -22,7 +22,28 @@ class App extends React.Component {
     loading: true
   }
 
+  componentWillMount() {
+    this.props.user.setLoginIn(true)
+    this.props.user
+      .getProfile()
+      .then(async () => {
+        if (!this.props.user.authenticated) {
+          await this.props.history.replace('/login')
+          await this.props.user.setLoginIn(false)
+        } else {
+          await this.props.user.setLoginIn(false)
+        }
+      })
+      .catch(() => {
+        console.log('you are not logging in')
+      })
+  }
+
   render() {
+    if (this.props.user.logingIn) {
+      return <div />
+    }
+
     return (
       <Layout>
         <LunaNavbar />

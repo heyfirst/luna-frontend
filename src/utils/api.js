@@ -3,7 +3,7 @@ import store from './store'
 
 const createApiInstance = () =>
   axios.create({
-    // baseURL: config.apiPath,
+    // baseURL: 'http://localhost:8000',
     baseURL: 'https://api.dev.luna.codes',
     headers: {
       Authorization: store.getAccessToken() ? `JWT ${store.getAccessToken()}` : ''

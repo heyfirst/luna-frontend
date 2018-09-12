@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx'
+import { message } from 'antd'
 import store from '../../utils/store'
+import UserService from '../../services/UserService'
 
 export default class UserStore {
   constructor(rootStore) {
@@ -18,32 +20,41 @@ export default class UserStore {
   authenticated = false
 
   @action
-  login = async data => {
-    // try {
-    //   const result = await UserService.login(data).then(async resp => {
-    //     await store.setAccessToken(resp.data.token)
-    //     await this.getProfile()
-    //     message.success('เข้าสู่ระบบสำเร็จ กรุณารอซักครู่')
-    //     return true
-    //   })
-    //   return result
-    // } catch (error) {
-    //   console.log(error)
-    //   message.error('ไม่สามารถเข้าสู่ระบบได้ กรุณาตรวจสอบยูสเซอร์หรือรหัสผ่าน')
-    //   return false
-    // }
+  login = async accessToken => {
+    this.setLoginIn(true)
+    message.loading('กำลังเข้าสู่ระบบ')
+    try {
+      const result = await UserService.facebookLogin(accessToken)
+        .then(async resp => {
+          this.setLoginIn(false)
+          await store.setAccessToken(resp.data.accessToken)
+          await this.getProfile()
+          message.success('เข้าสู่ระบบสำเร็จ กรุณารอซักครู่')
+          return true
+        })
+        .catch(err => {
+          console.log(err)
+          message.error('เข้าสู่ระบบไม่สำเร็จ กรุณาติดต่อผู้ดูแลระบบ')
+        })
+      return result
+    } catch (error) {
+      this.setLoginIn(false)
+      message.error('เข้าสู่ระบบไม่สำเร็จ กรุณาติดต่อผู้ดูแลระบบ')
+      console.log(error)
+      return false
+    }
   }
 
   @action
   getProfile = async () => {
-    // try {
-    //   await UserService.profile().then(resp => {
-    //     this.setUser(resp.data)
-    //     this.setLoggedIn()
-    //   })
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      await UserService.getProfile().then(resp => {
+        this.setUser(resp.data)
+        this.setLoggedIn()
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   @action
