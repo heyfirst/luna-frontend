@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, withRouter, Redirect } from 'react-static'
+import { Route as ReactRoute, Switch, withRouter, Redirect } from 'react-static'
 import { hot } from 'react-hot-loader'
 import * as R from 'ramda'
 import { observer, inject } from 'mobx-react'
@@ -16,6 +16,23 @@ import TaskListPage from './containers/TaskListPage'
 import TaskPage from './containers/TaskPage'
 import ProfilePage from './containers/ProfilePage'
 
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+class Route extends React.Component {
+  componentWillMount() {
+    nprogress.start()
+  }
+
+  componentDidMount() {
+    nprogress.done()
+  }
+
+  render() {
+    return <ReactRoute {...this.props} />
+  }
+}
+
 @inject('user')
 @observer
 class App extends React.Component {
@@ -31,7 +48,6 @@ class App extends React.Component {
         if (!this.props.user.authenticated) {
           await this.props.user.setLoginIn(false)
         } else {
-          message.info(`สวัสดี! คุณ ${this.props.user.user.first_name}`)
           await this.props.user.setLoginIn(false)
         }
       })
@@ -55,12 +71,12 @@ class App extends React.Component {
           render={props => <Redirect to={`${props.location.pathname}/`} />}
         />
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/topics" component={TopicPage} />
-          <Route exact path="/topics/:topicID" component={TaskListPage} />
-          <Route exact path="/tasks/:taskID" component={TaskPage} />
-          <Route exact path="/profile" component={ProfilePage} />
+          <Route key={1} exact path="/login" component={Login} />
+          <Route key={2} exact path="/" component={Home} />
+          <Route key={3} exact path="/topics" component={TopicPage} />
+          <Route key={4} exact path="/topics/:topicID" component={TaskListPage} />
+          <Route key={5} exact path="/tasks/:taskID" component={TaskPage} />
+          <Route key={6} exact path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
       </Layout>
