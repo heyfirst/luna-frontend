@@ -29,11 +29,6 @@ const Difficulty = styled.div`
     display: inline ;
     color: black;
 `
-const Score = styled.div`
-    display: inline ;
-    padding-left: 5rem;
-    color: black;
-`
 const Solve = styled.div`
     margin-top: 1rem;
     background-color: #00C0CC !important;
@@ -66,7 +61,7 @@ class TaskListPage extends React.Component {
   }
 
   filter = () => (
-    <div className="card mt-3">
+    <div className="card mt-3" style={{borderRadius: `0.625rem`}}>
       <div className="card-body">
         <h5 className="card-title">Difficulty</h5>
         <form>
@@ -131,9 +126,11 @@ class TaskListPage extends React.Component {
                 <CardContent className="col-sm-9">
                   <h5 className="card-title"> {task.task_name} </h5>
                   <Difficulty className="card-text">
-                    Difficulty: Basic
+                    {task.topics.map((topic) => (
+                      topic.topic.topic_name == this.state.topic.topic_name ?
+                        <span>Difficulty : {topic.level.level_name}</span> : null
+                    ))}
                   </Difficulty>
-                  <Score className="card-text"> Score: 10 </Score>
                 </CardContent>
                 <div className="col-sm-2">
                   <h4><Solve className="badge badge-pill badge-info" > Solved </Solve></h4>
@@ -152,7 +149,7 @@ class TaskListPage extends React.Component {
     }
 
     return (
-      <div className="container-fluid mt-4">
+      <div className="container-fluid mt-4 mb-3">
         <center>
           <h3> Welcome to Topic: <u>{this.state.topic.topic_name}</u> 🌙 </h3>
           <p className="">หัวข้อนี้มีโจทย์ทั้งหมด {this.state.tasks.length} ข้อ</p>
