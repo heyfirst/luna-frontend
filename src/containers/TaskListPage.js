@@ -33,13 +33,19 @@ const Solve = styled.div`
     margin-top: 1rem;
     background-color: #00C0CC !important;
 `
+const Filter = styled.div`
+    border-radius: 0.625rem;
+`
 
 @requireAuth()
 class TaskListPage extends React.Component {
   state = {
     loading: true,
     topic: {},
-    tasks: []
+    tasks: [],
+    level: ["Beginner", "Intermediate", "Advance"],
+    solve: ["Solved", "Unsolved"],
+    levelresult: "",
   }
 
   async componentWillMount() {
@@ -53,92 +59,92 @@ class TaskListPage extends React.Component {
       resp => resp.data
     )
     this.setState({
-      loading: true,
       topic,
       tasks,
-      loading: false
+      loading: false,
     })
   }
 
+  // ส่วนของตัว filter
   filter = () => (
-    <div className="card mt-3" style={{borderRadius: `0.625rem`}}>
+    <Filter className="card mt-3">
       <div className="card-body">
         <h5 className="card-title">Difficulty</h5>
-        <form>
-          <div className="row">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-11">
+        <div className="row">
+          <div className="col-sm-1"></div>
+          <div className="col-sm-11">
+            {this.state.level.map((level) => (
               <div className="custom-control custom-radio">
-                <input className="custom-control-input" type="radio" name="difficulty" id="basic" value="basic" />
-                <label className="custom-control-label" htmlFor="basic">
-                  Basic
+                <input className="custom-control-input" type="radio" name="difficulty" id={level} value={level} onChange={this.filterLevel} />
+                <label className="custom-control-label" htmlFor={level}>
+                  {level}
                 </label>
               </div>
-              <div className="custom-control custom-radio">
-                <input className="custom-control-input" type="radio" name="difficulty" id="intermediately" value="intermediately" />
-                <label className="custom-control-label" htmlFor="intermediately">
-                  Intermediately
-                </label>
-              </div>
-              <div className="custom-control custom-radio">
-                <input className="custom-control-input" type="radio" name="difficulty" id="advance" value="advance" />
-                <label className="custom-control-label" htmlFor="advance">
-                  Advance
-                </label>
-              </div>
-            </div>
+            ))}
           </div>
-        </form>
-        <h5 className="card-title">Status</h5>
-        <form>
-          <div className="row">
-            <div className="col-sm-1"></div>
-            <div className="col-sm-11">
+        </div>
+        <h5 className="card-title mt-1">Status</h5>
+        <div className="row">
+          <div className="col-sm-1"></div>
+          <div className="col-sm-11">
+            {this.state.solve.map((solve) => (
               <div className="custom-control custom-radio">
-                <input className="custom-control-input" type="radio" name="status" id="solved" value="solved" />
-                <label className="custom-control-label" htmlFor="solved">
-                  Solved
+                <input className="custom-control-input" type="radio" value={solve} name="status" id={solve} />
+                <label className="custom-control-label" htmlFor={solve}>
+                  {solve}
                 </label>
               </div>
-              <div className="custom-control custom-radio">
-                <input className="custom-control-input" type="radio" name="status" id="unsolved" value="unsolved" />
-                <label className="custom-control-label" htmlFor="unsolved">
-                  Unsolved
-                </label>
-              </div>
-            </div>
+            ))}
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </Filter>
   )
+  
+  // Function Filter Level
+  filterLevel = (e) => {
+    let val = e.target.value
+    if(val == "Beginner"){
+      return this.setState({levelresult: val}) 
+    }
+    else if(val == "Intermediate"){
+      return this.setState({levelresult: val}) 
+    }
+    else if(val == "Advance"){
+      return this.setState({levelresult: val})
+    }
+    else 
+      return this.setState({levelresult: ""})
+  }
 
+  //ส่วนของตัวการ์ด และ เช็คชื่อ Topic กับ Filter level 
   card = () => (
     <div>
       {this.state.tasks.map((task, index) => (
-        <CardTask className="card mt-3">
-          <Link to={`/tasks/${task.pk}`} key={index}>
-            <CardBody className="card-body">
-              <div className="row">
-                <div className="col-sm-1">
-                  <img src="http://placehold.it/60x60" className="rounded-circle" />
-                </div>
-                <CardContent className="col-sm-9">
-                  <h5 className="card-title"> {task.task_name} </h5>
-                  <Difficulty className="card-text">
-                    {task.topics.map((topic) => (
-                      topic.topic.topic_name == this.state.topic.topic_name ?
-                        <span>Difficulty : {topic.level.level_name}</span> : null
-                    ))}
-                  </Difficulty>
-                </CardContent>
-                <div className="col-sm-2">
-                  <h4><Solve className="badge badge-pill badge-info" > Solved </Solve></h4>
-                </div>
-              </div>
-            </CardBody>
-          </Link>
-        </CardTask>
+        task.topics.map((topic) => (
+          topic.topic.topic_name == this.state.topic.topic_name && (topic.level.level_name == this.state.levelresult || this.state.levelresult == "") ?
+            <CardTask className="card mt-3">
+              <Link to={`/tasks/${task.pk}`} key={index}>
+                <CardBody className="card-body">
+                  <div className="row">
+                    <div className="col-sm-1">
+                      <img src="http://placehold.it/60x60" className="rounded-circle" />
+                    </div>
+                    <CardContent className="col-sm-9">
+                      <h5 className="card-title"> {task.task_name} </h5>
+                      <Difficulty className="card-text">
+                        <span>Difficulty : {topic.level.level_name}</span>
+                      </Difficulty>
+                    </CardContent>
+                    <div className="col-sm-2">
+                      <h4><Solve className="badge badge-pill badge-info" > Solved </Solve></h4>
+                    </div>
+                  </div>
+                </CardBody>
+              </Link>
+            </CardTask>
+            : null
+        ))
       ))}
     </div>
   )
