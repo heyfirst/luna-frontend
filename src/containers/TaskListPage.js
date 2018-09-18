@@ -46,6 +46,7 @@ class TaskListPage extends React.Component {
     level: ["Beginner", "Intermediate", "Advance"],
     solve: ["Solved", "Unsolved"],
     levelresult: "",
+    solveresult: "",
   }
 
   async componentWillMount() {
@@ -89,7 +90,7 @@ class TaskListPage extends React.Component {
           <div className="col-sm-11">
             {this.state.solve.map((solve) => (
               <div className="custom-control custom-radio">
-                <input className="custom-control-input" type="radio" value={solve} name="status" id={solve} />
+                <input className="custom-control-input" type="radio" name="status" id={solve} value={solve} onChange={this.filterLevel} />
                 <label className="custom-control-label" htmlFor={solve}>
                   {solve}
                 </label>
@@ -100,28 +101,34 @@ class TaskListPage extends React.Component {
       </div>
     </Filter>
   )
-  
-  // Function Filter Level
+
+  // Function Filter Level and Solved
   filterLevel = (e) => {
-    let val = e.target.value
-    if(val == "Beginner"){
-      return this.setState({levelresult: val}) 
+    let val = e.target.id
+    if (val == "Beginner" || val == "Intermediate" || val == "Advance") {
+      if (this.state.solveresult == "Solved" || this.state.solveresult == "Unsolved") {
+        return this.setState({ levelresult: val })
+      }
+      else
+        return this.setState({ levelresult: val, solveresult: "" })
     }
-    else if(val == "Intermediate"){
-      return this.setState({levelresult: val}) 
+    else if (val == "Solved" || val == "Unsolved") {
+      if (this.state.levelresult == "Beginner" || this.state.levelresult == "Intermediate" || this.state.levelresult == "Advance") {
+        return this.setState({ solveresult: val })
+      }
+      else
+        return this.setState({ solveresult: val, levelresult: "" })
     }
-    else if(val == "Advance"){
-      return this.setState({levelresult: val})
-    }
-    else 
-      return this.setState({levelresult: ""})
+    else
+      return this.setState({ levelresult: "", solveresult: "" })
   }
 
-  //ส่วนของตัวการ์ด และ เช็คชื่อ Topic กับ Filter level 
+  //ส่วนของตัวการ์ด และ เช็คชื่อ Topic กับ Filter Level ans Solved
   card = () => (
     <div>
       {this.state.tasks.map((task, index) => (
         task.topics.map((topic) => (
+          // && (this.state.solveresult == "" || (this.state.solveresult == "Solved" || this.state.solveresult == "Unsolved))"
           topic.topic.topic_name == this.state.topic.topic_name && (topic.level.level_name == this.state.levelresult || this.state.levelresult == "") ?
             <CardTask className="card mt-3">
               <Link to={`/tasks/${task.pk}`} key={index}>
@@ -137,6 +144,7 @@ class TaskListPage extends React.Component {
                       </Difficulty>
                     </CardContent>
                     <div className="col-sm-2">
+                      {console.log(this.state.solveresult)}
                       <h4><Solve className="badge badge-pill badge-info" > Solved </Solve></h4>
                     </div>
                   </div>
