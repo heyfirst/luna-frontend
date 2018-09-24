@@ -28,7 +28,7 @@ const CardImage = styled.div`
   min-width: 100%;
   max-height: 100%;
   min-height: 100%;
-  border-radius: 50%;
+  border-radius: 4.9375rem !important;
 `
 
 const CardBody = styled.div`
