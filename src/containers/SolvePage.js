@@ -69,16 +69,18 @@ class SolvePage extends React.Component {
   }
 
   onDragSplitPanel = e => {
-    let width =
-      window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-    if (e.screenX !== 0 && !timeout) {
-      timeout = true
-      this.setState({
-        size: (e.screenX / width) * 100
-      })
-      setTimeout(() => {
-        timeout = false
-      }, 100)
+    if (typeof window !== 'undefined') {
+      let width =
+        window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+      if (e.screenX !== 0 && !timeout) {
+        timeout = true
+        this.setState({
+          size: (e.screenX / width) * 100
+        })
+        setTimeout(() => {
+          timeout = false
+        }, 100)
+      }
     }
   }
 
