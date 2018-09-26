@@ -5,6 +5,10 @@ import AceEditor from 'react-ace'
 
 import 'brace/mode/java'
 import 'brace/theme/solarized_dark'
+import '../../static/coding-theme.css'
+
+import { observer } from 'mobx-react'
+import SolveStore from './store'
 
 const Container = styled.div`
   flex-basis: ${props => props.size}%;
@@ -17,25 +21,23 @@ const Container = styled.div`
   }
 `
 
+@observer
 export default class Editor extends React.Component {
   render() {
+    const store = SolveStore
+
     return (
       <Container size={this.props.size}>
         <AceEditor
           mode="java"
           theme="solarized_dark"
           name="ace"
-          onLoad={this.onLoad}
-          onChange={this.onChange}
-          fontSize={14}
+          onChange={store.changeCode}
+          fontSize={12}
           showPrintMargin
           showGutter
           highlightActiveLine
-          value={`class Student {
-      public String getStudent() {
-        return "123456";
-      }
-    }`}
+          value={store.code}
           setOptions={{
             enableBasicAutocompletion: false,
             enableLiveAutocompletion: false,

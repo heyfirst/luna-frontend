@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Editor from './Editor'
-import Testcases from './Testcases'
+import ResultPanel from './ResultPanel'
 
 const SplitPanelLine = styled.div`
   position: absolute;
@@ -66,7 +66,7 @@ export default class SolvePanel extends React.Component {
           onDrag={e => this.onDragSplitPanel(e)}
           size={this.state.size}
         />
-        <Testcases size={this.state.size} />
+        <ResultPanel size={this.state.size} />
       </Container>
     )
   }
