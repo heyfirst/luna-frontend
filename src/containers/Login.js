@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'antd'
 import { inject, observer } from 'mobx-react'
+import Layout from '../components/Core/Layout'
 
 @inject('user')
 @observer
@@ -27,16 +28,18 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div className="container pt-4">
-        <div className="row">
-          <div className="col-12 text-center">
-            <h2>Sign In</h2>
-            <Button type="primary" onClick={() => this.onLogin()}>
-              Sign In with Facebook
-            </Button>
+      <Layout>
+        <div className="container pt-4">
+          <div className="row">
+            <div className="col-12 text-center">
+              <h2>Sign In</h2>
+              <Button type="primary" onClick={() => this.onLogin()}>
+                Sign In with Facebook
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
