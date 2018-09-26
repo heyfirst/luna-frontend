@@ -3,9 +3,6 @@ import { Route as ReactRoute, Switch, withRouter, Redirect } from 'react-static'
 import { hot } from 'react-hot-loader'
 import * as R from 'ramda'
 import { observer, inject } from 'mobx-react'
-import { message } from 'antd'
-import Layout from './components/Core/Layout'
-import LunaNavbar from './components/Core/Navbar'
 
 import './App.css'
 import NotFound from './containers/404'
@@ -13,7 +10,7 @@ import Login from './containers/Login'
 import TopicPage from './containers/TopicPage'
 import Home from './containers/Home'
 import TaskListPage from './containers/TaskListPage'
-import TaskPage from './containers/TaskPage'
+import SolvePage from './containers/SolvePage'
 import ProfilePage from './containers/ProfilePage'
 
 import nprogress from 'nprogress'
@@ -62,8 +59,7 @@ class App extends React.Component {
     }
 
     return (
-      <Layout>
-        <LunaNavbar />
+      <React.Fragment>
         <Route
           path="/:url*"
           exact
@@ -75,11 +71,11 @@ class App extends React.Component {
           <Route key={2} exact path="/" component={Home} />
           <Route key={3} exact path="/topics" component={TopicPage} />
           <Route key={4} exact path="/topics/:topicID" component={TaskListPage} />
-          <Route key={5} exact path="/tasks/:taskID" component={TaskPage} />
+          <Route key={5} exact path="/tasks/:taskID" component={SolvePage} />
           <Route key={6} exact path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
-      </Layout>
+      </React.Fragment>
     )
   }
 }
