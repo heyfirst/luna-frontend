@@ -4,6 +4,7 @@ import { Icon } from 'antd'
 import { Navbar } from 'reactstrap'
 
 const ActionContainer = styled(Navbar)`
+  background-color: #29406b !important;
   display: flex;
   justify-content: center;
   position: relative;
