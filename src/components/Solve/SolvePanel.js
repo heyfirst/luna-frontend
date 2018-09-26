@@ -42,17 +42,19 @@ export default class SolvePanel extends React.Component {
   }
 
   onDragSplitPanel = e => {
-    let height =
-      window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-    console.log(e.screenY, height)
-    if (e.screenY !== 0 && !timeout) {
-      timeout = true
-      this.setState({
-        size: (e.screenY / (height + 112)) * 100
-      })
-      setTimeout(() => {
-        timeout = false
-      }, 100)
+    if (typeof window !== 'undefined') {
+      let height =
+        window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+      console.log(e.screenY, height)
+      if (e.screenY !== 0 && !timeout) {
+        timeout = true
+        this.setState({
+          size: (e.screenY / (height + 112)) * 100
+        })
+        setTimeout(() => {
+          timeout = false
+        }, 100)
+      }
     }
   }
 
