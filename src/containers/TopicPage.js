@@ -5,6 +5,7 @@ import { Link } from 'react-static'
 import PadlockImage from '../static/images/padlock.png'
 import TopicService from '../services/TopicService'
 import requireAuth from '../utils/requireAuth'
+import Layout from '../components/Core/Layout'
 
 const DivCard = styled.div`
   margin-bottom: 1.4375rem;
@@ -170,11 +171,13 @@ class Topic extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-10 offset-1 mt-4">{this.topicsInline()}</div>
+      <Layout>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-10 offset-1 mt-4">{this.topicsInline()}</div>
+          </div>
         </div>
-      </div>
+      </Layout>
     )
   }
 }
