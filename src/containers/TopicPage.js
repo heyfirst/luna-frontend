@@ -71,18 +71,10 @@ const CardBodyAlignCenter = styled.div`
   padding-bottom: 0rem !important;
 `
 
-// const PictureImg = styled.img`
-//   padding-top: 1.5625rem;
-//   width: 4.375rem;
-//   height: 5.9375rem;
-//   z-index: 100;
-// `
-
-// const ImgHidden = styled.div`
-//   width: 4.375rem;
-//   height: 5.9375rem;
-//   visibility: hidden;
-// `
+const TopicHeader = styled.div`
+  color: #000;
+  font-size: 1.5625rem;
+`
 
 const PTask = styled.div`
   text-align: center;
@@ -128,7 +120,7 @@ class Topic extends React.Component {
     return (
       <div className="row">
         <div className="col-sm-3 card-image">
-          <CardImage src={getImageFromType(topic.topic_name)} className="mx-auto d-block mt-2 mb-2" height="100" width="100">
+          <CardImage src={getImageFromType(topic.topic_name)} className="mx-auto d-block mt-2 mb-2" height="100" width="100"/>
             {/* {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ? (
               <ImgHidden />
             ) : (
@@ -136,10 +128,10 @@ class Topic extends React.Component {
                 <PictureImg className="img-fluid rounded mx-auto d-block" src={PadlockImage} />
               </picture>
             )} */}
-          </CardImage>
+          {/* </CardImage> */}
         </div>
         <CardBody className="col-sm-7 card-body">
-          <h4 className="mb-0">{topic.topic_name}</h4>
+          <TopicHeader className="mb-0 font-weight-bold">{topic.topic_name}</TopicHeader>
           <p>Lorem Ipsum is not simply random text.</p>
           <CardProgress className="progress">
             <CardProgressBar percentage={percentage} className="progress-bar" />
