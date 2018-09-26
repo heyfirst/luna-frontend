@@ -17,6 +17,7 @@ import styled from 'styled-components'
 const NewNavbar = styled(Navbar)`
   background-color : #29406B;
   padding: 0;
+  filter: drop-shadow(0rem 0.25rem 0.15rem rgba(0, 0, 0, 0.1));
 `
 
 const NewImg = styled.img`
