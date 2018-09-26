@@ -69,10 +69,12 @@ class SolvePage extends React.Component {
   }
 
   onDragSplitPanel = e => {
+    let width =
+      window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     if (e.screenX !== 0 && !timeout) {
       timeout = true
       this.setState({
-        size: (e.screenX / screen.width) * 100
+        size: (e.screenX / width) * 100
       })
       setTimeout(() => {
         timeout = false
@@ -86,7 +88,6 @@ class SolvePage extends React.Component {
         <SolveNavbar />
         <Container>
           <SplitPanel
-            id="split-panel-line"
             draggable
             onDragStart={e => this.handleOnDragStart(e)}
             onDrag={e => this.onDragSplitPanel(e)}
