@@ -12,6 +12,16 @@ class SolveStore {
   changeCode = code => {
     this.code = code
   }
+
+  @action
+  runTest = () => {
+    console.log('test')
+  }
+
+  @action
+  submit = () => {
+    console.log('submit!')
+  }
 }
 
 export default new SolveStore()

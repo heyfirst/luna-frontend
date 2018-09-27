@@ -33,6 +33,7 @@ const TastcaseContainer = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+    font-weight: bold;
 
     .anticon-caret-down {
       display: flex;
@@ -62,6 +63,16 @@ const TastcaseContainer = styled.div`
 
       .value {
         width: 60%;
+
+        &.success {
+          color: #f2994a;
+        }
+        &.fail {
+          color: #d80027;
+        }
+        &.expected {
+          color: #47c9d1;
+        }
       }
     }
   }
@@ -76,6 +87,7 @@ const TastcaseContainer = styled.div`
 class Testcase extends React.Component {
   state = { collapse: false }
   render() {
+    const { pass, title, input, output, expectedOutput } = this.props
     return (
       <TastcaseContainer
         onClick={() => this.setState({ collapse: !this.state.collapse })}
@@ -83,21 +95,21 @@ class Testcase extends React.Component {
       >
         <div className="title">
           <Icon type="caret-down" />
-          {` Tastcase`}
-          <img className="status" src={TestcaseSuccess} />
+          {` ${title}`}
+          <img className="status" src={pass ? TestcaseSuccess : TestcaseFail} />
         </div>
         <Collapse isOpen={this.state.collapse} className="detail">
           <div className="detail-list">
             <div className="label">Input:</div>
-            <div className="value">...</div>
+            <div className="value">{input}</div>
           </div>
           <div className="detail-list">
             <div className="label">Output:</div>
-            <div className="value">...</div>
+            <div className={`value ${pass ? 'success' : 'fail'}`}>{output}</div>
           </div>
           <div className="detail-list">
             <div className="label">Expected Output:</div>
-            <div className="value">...</div>
+            <div className="value expected">{expectedOutput}</div>
           </div>
         </Collapse>
       </TastcaseContainer>
@@ -112,7 +124,14 @@ export default class ResultPanel extends React.Component {
       <Container size={this.props.size}>
         <TestList>
           {[...Array(10)].map((e, index) => (
-            <Testcase key={index} />
+            <Testcase
+              key={index}
+              pass={index % 2 === 0}
+              title={`Testcase #${index + 1}`}
+              input={`1 2`}
+              output={`3`}
+              expectedOutput={index % 2 === 0 ? '3' : '2'}
+            />
           ))}
         </TestList>
       </Container>
