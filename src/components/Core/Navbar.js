@@ -12,6 +12,18 @@ import {
 } from 'reactstrap'
 import { NavLink as Link, withRouter } from 'react-static'
 import { observer, inject } from 'mobx-react'
+import styled from 'styled-components'
+
+const NewNavbar = styled(Navbar)`
+  background-color : #29406B;
+  padding: 0;
+  filter: drop-shadow(0rem 0.25rem 0.15rem rgba(0, 0, 0, 0.1));
+`
+
+const NewImg = styled.img`
+  border-radius: 50%;
+  margin-right: 0.3rem;
+`
 
 @withRouter
 @inject('user')
@@ -34,7 +46,7 @@ class LunaNavbar extends React.Component {
 
   render() {
     return (
-      <Navbar color="dark" dark expand="md">
+      <NewNavbar dark expand="md">
         <div className="container">
           <Link className="navbar-brand" to="/">
             Luna
@@ -52,6 +64,11 @@ class LunaNavbar extends React.Component {
                   Challenge
                 </Link>
               </NavItem>
+              <NavItem>
+                <Link className="nav-link" to="/Ranking/">
+                  Ranking
+                </Link>
+              </NavItem>
             </Nav>
             <Nav className="ml-auto" navbar>
               {!this.props.user.authenticated ? (
@@ -63,7 +80,7 @@ class LunaNavbar extends React.Component {
               ) : (
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    Profile
+                    <NewImg src="http://placehold.it/60x60" height="30" width="30"/> {this.props.user.user.first_name} {this.props.user.user.last_name}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <Link to="/profile/">
@@ -76,7 +93,7 @@ class LunaNavbar extends React.Component {
             </Nav>
           </Collapse>
         </div>
-      </Navbar>
+      </NewNavbar>
     )
   }
 }

@@ -5,38 +5,82 @@ import TopicService from '../services/TopicService'
 import { Link } from 'react-static'
 import Layout from '../components/Core/Layout'
 
-// const TaskCard = styled.div`
-//   a {
-//     color: #666;
-//     transition: all 0.3s;
+import DataTypeImage from '../static/images/data-type.png'
+import StringImage from '../static/images/string.png'
+import ArrayImage from '../static/images/array.png'
+import LoopImage from '../static/images/loop.png'
+import ConditionImage from '../static/images/condition.png'
+import DataStructureImage from '../static/images/data-structure.png'
 
-//     &:hover {
-//       color: #000;
-//     }
-//   }
-// `
+const getImageFromType = type => {
+  switch (type) {
+    case 'Data Type':
+      return DataTypeImage
+    case 'String':
+      return StringImage
+    case 'Array':
+      return ArrayImage
+    case 'Loop':
+      return LoopImage
+    case 'Condition':
+      return ConditionImage
+    case 'Data Structure':
+      return DataStructureImage
+  }
+}
+
 const CardTask = styled.div`
-  border-radius: 3.75rem !important;
+  border-radius: 0.9375rem !important;
+  filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.1));
 `
-
 const CardBody = styled.div`
-  padding: 0.25rem !important;
+  padding: 0.5rem !important;
 `
 const CardContent = styled.div`
-  padding-left: 1.625rem !important;
   color: #00c0cc;
 `
 const Difficulty = styled.div`
-  display: inline;
   color: black;
+  display: inline;
 `
 const Solve = styled.div`
-  margin-top: 1rem;
-  background-color: #00c0cc !important;
+  background-color: #fff !important;
+  border: 0.0625rem solid #7498E9;
+  color: #7498E9;
+  font-size: 1rem;
+  margin-top: 0.725rem;
+  margin-left: 1rem;
 `
-const Filter = styled.div`
-  border-radius: 0.625rem;
+const Solved = styled.div`
+  background-color: #7498E9 !important;
+  border: 0.0625rem solid #7498E9;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 0.725rem;
+  margin-left: 1rem;
 `
+const SpanDiff = styled.span`
+  font-size: 0.875rem;
+`
+const TopicImage = styled.img`
+  filter: drop-shadow(0rem 0.5rem 0.25rem rgba(0, 0, 0, 0.1));
+`
+const BGColor = styled.div`
+  width: 100%;
+  height: 15.5rem;
+  background-color: #29406B; 
+  margin: 0;
+  padding: 0;
+`
+const Header = styled.div`
+  color: #fff;
+  font-size: 1.875rem;
+`
+const SubHeader = styled.div`
+  color: #fff;
+  font-size: 1rem;
+`
+
 
 @requireAuth()
 class TaskListPage extends React.Component {
@@ -67,101 +111,25 @@ class TaskListPage extends React.Component {
     })
   }
 
-  // ส่วนของตัว filter
-  filter = () => (
-    <Filter className="card mt-3">
-      <div className="card-body">
-        <h5 className="card-title">Difficulty</h5>
-        <div className="row">
-          <div className="col-sm-1" />
-          <div className="col-sm-11">
-            {this.state.level.map(level => (
-              <div className="custom-control custom-radio">
-                <input
-                  className="custom-control-input"
-                  type="radio"
-                  name="difficulty"
-                  id={level}
-                  value={level}
-                  onChange={this.filterLevel}
-                />
-                <label className="custom-control-label" htmlFor={level}>
-                  {level}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-        <h5 className="card-title mt-1">Status</h5>
-        <div className="row">
-          <div className="col-sm-1" />
-          <div className="col-sm-11">
-            {this.state.solve.map(solve => (
-              <div className="custom-control custom-radio">
-                <input
-                  className="custom-control-input"
-                  type="radio"
-                  name="status"
-                  id={solve}
-                  value={solve}
-                  onChange={this.filterLevel}
-                />
-                <label className="custom-control-label" htmlFor={solve}>
-                  {solve}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Filter>
-  )
-
-  // Function Filter Level and Solved
-  filterLevel = e => {
-    let val = e.target.id
-    if (val == 'Beginner' || val == 'Intermediate' || val == 'Advance') {
-      if (this.state.solveresult == 'Solved' || this.state.solveresult == 'Unsolved') {
-        return this.setState({ levelresult: val })
-      } else return this.setState({ levelresult: val, solveresult: '' })
-    } else if (val == 'Solved' || val == 'Unsolved') {
-      if (
-        this.state.levelresult == 'Beginner' ||
-        this.state.levelresult == 'Intermediate' ||
-        this.state.levelresult == 'Advance'
-      ) {
-        return this.setState({ solveresult: val })
-      } else return this.setState({ solveresult: val, levelresult: '' })
-    } else return this.setState({ levelresult: '', solveresult: '' })
-  }
-
   //ส่วนของตัวการ์ด และ เช็คชื่อ Topic กับ Filter Level ans Solved
   card = () => (
     <div>
       {this.state.tasks.map((task, index) =>
         task.topics.map(
           topic =>
-            // && (this.state.solveresult == "" || (this.state.solveresult == "Solved" || this.state.solveresult == "Unsolved))"
-            topic.topic.topic_name == this.state.topic.topic_name &&
-            (topic.level.level_name == this.state.levelresult || this.state.levelresult == '') ? (
+            topic.topic.topic_name == this.state.topic.topic_name ? (
               <CardTask className="card mt-3">
                 <Link to={`/tasks/${task.pk}`} key={index}>
                   <CardBody className="card-body">
                     <div className="row">
-                      <div className="col-sm-1">
-                        <img src="http://placehold.it/60x60" className="rounded-circle" />
-                      </div>
-                      <CardContent className="col-sm-9">
-                        <h5 className="card-title"> {task.task_name} </h5>
+                      <CardContent className="col-sm-10 pl-5">
+                        <h6 className="mb-2 font-weight-bold"> {task.task_name} </h6>
                         <Difficulty className="card-text">
-                          <span>Difficulty : {topic.level.level_name}</span>
+                          <SpanDiff>Difficulty : {topic.level.level_name}</SpanDiff>
                         </Difficulty>
                       </CardContent>
                       <div className="col-sm-2">
-                        {console.log(this.state.solveresult)}
-                        <h4>
-                          <Solve className="badge badge-pill badge-info"> Solved </Solve>
-                        </h4>
+                        <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
                       </div>
                     </div>
                   </CardBody>
@@ -180,21 +148,32 @@ class TaskListPage extends React.Component {
 
     return (
       <Layout>
-        <div className="container-fluid mt-4 mb-3">
-          <center>
-            <h3>
-              {' '}
-              Welcome to Topic: <u>{this.state.topic.topic_name}</u> 🌙{' '}
-            </h3>
-            <p className="">หัวข้อนี้มีโจทย์ทั้งหมด {this.state.tasks.length} ข้อ</p>
-          </center>
-          <div className="row">
-            <div className="col-sm-2" />
-            <div className="col-sm-2">{this.filter()}</div>
-            <div className="col-sm-6">{this.card()}</div>
-            <div className="col-sm-2" />
+        <BGColor>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-sm-3"></div>
+              <div className="col-sm-6 mt-4 mb-3">
+                <div className="row mb-2">
+                  <div className="col-sm-2"></div>
+                  <div className="col-sm-3 pr-1">
+                    <TopicImage src={getImageFromType(this.state.topic.topic_name)} height="150" width="150" className="rounded" />
+                  </div>
+                  <div className="col-sm-5 pt-5 pl-1">
+                    <Header className="mb-0 font-weight-bold">{this.state.topic.topic_name}</Header>
+                    <SubHeader>Lorem Ipsum is not simply random text.</SubHeader>
+                  </div>
+                  <div className="col-sm-2"></div>
+                </div>
+              </div>
+              <div className="col-sm-3" ></div>
+            </div>
+            <div className="row mb-4">
+              <div className="col-sm-3" />
+              <div className="col-sm-6">{this.card()}</div>
+              <div className="col-sm-3" />
+            </div>
           </div>
-        </div>
+        </BGColor>
       </Layout>
     )
   }
