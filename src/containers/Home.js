@@ -40,7 +40,7 @@ const FrontLayout = styled.div`
     z-index: 0;
   }
 
-  * {
+  h1, h3, button {
     color: white;
   }
 
