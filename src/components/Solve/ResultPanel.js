@@ -3,7 +3,7 @@ import { Icon } from 'antd'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import { Collapse } from 'reactstrap'
-
+import * as R from 'ramda'
 import SolveStore from './store'
 
 import TestcaseSuccess from '../../static/images/testcase-success.png'
@@ -142,7 +142,9 @@ class Testcase extends React.Component {
         <div className="title">
           <Icon type="caret-down" />
           {` ${title}`}
-          <img className="status" src={pass ? TestcaseSuccess : TestcaseFail} />
+          {pass && (
+            <img className="status" src={pass === 'PASS' ? TestcaseSuccess : TestcaseFail} />
+          )}
         </div>
         <Collapse isOpen={this.state.collapse} className="detail">
           <div className="detail-list">
@@ -165,6 +167,15 @@ class Testcase extends React.Component {
 
 @observer
 export default class ResultPanel extends React.Component {
+  getPassFromResult = result => {
+    if (R.path(['status'], result)) {
+      console.log('PASS')
+      return 'PASS'
+    } else {
+      return 'FAIL'
+    }
+  }
+
   render() {
     const store = SolveStore
     return (
@@ -188,10 +199,14 @@ export default class ResultPanel extends React.Component {
             {store.testcases.map((testcase, index) => (
               <Testcase
                 key={testcase.id}
-                pass={index % 2 === 0}
+                pass={
+                  store.result.length !== 0
+                    ? this.getPassFromResult(R.path([index], store.result))
+                    : undefined
+                }
                 title={`Testcase #${index + 1}`}
                 test={`${testcase.test}`}
-                output={`3`}
+                output={`${R.path([index, 'output'], store.result) || '-'} `}
                 expectedOutput={`${testcase.expected_output}`}
               />
             ))}

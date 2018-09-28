@@ -59,8 +59,9 @@ class SolveStore {
       this.error = result.submission.err
     } else {
       this.error = {}
-      this.result = result.submission
-      if (this.result.pass === false) {
+      this.resultPanelState = 'TESTCASE'
+      this.result = result.submission.result
+      if (result.submission.pass === false) {
         notification['warning']({
           message: 'Something Wrong!',
           description: `Something are wrong in testcase, Let's fix it!.`
