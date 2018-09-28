@@ -22,6 +22,7 @@ export default class UserStore {
   @action
   login = async accessToken => {
     this.setLoginIn(true)
+    await store.removeAccessToken()
     message.loading('กำลังเข้าสู่ระบบ')
     try {
       const result = await UserService.facebookLogin(accessToken)

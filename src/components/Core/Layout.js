@@ -2,10 +2,10 @@ import React from 'react'
 import LunaNavbar from './Navbar'
 
 const Layout = ({ children }) => (
-  <div>
+  <React.Fragment>
     <LunaNavbar />
     {children}
-  </div>
+  </React.Fragment>
 )
 
 export default Layout

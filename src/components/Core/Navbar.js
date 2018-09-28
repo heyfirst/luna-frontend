@@ -19,6 +19,8 @@ const NewNavbar = styled(Navbar)`
   background-color: #29406b;
   padding: 0;
   filter: drop-shadow(0rem 0.25rem 0.15rem rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  z-index: 99;
 `
 
 const NewImg = styled.img`
