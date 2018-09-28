@@ -8,6 +8,7 @@ import ArrayImage from '../static/images/array.png'
 import LoopImage from '../static/images/loop.png'
 import ConditionImage from '../static/images/condition.png'
 import DataStructureImage from '../static/images/data-structure.png'
+import PadLock from '../static/images/padlock.png'
 
 import TopicService from '../services/TopicService'
 import requireAuth from '../utils/requireAuth'
@@ -37,14 +38,6 @@ const DivCard = styled.div`
   margin-bottom: 1.25rem;
   filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.1));
 `
-
-// const DivCardInline = styled.div`
-//   margin-bottom: 1.4375rem;
-//   width: 49%;
-//   margin-left: 0.1875rem;
-//   margin-right: 0.1875rem;
-//   border-radius: 0.625rem !important;
-// `
 
 const CardImage = styled.img`
   padding: 0rem;
@@ -78,9 +71,27 @@ const TopicHeader = styled.div`
 
 const PTask = styled.div`
   text-align: center;
+  font-size: 0.875rem;
   padding-top: 3.125rem;
   padding-right: 0.9375rem;
   color: black;
+`
+
+const NewLink = styled(Link)`
+  text-decoration-line: none;
+`
+
+const Content = styled.p`
+  font-size: 0.875rem;
+`
+const PadLockImage = styled.img`
+  position: absolute; 
+  z-index: 100; 
+  margin: auto; 
+  top: 0; 
+  left: 0; 
+  bottom: 0; 
+  right: 0;
 `
 
 @requireAuth()
@@ -111,28 +122,22 @@ class Topic extends React.Component {
   }
 
   // Function เช็ค Score ของ User เกินเกณฑ์หรือไม่
-  // isScoreOverNinetyNine = topic => {
-  //   return topic.pk > 0 && topic.pk <= this.state.userScore && this.state.userScore > 99 //Mock เกณฑ์ Score
-  // }
+  isScoreOverNinetyNine = topic => {
+    return topic.pk > 0 &&
+      topic.pk <= this.state.userScore &&
+      this.state.userScore > 99 //Mock เกณฑ์ Score
+  }
 
   // ส่วนของตัวการ์ด
   Card = (topic, percentage) => {
     return (
-      <div className="row">
+      <div className="row mr-0 ml-0">
         <div className="col-sm-3 card-image">
-          <CardImage src={getImageFromType(topic.topic_name)} className="mx-auto d-block mt-2 mb-2" height="100" width="100"/>
-            {/* {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ? (
-              <ImgHidden />
-            ) : (
-              <picture>
-                <PictureImg className="img-fluid rounded mx-auto d-block" src={PadlockImage} />
-              </picture>
-            )} */}
-          {/* </CardImage> */}
+          <CardImage src={getImageFromType(topic.topic_name)} className="mx-auto d-block mt-2 mb-2 pt-1" height="100" width="100" />
         </div>
         <CardBody className="col-sm-7 card-body">
           <TopicHeader className="mb-0 font-weight-bold">{topic.topic_name}</TopicHeader>
-          <p>Lorem Ipsum is not simply random text.</p>
+          <Content>Lorem Ipsum is not simply random text.</Content>
           <CardProgress className="progress">
             <CardProgressBar percentage={percentage} className="progress-bar" />
           </CardProgress>
@@ -147,33 +152,32 @@ class Topic extends React.Component {
     )
   }
 
-  // Function เช็ค Card ไหนต้องส้ราง Link
-  linkCard = (topic, percentage) => (
-    <Link to={`/topics/${topic.pk}`} key={topic.pk}>
-      {this.Card(topic, percentage)}
-    </Link>
-    // <div>
-    //   {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ? (
-    //     <Link to={`/topics/${topic.pk}`} key={topic.pk}>
-    //       {this.Card(topic, percentage)}
-    //     </Link>
-    //   ) : (
-    //       this.Card(topic, percentage)
-    //     )}
-    // </div>
-  )
+  //ส่วนเช็คว่าต้องสร้าง Link ไหม
+  linkCard = (topic, percentage) => {
+    if (this.isScoreOverNinetyNine(topic) || topic.pk === 1) {
+      return (
+        <NewLink to={`/topics/${topic.pk}`} key={topic.pk}>
+          {this.Card(topic, percentage)}
+        </NewLink>
+      )
+    } else {
+      return (
+        <div style={{
+          backgroundColor: 'rgba(41, 64, 107, 0.8)',
+          opacity: 0.7,
+          borderRadius: "0.625rem"
+        }}>
+          <PadLockImage src={PadLock} className="mx-auto d-block" height="50" width="50"/>
+          {this.Card(topic, percentage)}
+        </ div>
+      )
+    }
+  }
 
   // Function เช็ค Topic ไหนเป็นไลน์เดียวกัน
   topicsInline = () => {
     return this.state.topics.map(topic => {
       const percentage = this.percentageCalc(100, 150)
-      // if (this.isMustShowInline(topic)) {
-      //   return (
-      //     <DivCardInline className="card d-inline-flex">
-      //       {this.linkCard(topic, percentage)}
-      //     </DivCardInline>
-      //   )
-      // } else {
       return (
         <DivCard className="card w-50 border-0" key={topic.pk}>
           {this.linkCard(topic, percentage)}
@@ -186,7 +190,7 @@ class Topic extends React.Component {
   render() {
     return (
       <Layout>
-        <div className="container-fluid">
+        <div className="container-fluid mb-5">
           <div className="row">
             <div className="col-sm-10 offset-1 mt-4">{this.topicsInline()}</div>
           </div>
