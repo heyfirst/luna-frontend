@@ -90,18 +90,17 @@ const TastcaseContainer = styled.div`
 `
 
 const Menu = styled.div`
-  display: flex;
+  display: block;
   padding: 0.5rem 1rem;
 
   > div {
+    display: inline-block;
     cursor: pointer;
     position: relative;
     font-weight: bold;
     color: white;
     padding: 0.4rem 1rem;
     height: 100%;
-    align-items: center;
-    display: flex;
     margin-right: 1rem;
     transition: all 0.3s;
     height: 2.5rem;
