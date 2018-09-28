@@ -12,7 +12,8 @@ const Container = styled.div`
   flex-basis: ${props => 100 - props.size}%;
   padding-top: 2px;
   transition: all 0.15s;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 
 const TestList = styled.div`
