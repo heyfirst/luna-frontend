@@ -45,30 +45,34 @@ const Difficulty = styled.div`
 `
 const Solve = styled.div`
   background-color: #fff !important;
-  border: 0.0625rem solid #7498E9;
-  color: #7498E9;
+  border: 0.0625rem solid #7498e9;
+  color: #7498e9;
   font-size: 1rem;
   margin-top: 0.725rem;
   margin-left: 1rem;
 `
+
 const Solved = styled.div`
-  background-color: #7498E9 !important;
-  border: 0.0625rem solid #7498E9;
+  background-color: #7498e9 !important;
+  border: 0.0625rem solid #7498e9;
   color: #fff;
   font-size: 1rem;
   margin-top: 0.725rem;
   margin-left: 1rem;
 `
+
 const SpanDiff = styled.span`
   font-size: 0.875rem;
 `
+
 const TopicImage = styled.img`
   filter: drop-shadow(0rem 0.5rem 0.25rem rgba(0, 0, 0, 0.1));
 `
+
 const BGColor = styled.div`
   width: 100%;
   height: 15.5rem;
-  background-color: #29406B; 
+  background-color: #29406b;
   margin: 0;
   padding: 0;
 `
@@ -80,7 +84,6 @@ const SubHeader = styled.div`
   color: #fff;
   font-size: 1rem;
 `
-
 
 @requireAuth()
 class TaskListPage extends React.Component {
@@ -142,37 +145,42 @@ class TaskListPage extends React.Component {
   )
 
   render() {
-    if (this.state.loading) {
-      return <div />
-    }
-
     return (
       <Layout>
         <BGColor>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-sm-3"></div>
-              <div className="col-sm-6 mt-4 mb-3">
-                <div className="row mb-2">
-                  <div className="col-sm-2"></div>
-                  <div className="col-sm-3 pr-1">
-                    <TopicImage src={getImageFromType(this.state.topic.topic_name)} height="150" width="150" className="rounded" />
+          {!this.state.loading && (
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-sm-3" />
+                <div className="col-sm-6 mt-4 mb-3">
+                  <div className="row mb-2">
+                    <div className="col-sm-2" />
+                    <div className="col-sm-3 pr-1">
+                      <TopicImage
+                        src={getImageFromType(this.state.topic.topic_name)}
+                        height="150"
+                        width="150"
+                        className="rounded"
+                      />
+                    </div>
+                    <div className="col-sm-5 pt-5 pl-1">
+                      <Header className="mb-0 font-weight-bold">
+                        {this.state.topic.topic_name}
+                      </Header>
+                      <SubHeader>Lorem Ipsum is not simply random text.</SubHeader>
+                    </div>
+                    <div className="col-sm-2" />
                   </div>
-                  <div className="col-sm-5 pt-5 pl-1">
-                    <Header className="mb-0 font-weight-bold">{this.state.topic.topic_name}</Header>
-                    <SubHeader>Lorem Ipsum is not simply random text.</SubHeader>
-                  </div>
-                  <div className="col-sm-2"></div>
                 </div>
+                <div className="col-sm-3" />
               </div>
-              <div className="col-sm-3" ></div>
+              <div className="row mb-4">
+                <div className="col-sm-3" />
+                <div className="col-sm-6">{this.card()}</div>
+                <div className="col-sm-3" />
+              </div>
             </div>
-            <div className="row mb-4">
-              <div className="col-sm-3" />
-              <div className="col-sm-6">{this.card()}</div>
-              <div className="col-sm-3" />
-            </div>
-          </div>
+          )}
         </BGColor>
       </Layout>
     )

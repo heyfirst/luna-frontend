@@ -15,7 +15,8 @@ import { observer, inject } from 'mobx-react'
 import styled from 'styled-components'
 
 const NewNavbar = styled(Navbar)`
-  background-color : #29406B;
+  height: 56px;
+  background-color: #29406b;
   padding: 0;
   filter: drop-shadow(0rem 0.25rem 0.15rem rgba(0, 0, 0, 0.1));
 `
@@ -60,12 +61,12 @@ class LunaNavbar extends React.Component {
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/challenge/">
+                <Link className="nav-link" to="/challenge/" disabled>
                   Challenge
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/Ranking/">
+                <Link className="nav-link" to="/Ranking/" disabled>
                   Ranking
                 </Link>
               </NavItem>
@@ -80,7 +81,8 @@ class LunaNavbar extends React.Component {
               ) : (
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    <NewImg src="http://placehold.it/60x60" height="30" width="30"/> {this.props.user.user.first_name} {this.props.user.user.last_name}
+                    <NewImg src="http://placehold.it/60x60" height="30" width="30" />{' '}
+                    {this.props.user.user.first_name} {this.props.user.user.last_name}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <Link to="/profile/">

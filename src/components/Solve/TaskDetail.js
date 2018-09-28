@@ -1,5 +1,10 @@
 import React from 'react'
+import styled from 'styled-components'
 
-const TaskDetail = () => <div>TaskDetail</div>
+const Container = styled.div`
+  padding: 1rem;
+`
+
+const TaskDetail = () => <Container>TaskDetail</Container>
 
 export default TaskDetail

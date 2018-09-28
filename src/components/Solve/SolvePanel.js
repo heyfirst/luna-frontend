@@ -18,6 +18,7 @@ const SplitPanelLine = styled.div`
 `
 
 const Container = styled.div`
+  overflow: hidden;
   position: relative;
   height: 100%;
   display: flex;
