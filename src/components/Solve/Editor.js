@@ -52,9 +52,9 @@ export default class Editor extends React.Component {
             highlightActiveLine
             value={store.code}
             setOptions={{
-              enableBasicAutocompletion: false,
+              enableBasicAutocompletion: true,
               enableLiveAutocompletion: false,
-              enableSnippets: false,
+              enableSnippets: true,
               showLineNumbers: true,
               tabSize: 2
             }}

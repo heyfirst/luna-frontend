@@ -1,10 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { observer } from 'mobx-react'
+import SolveStore from '../components/Solve/store'
+
 import requireAuth from '../utils/requireAuth'
 import SolveNavbar from '../components/Solve/Navbar'
 import ActionBar from '../components/Solve/ActionBar'
 import TaskDetail from '../components/Solve/TaskDetail'
 import SolvePanel from '../components/Solve/SolvePanel'
+import { withRouter } from 'react-static'
 
 const Container = styled.div`
   display: flex;
@@ -53,9 +57,14 @@ const SplitPanel = styled.div`
 let timeout = false
 
 @requireAuth()
+@observer
 class SolvePage extends React.Component {
   state = {
     size: 50
+  }
+
+  async componentWillMount() {
+    await SolveStore.fetchTask(this.props.match.params.taskID)
   }
 
   componentDidMount() {
@@ -110,4 +119,4 @@ class SolvePage extends React.Component {
   }
 }
 
-export default SolvePage
+export default withRouter(SolvePage)

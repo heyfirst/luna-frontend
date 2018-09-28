@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import { Collapse } from 'reactstrap'
 
+import SolveStore from './store'
+
 import TestcaseSuccess from '../../static/images/testcase-success.png'
 import TestcaseFail from '../../static/images/testcase-fail.png'
 
@@ -14,10 +16,12 @@ const Container = styled.div`
   transition: all 0.15s;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 `
 
 const TestList = styled.div`
-  margin: 1rem;
+  margin: 0 1rem;
 `
 
 const TastcaseContainer = styled.div`
@@ -85,10 +89,51 @@ const TastcaseContainer = styled.div`
   }
 `
 
+const Menu = styled.div`
+  display: flex;
+  padding: 0.5rem 1rem;
+
+  > div {
+    cursor: pointer;
+    position: relative;
+    font-weight: bold;
+    color: white;
+    padding: 0.4rem 1rem;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    margin-right: 1rem;
+    transition: all 0.3s;
+    height: 2.5rem;
+
+    &.active {
+      color: #00c0cc;
+
+      &:before {
+        border-bottom: 4px solid #00c0cc;
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+      }
+    }
+  }
+`
+
+const Console = styled.div`
+  background: #0f1d33;
+  color: white;
+  padding: 1rem;
+  margin: 0.4rem 1rem;
+  white-space: pre-wrap;
+`
+
 class Testcase extends React.Component {
   state = { collapse: false }
   render() {
-    const { pass, title, input, output, expectedOutput } = this.props
+    const { pass, title, test, output, expectedOutput } = this.props
     return (
       <TastcaseContainer
         onClick={() => this.setState({ collapse: !this.state.collapse })}
@@ -101,8 +146,8 @@ class Testcase extends React.Component {
         </div>
         <Collapse isOpen={this.state.collapse} className="detail">
           <div className="detail-list">
-            <div className="label">Input:</div>
-            <div className="value">{input}</div>
+            <div className="label">Test:</div>
+            <div className="value">{test}</div>
           </div>
           <div className="detail-list">
             <div className="label">Output:</div>
@@ -121,20 +166,40 @@ class Testcase extends React.Component {
 @observer
 export default class ResultPanel extends React.Component {
   render() {
+    const store = SolveStore
     return (
       <Container size={this.props.size}>
-        <TestList>
-          {[...Array(10)].map((e, index) => (
-            <Testcase
-              key={index}
-              pass={index % 2 === 0}
-              title={`Testcase #${index + 1}`}
-              input={`1 2`}
-              output={`3`}
-              expectedOutput={index % 2 === 0 ? '3' : '2'}
-            />
-          ))}
-        </TestList>
+        <Menu>
+          <div
+            onClick={() => store.setResultPanelState('TESTCASE')}
+            className={`${store.resultPanelState === 'TESTCASE' && 'active'}`}
+          >
+            Testcase
+          </div>
+          <div
+            onClick={() => store.setResultPanelState('CONSOLE')}
+            className={`${store.resultPanelState === 'CONSOLE' && 'active'}`}
+          >
+            Console
+          </div>
+        </Menu>
+        {store.resultPanelState === 'TESTCASE' && (
+          <TestList>
+            {store.testcases.map((testcase, index) => (
+              <Testcase
+                key={testcase.id}
+                pass={index % 2 === 0}
+                title={`Testcase #${index + 1}`}
+                test={`${testcase.test}`}
+                output={`3`}
+                expectedOutput={`${testcase.expected_output}`}
+              />
+            ))}
+          </TestList>
+        )}
+        {store.resultPanelState === 'CONSOLE' && (
+          <Console>{store.error.stderr || 'Nothing in Console.'}</Console>
+        )}
       </Container>
     )
   }
