@@ -51,7 +51,8 @@ const FrontLayout = styled.div`
 
   .headline {
     position: absolute;
-    top: 20%;
+    top: 25%;
+    left: 10%;
 
     h1 {
       font-size: 7rem;
@@ -73,9 +74,10 @@ const FrontLayout = styled.div`
 
   .moon {
     position: absolute;
-    height: 14rem;
-    right: 15%;
+    height: 15rem;
+    right: 20%;
     top: 10%;
+    animation: ${FloatAstro} 10s infinite normal 3s;
   }
 
   .particle {
