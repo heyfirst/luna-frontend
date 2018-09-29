@@ -114,7 +114,7 @@ class TaskListPage extends React.Component {
     const { match } = this.props
     const topic = await TopicService.getTopic(match.params.topicID).then(resp => resp.data)
     const tasks = await TopicService.getTaskFromTopicID(match.params.topicID).then(
-      resp => resp.data.results
+      resp => resp.data
     )
 
     this.setState({
@@ -160,7 +160,8 @@ class TaskListPage extends React.Component {
     let a = true
     if (a == true) {
       return (
-        <Link to={`/tasks/${tasks.pk}`}>
+        <Link to={`/tasks/${tasks.id}`}>
+          {console.log(tasks)}
           {this.card(tasks)}
         </Link>
       )
