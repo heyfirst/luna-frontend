@@ -2,6 +2,10 @@ import React from 'react'
 import requireAuth from '../utils/requireAuth'
 import { inject, observer } from 'mobx-react'
 import Layout from '../components/Core/Layout'
+import ProfileCard from '../components/Profile/ProfileCard'
+import LearningProgressCard from '../components/Profile/LearningProgressCard'
+import ImprovementCard from '../components/Profile/ImprovementCard'
+import CalendarHeatmapCard from '../components/Profile/CalendarHeatmapCard'
 
 @requireAuth()
 @inject('user')
@@ -11,13 +15,25 @@ class ProfilePage extends React.Component {
     return (
       <Layout>
         <div className="container mt-4">
-          <div className="row">
+          <div className="row mb-3">
             <div className="col">
-              <h1>
-                Hi, {this.props.user.user.first_name} {this.props.user.user.last_name} 🌙
-              </h1>
+              <ProfileCard user={this.props.user.user} />
             </div>
           </div>
+          <div className="row mb-3">
+            <div className="col-5">
+              <LearningProgressCard />
+            </div>
+            <div className="col-7">
+              <CalendarHeatmapCard />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col">
+              <ImprovementCard />
+            </div>
+          </div>
+          <div className="row mb-3" />
         </div>
       </Layout>
     )

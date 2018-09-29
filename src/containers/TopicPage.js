@@ -104,7 +104,7 @@ class Topic extends React.Component {
   }
 
   async componentWillMount() {
-    const topics = await TopicService.getAllTopic().then(resp => resp.data.results)
+    const topics = await TopicService.getAllTopic().then(resp => resp.data)
     const userScore = 99 // Mock Data userScore
     this.setState({
       topics,

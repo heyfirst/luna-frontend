@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Navbar } from 'reactstrap'
 import { observer } from 'mobx-react'
 import SolveStore from './store'
+import { withRouter } from 'react-static'
 
 const ActionContainer = styled(Navbar)`
   background-color: #29406b !important;
@@ -51,6 +52,7 @@ const ActionContainer = styled(Navbar)`
   }
 `
 
+@withRouter
 @observer
 export default class ActionBar extends React.Component {
   render() {
@@ -65,11 +67,11 @@ export default class ActionBar extends React.Component {
           <div className="action">
             <button
               className="btn btn-runtest mr-2"
-              onClick={() => store.runTest()}
+              onClick={() => store.runTest(this.props.history)}
             >{`Run Test`}</button>
             <button
               className="btn btn-submit"
-              onClick={() => store.submit()}
+              onClick={() => store.submit(this.props.history)}
             >{`Submit Answer`}</button>
           </div>
         </div>
