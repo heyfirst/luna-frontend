@@ -5,6 +5,9 @@ import SolveService from '../../services/SolveService'
 
 class SolveStore {
   @observable
+  loading = true
+
+  @observable
   task = {}
 
   @observable
@@ -23,12 +26,23 @@ class SolveStore {
   duration = 0
 
   @action
-  fetchTask = async id => {
+  fetchTask = async (id, history) => {
     const task = await SolveService.getTaskByID(id)
       .then(resp => resp.data)
       .catch(err => {
-        console.log(err)
+        if (err.status === 403) {
+          notification['error']({
+            message: 'Forbidden!',
+            description: 'You must going to completed the before task.'
+          })
+        }
+        return { err }
       })
+
+    if (task.err) {
+      history.goBack()
+      return
+    }
 
     const testcases = await SolveService.getTestcasesByTaskID(id)
       .then(resp => resp.data)
@@ -39,6 +53,7 @@ class SolveStore {
     this.task = task
     this.testcases = testcases
     this.code = task.default_code
+    this.loading = false
   }
 
   @action
