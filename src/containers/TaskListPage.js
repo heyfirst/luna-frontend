@@ -86,9 +86,9 @@ const SubHeader = styled.div`
 `
 const Lock = styled.div`
   position: absolute;
-  background-color: #29406B; 
-  width: 100%; 
-  height: 100%; 
+  background-color: #29406b;
+  width: 100%;
+  height: 100%;
   z-index: 99;
   border-radius: 0.9375rem;
   opacity: 0.8;
@@ -125,21 +125,16 @@ class TaskListPage extends React.Component {
   }
 
   // Fuction Solved or Solve
-  solve = () => {
-    let a = true
-    if (a == true) {
-      return (
-        <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
-      )
+  solve = answered => {
+    if (!answered) {
+      return <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
     } else {
-      return (
-        <Solved className="badge badge-pill font-weight-normal"> Solved </Solved>
-      )
+      return <Solved className="badge badge-pill font-weight-normal"> Solved </Solved>
     }
   }
 
   // ส่วนของตัวการ์ด Tasks
-  card = (tasks) => (
+  card = tasks => (
     <CardBody className="card-body">
       <div className="row">
         <CardContent className="col-sm-10 pl-5">
@@ -148,22 +143,16 @@ class TaskListPage extends React.Component {
             <SpanDiff>Difficulty : {tasks.main_topic.level.level_name}</SpanDiff>
           </Difficulty>
         </CardContent>
-        <div className="col-sm-2">
-          {this.solve()}
-        </div>
+        <div className="col-sm-2">{this.solve(tasks.answered)}</div>
       </div>
     </CardBody>
   )
 
   // Function เช็ค Card ไหนต้องส้ราง Link
-  linkCard = (tasks) => {
+  linkCard = tasks => {
     let a = true
     if (a == true) {
-      return (
-        <Link to={`/tasks/${tasks.id}`}>
-          {this.card(tasks)}
-        </Link>
-      )
+      return <Link to={`/tasks/${tasks.id}`}>{this.card(tasks)}</Link>
     } else {
       return (
         <div>
@@ -176,13 +165,16 @@ class TaskListPage extends React.Component {
 
   cardTasks = () => (
     <div>
-      {this.state.tasks.map((tasks, index) => (
-        tasks.main_topic && tasks.order && tasks.main_topic.topic.topic_name == this.state.topic.topic_name ? (
-          <CardTask key={index} className="card mt-3">
-            {this.linkCard(tasks)}
-          </CardTask>
-        ) : null
-      ))}
+      {this.state.tasks.map(
+        (tasks, index) =>
+          tasks.main_topic &&
+          tasks.order &&
+          tasks.main_topic.topic.topic_name === this.state.topic.topic_name ? (
+            <CardTask key={index} className="card mt-3">
+              {this.linkCard(tasks)}
+            </CardTask>
+          ) : null
+      )}
     </div>
   )
 
@@ -190,30 +182,39 @@ class TaskListPage extends React.Component {
     return (
       <Layout>
         <BGColor>
-          <div className="container-fluid mb-5">
-            <div className="row">
-              <div className="col-sm-3"></div>
-              <div className="col-sm-6 mt-4 mb-3">
-                <div className="row mb-2">
-                  <div className="col-sm-2"></div>
-                  <div className="col-sm-3 pr-1">
-                    <TopicImage src={getImageFromType(this.state.topic.topic_name)} height="150" width="150" className="rounded" />
+          {!this.state.loading && (
+            <div className="container-fluid mb-5">
+              <div className="row">
+                <div className="col-sm-3" />
+                <div className="col-sm-6 mt-4 mb-3">
+                  <div className="row mb-2">
+                    <div className="col-sm-2" />
+                    <div className="col-sm-3 pr-1">
+                      <TopicImage
+                        src={getImageFromType(this.state.topic.topic_name)}
+                        height="150"
+                        width="150"
+                        className="rounded"
+                      />
+                    </div>
+                    <div className="col-sm-5 pt-5 pl-1">
+                      <Header className="mb-0 font-weight-bold">
+                        {this.state.topic.topic_name}
+                      </Header>
+                      <SubHeader>{this.state.topic.description}</SubHeader>
+                    </div>
                   </div>
-                  <div className="col-sm-5 pt-5 pl-1">
-                    <Header className="mb-0 font-weight-bold">{this.state.topic.topic_name}</Header>
-                    <SubHeader>Lorem Ipsum is not simply random text.</SubHeader>
-                  </div>
+                  <div className="col-sm-3" />
                 </div>
                 <div className="col-sm-3" />
               </div>
-              <div className="col-sm-3"></div>
+              <div className="row mb-4">
+                <div className="col-sm-3" />
+                <div className="col-sm-6">{this.cardTasks()}</div>
+                <div className="col-sm-3" />
+              </div>
             </div>
-            <div className="row mb-4">
-              <div className="col-sm-3" />
-              <div className="col-sm-6">{this.cardTasks()}</div>
-              <div className="col-sm-3" />
-            </div>
-          </div>
+          )}
         </BGColor>
       </Layout>
     )
