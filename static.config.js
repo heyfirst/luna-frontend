@@ -29,6 +29,10 @@ export default {
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
               crossOrigin="anonymous"
             />
+            <link
+              href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
+              rel="stylesheet"
+            />
           </Head>
           <Body>
             {children}

@@ -6,7 +6,8 @@ const createApiInstance = () =>
     // baseURL: 'http://localhost:8000',
     baseURL: 'https://api.luna.codes',
     headers: {
-      Authorization: store.getAccessToken() ? `JWT ${store.getAccessToken()}` : ''
+      Authorization: store.getAccessToken() ? `JWT ${store.getAccessToken()}` : '',
+      'Content-Type': 'application/json'
     }
   })
 

@@ -3,6 +3,8 @@ import { Icon } from 'antd'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import { Collapse } from 'reactstrap'
+import * as R from 'ramda'
+import SolveStore from './store'
 
 import TestcaseSuccess from '../../static/images/testcase-success.png'
 import TestcaseFail from '../../static/images/testcase-fail.png'
@@ -12,11 +14,14 @@ const Container = styled.div`
   flex-basis: ${props => 100 - props.size}%;
   padding-top: 2px;
   transition: all 0.15s;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 `
 
 const TestList = styled.div`
-  margin: 1rem;
+  margin: 0 1rem;
 `
 
 const TastcaseContainer = styled.div`
@@ -33,6 +38,7 @@ const TastcaseContainer = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+    font-weight: bold;
 
     .anticon-caret-down {
       display: flex;
@@ -62,6 +68,16 @@ const TastcaseContainer = styled.div`
 
       .value {
         width: 60%;
+
+        &.success {
+          color: #f2994a;
+        }
+        &.fail {
+          color: #d80027;
+        }
+        &.expected {
+          color: #47c9d1;
+        }
       }
     }
   }
@@ -73,9 +89,50 @@ const TastcaseContainer = styled.div`
   }
 `
 
+const Menu = styled.div`
+  display: block;
+  padding: 0.5rem 1rem;
+
+  > div {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    font-weight: bold;
+    color: white;
+    padding: 0.4rem 1rem;
+    height: 100%;
+    margin-right: 1rem;
+    transition: all 0.3s;
+    height: 2.5rem;
+
+    &.active {
+      color: #00c0cc;
+
+      &:before {
+        border-bottom: 4px solid #00c0cc;
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+      }
+    }
+  }
+`
+
+const Console = styled.div`
+  background: #0f1d33;
+  color: white;
+  padding: 1rem;
+  margin: 0.4rem 1rem;
+  white-space: pre-wrap;
+`
+
 class Testcase extends React.Component {
   state = { collapse: false }
   render() {
+    const { pass, title, test, output, expectedOutput } = this.props
     return (
       <TastcaseContainer
         onClick={() => this.setState({ collapse: !this.state.collapse })}
@@ -83,21 +140,23 @@ class Testcase extends React.Component {
       >
         <div className="title">
           <Icon type="caret-down" />
-          {` Tastcase`}
-          <img className="status" src={TestcaseSuccess} />
+          {` ${title}`}
+          {pass && (
+            <img className="status" src={pass === 'PASS' ? TestcaseSuccess : TestcaseFail} />
+          )}
         </div>
         <Collapse isOpen={this.state.collapse} className="detail">
           <div className="detail-list">
-            <div className="label">Input:</div>
-            <div className="value">...</div>
+            <div className="label">Test:</div>
+            <div className="value">{test}</div>
           </div>
           <div className="detail-list">
             <div className="label">Output:</div>
-            <div className="value">...</div>
+            <div className={`value ${pass ? 'success' : 'fail'}`}>{output}</div>
           </div>
           <div className="detail-list">
             <div className="label">Expected Output:</div>
-            <div className="value">...</div>
+            <div className="value expected">{expectedOutput}</div>
           </div>
         </Collapse>
       </TastcaseContainer>
@@ -107,14 +166,54 @@ class Testcase extends React.Component {
 
 @observer
 export default class ResultPanel extends React.Component {
+  getPassFromResult = result => {
+    if (R.path(['status'], result)) {
+      console.log('PASS')
+      return 'PASS'
+    } else {
+      return 'FAIL'
+    }
+  }
+
   render() {
+    const store = SolveStore
     return (
       <Container size={this.props.size}>
-        <TestList>
-          {[...Array(10)].map((e, index) => (
-            <Testcase key={index} />
-          ))}
-        </TestList>
+        <Menu>
+          <div
+            onClick={() => store.setResultPanelState('TESTCASE')}
+            className={`${store.resultPanelState === 'TESTCASE' && 'active'}`}
+          >
+            Testcase
+          </div>
+          <div
+            onClick={() => store.setResultPanelState('CONSOLE')}
+            className={`${store.resultPanelState === 'CONSOLE' && 'active'}`}
+          >
+            Console
+          </div>
+        </Menu>
+        {store.resultPanelState === 'TESTCASE' && (
+          <TestList>
+            {store.testcases.map((testcase, index) => (
+              <Testcase
+                key={testcase.id}
+                pass={
+                  store.result.length !== 0
+                    ? this.getPassFromResult(R.path([index], store.result))
+                    : undefined
+                }
+                title={`Testcase #${index + 1}`}
+                test={`${testcase.test}`}
+                output={`${R.path([index, 'output'], store.result) || '-'} `}
+                expectedOutput={`${testcase.expected_output}`}
+              />
+            ))}
+          </TestList>
+        )}
+        {store.resultPanelState === 'CONSOLE' && (
+          <Console>{store.error.stderr || 'Nothing in Console.'}</Console>
+        )}
       </Container>
     )
   }
