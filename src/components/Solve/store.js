@@ -1,5 +1,6 @@
 import { observable, action, computed, runInAction } from 'mobx'
-import { notification } from 'antd'
+import { notification, Modal } from 'antd'
+
 import SolveService from '../../services/SolveService'
 
 class SolveStore {
@@ -70,16 +71,57 @@ class SolveStore {
         })
       } else {
         notification['success']({
-          message: `Yeah! You're Pass`,
-          description: `You're pass this task, try to submit your code!`
+          message: `Your code's right!`,
+          description: `You're pass this testcase, try to submit your code!`
         })
       }
     }
   }
 
   @action
-  submit = () => {
-    console.log('submit!')
+  submit = async history => {
+    const result = await SolveService.submitCode({
+      taskID: this.task.id,
+      code: this.code,
+      duration: this.duration
+    }).then(resp => resp.data)
+
+    if (result.submission.err) {
+      notification['error']({
+        message: 'Error!',
+        description: 'See error statement in console panel.'
+      })
+      this.resultPanelState = 'CONSOLE'
+      this.error = result.submission.err
+    } else {
+      this.error = {}
+      this.resultPanelState = 'TESTCASE'
+      this.result = result.submission.result
+      if (result.submission.pass === false) {
+        notification['warning']({
+          message: 'Something Wrong!',
+          description: `Something are wrong in your algorithms, Let's fix it!.`
+        })
+      } else {
+        if (result.answered) {
+          Modal.success({
+            title: `You've passed this task`,
+            content: `You have passed this task, try a new task!`,
+            onOk: () => {
+              history.push(`/topics/${this.task.main_topic.id}`)
+            }
+          })
+        } else {
+          Modal.success({
+            title: `Yeah! You're Pass`,
+            content: `You're pass this task, Welcome!!`,
+            onOk: () => {
+              history.push(`/topics/${this.task.main_topic.id}`)
+            }
+          })
+        }
+      }
+    }
   }
 
   @observable
