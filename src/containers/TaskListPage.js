@@ -61,6 +61,15 @@ const Solved = styled.div`
   margin-left: 1rem;
 `
 
+const Locked = styled.div`
+  background-color: #fff !important;
+  border: 0.0625rem solid #666;
+  color: #666;
+  font-size: 1rem;
+  margin-top: 0.725rem;
+  margin-left: 1rem;
+`
+
 const SpanDiff = styled.span`
   font-size: 0.875rem;
 `
@@ -125,16 +134,18 @@ class TaskListPage extends React.Component {
   }
 
   // Fuction Solved or Solve
-  solve = answered => {
-    if (!answered) {
-      return <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
-    } else {
+  solve = (answered, isLock) => {
+    if (answered) {
       return <Solved className="badge badge-pill font-weight-normal"> Solved </Solved>
+    } else if (isLock) {
+      return <Locked className="badge badge-pill font-weight-normal"> Lock </Locked>
+    } else {
+      return <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
     }
   }
 
   // ส่วนของตัวการ์ด Tasks
-  card = tasks => (
+  card = (tasks, isLock) => (
     <CardBody className="card-body">
       <div className="row">
         <CardContent className="col-sm-10 pl-5">
@@ -143,21 +154,25 @@ class TaskListPage extends React.Component {
             <SpanDiff>Difficulty : {tasks.main_topic.level.level_name}</SpanDiff>
           </Difficulty>
         </CardContent>
-        <div className="col-sm-2">{this.solve(tasks.answered)}</div>
+        <div className="col-sm-2">{this.solve(tasks.answered, isLock)}</div>
       </div>
     </CardBody>
   )
 
   // Function เช็ค Card ไหนต้องส้ราง Link
   linkCard = tasks => {
-    let a = true
-    if (a == true) {
+    const isLock = !(
+      tasks.answered ||
+      tasks.order === 1 ||
+      this.state.tasks.find(t => t.answered && t.order === tasks.order - 1) !== undefined
+    )
+    if (!isLock) {
       return <Link to={`/tasks/${tasks.id}`}>{this.card(tasks)}</Link>
     } else {
       return (
         <div>
           <Lock />
-          {this.card(tasks)}
+          {this.card(tasks, isLock)}
         </div>
       )
     }
