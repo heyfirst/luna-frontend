@@ -8,7 +8,7 @@ const TopicService = {
     return api.get(`/topics/topics/${id}`)
   },
   getTaskFromTopicID: id => {
-    return api.get(`/topics/topics/${id}/tasks/`)
+    return api.get(`/tasks/tasks/?ordering=order`)
   }
 }
 
