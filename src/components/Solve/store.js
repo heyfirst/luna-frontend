@@ -31,6 +31,7 @@ class SolveStore {
       .then(resp => resp.data)
       .catch(err => {
         if (err.status === 403) {
+          console.log('hos')
           notification['error']({
             message: 'Forbidden!',
             description: 'You must going to completed the before task.'
@@ -40,7 +41,7 @@ class SolveStore {
       })
 
     if (task.err) {
-      history.goBack()
+      history.replace('/')
       return
     }
 
