@@ -35,7 +35,9 @@ export default class SolveNavbar extends React.Component {
           <Icon type="arrow-left" theme="outlined" />
           {` Back`}
         </button>
-        <div className="navbar-brand task-name">{store.task.task_name}</div>
+        <div className="navbar-brand task-name">
+          {store.task.task_name} <div className="text-muted d-inline small">(00:00)</div>
+        </div>
       </SolveNavbarContainer>
     )
   }
