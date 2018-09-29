@@ -161,7 +161,6 @@ class TaskListPage extends React.Component {
     if (a == true) {
       return (
         <Link to={`/tasks/${tasks.id}`}>
-          {console.log(tasks)}
           {this.card(tasks)}
         </Link>
       )
@@ -178,7 +177,7 @@ class TaskListPage extends React.Component {
   cardTasks = () => (
     <div>
       {this.state.tasks.map((tasks, index) => (
-        tasks.main_topic && tasks.main_topic.topic.topic_name == this.state.topic.topic_name ? (
+        tasks.main_topic && tasks.order && tasks.main_topic.topic.topic_name == this.state.topic.topic_name ? (
           <CardTask key={index} className="card mt-3">
             {this.linkCard(tasks)}
           </CardTask>
