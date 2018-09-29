@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed, runInAction } from 'mobx'
 import { notification } from 'antd'
 import SolveService from '../../services/SolveService'
 
@@ -16,9 +16,10 @@ class SolveStore {
   error = {}
 
   @observable
-  code = `public String getStudent() {
-  return "123456";
-}`
+  code = ``
+
+  @observable
+  duration = 0
 
   @action
   fetchTask = async id => {
@@ -36,6 +37,7 @@ class SolveStore {
 
     this.task = task
     this.testcases = testcases
+    this.code = task.default_code
   }
 
   @action
@@ -46,7 +48,7 @@ class SolveStore {
   @action
   runTest = async () => {
     const result = await SolveService.testCode({
-      taskID: this.task.pk,
+      taskID: this.task.id,
       code: this.code
     }).then(resp => resp.data)
 
@@ -86,6 +88,29 @@ class SolveStore {
   @action
   setResultPanelState = state => {
     this.resultPanelState = state
+  }
+
+  @action
+  startDuration = () => {
+    setInterval(
+      () =>
+        runInAction(() => {
+          this.duration += 1
+        }),
+      1000
+    )
+  }
+
+  @computed
+  get durationInTime() {
+    if (this.duration > 0) {
+      return `${parseInt(this.duration / 60, 10) < 10 ? 0 : ''}${parseInt(
+        this.duration / 60,
+        10
+      )} : ${this.duration % 60 < 10 ? 0 : ''}${this.duration % 60}`
+    } else {
+      return '00 : 00'
+    }
   }
 }
 

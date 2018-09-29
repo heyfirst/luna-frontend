@@ -22,7 +22,11 @@ const SolveNavbarContainer = styled(Navbar)`
       text-decoration: none;
     }
   }
+
   .task-name {
+  }
+
+  .duration {
   }
 `
 
@@ -36,7 +40,8 @@ export default class SolveNavbar extends React.Component {
           {` Back`}
         </button>
         <div className="navbar-brand task-name">
-          {store.task.task_name} <div className="text-muted d-inline small">(00:00)</div>
+          {store.task.task_name}{' '}
+          <div className="text-muted d-inline small duration">({store.durationInTime})</div>
         </div>
       </SolveNavbarContainer>
     )
