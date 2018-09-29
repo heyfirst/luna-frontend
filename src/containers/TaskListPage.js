@@ -114,7 +114,7 @@ class TaskListPage extends React.Component {
     const { match } = this.props
     const topic = await TopicService.getTopic(match.params.topicID).then(resp => resp.data)
     const tasks = await TopicService.getTaskFromTopicID(match.params.topicID).then(
-      resp => resp.data.results
+      resp => resp.data
     )
 
     this.setState({
@@ -160,7 +160,7 @@ class TaskListPage extends React.Component {
     let a = true
     if (a == true) {
       return (
-        <Link to={`/tasks/${tasks.pk}`}>
+        <Link to={`/tasks/${tasks.id}`}>
           {this.card(tasks)}
         </Link>
       )
@@ -177,7 +177,7 @@ class TaskListPage extends React.Component {
   cardTasks = () => (
     <div>
       {this.state.tasks.map((tasks, index) => (
-        tasks.main_topic && tasks.main_topic.topic.topic_name == this.state.topic.topic_name ? (
+        tasks.main_topic && tasks.order && tasks.main_topic.topic.topic_name == this.state.topic.topic_name ? (
           <CardTask key={index} className="card mt-3">
             {this.linkCard(tasks)}
           </CardTask>
@@ -198,6 +198,10 @@ class TaskListPage extends React.Component {
                   <div className="col-sm-2"></div>
                   <div className="col-sm-3 pr-1">
                     <TopicImage src={getImageFromType(this.state.topic.topic_name)} height="150" width="150" className="rounded" />
+                  </div>
+                  <div className="col-sm-5 pt-5 pl-1">
+                    <Header className="mb-0 font-weight-bold">{this.state.topic.topic_name}</Header>
+                    <SubHeader>Lorem Ipsum is not simply random text.</SubHeader>
                   </div>
                 </div>
                 <div className="col-sm-3" />
