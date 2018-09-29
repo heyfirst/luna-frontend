@@ -75,6 +75,10 @@ class SolvePage extends React.Component {
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
   }
 
+  async componentWillUnmount() {
+    await SolveStore.setDefaultState()
+  }
+
   handleOnDragStart = e => {
     e.dataTransfer.setDragImage(this.dragImg, 0, 0)
   }

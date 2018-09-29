@@ -52,8 +52,24 @@ class SolveStore {
 
     this.task = task
     this.testcases = testcases
-    this.code = task.default_code
+
+    if (task.answer) {
+      this.code = task.answer.source_code
+    } else {
+      this.code = task.default_code
+    }
+
     this.loading = false
+  }
+
+  @action
+  setDefaultState = () => {
+    this.task = {}
+    this.testcases = []
+    this.code = ``
+    this.result = []
+    this.error = {}
+    this.loading = true
   }
 
   @action
