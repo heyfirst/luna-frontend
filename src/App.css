@@ -41,3 +41,14 @@ body {
     white-space: normal;
   }
 }
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: white;
+  background: #00c0cc;
+}
+
+::selection {
+  color: white;
+  background: #00c0cc;
+}
