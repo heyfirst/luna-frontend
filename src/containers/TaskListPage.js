@@ -61,6 +61,15 @@ const Solved = styled.div`
   margin-left: 1rem;
 `
 
+const Locked = styled.div`
+  background-color: #fff !important;
+  border: 0.0625rem solid #666;
+  color: #666;
+  font-size: 1rem;
+  margin-top: 0.725rem;
+  margin-left: 1rem;
+`
+
 const SpanDiff = styled.span`
   font-size: 0.875rem;
 `
@@ -86,9 +95,9 @@ const SubHeader = styled.div`
 `
 const Lock = styled.div`
   position: absolute;
-  background-color: #29406B; 
-  width: 100%; 
-  height: 100%; 
+  background-color: #29406b;
+  width: 100%;
+  height: 100%;
   z-index: 99;
   border-radius: 0.9375rem;
   opacity: 0.8;
@@ -125,21 +134,18 @@ class TaskListPage extends React.Component {
   }
 
   // Fuction Solved or Solve
-  solve = () => {
-    let a = true
-    if (a == true) {
-      return (
-        <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
-      )
+  solve = (answered, isLock) => {
+    if (answered) {
+      return <Solved className="badge badge-pill font-weight-normal"> Solved </Solved>
+    } else if (isLock) {
+      return <Locked className="badge badge-pill font-weight-normal"> Lock </Locked>
     } else {
-      return (
-        <Solved className="badge badge-pill font-weight-normal"> Solved </Solved>
-      )
+      return <Solve className="badge badge-pill font-weight-normal"> Solve </Solve>
     }
   }
 
   // ส่วนของตัวการ์ด Tasks
-  card = (tasks) => (
+  card = (tasks, isLock) => (
     <CardBody className="card-body">
       <div className="row">
         <CardContent className="col-sm-10 pl-5">
@@ -148,27 +154,25 @@ class TaskListPage extends React.Component {
             <SpanDiff>Difficulty : {tasks.main_topic.level.level_name}</SpanDiff>
           </Difficulty>
         </CardContent>
-        <div className="col-sm-2">
-          {this.solve()}
-        </div>
+        <div className="col-sm-2">{this.solve(tasks.answered, isLock)}</div>
       </div>
     </CardBody>
   )
 
   // Function เช็ค Card ไหนต้องส้ราง Link
-  linkCard = (tasks) => {
-    let a = true
-    if (a == true) {
-      return (
-        <Link to={`/tasks/${tasks.id}`}>
-          {this.card(tasks)}
-        </Link>
-      )
+  linkCard = tasks => {
+    const isLock = !(
+      tasks.answered ||
+      tasks.order === 1 ||
+      this.state.tasks.find(t => t.answered && t.order === tasks.order - 1) !== undefined
+    )
+    if (!isLock) {
+      return <Link to={`/tasks/${tasks.id}`}>{this.card(tasks)}</Link>
     } else {
       return (
         <div>
           <Lock />
-          {this.card(tasks)}
+          {this.card(tasks, isLock)}
         </div>
       )
     }
@@ -176,13 +180,16 @@ class TaskListPage extends React.Component {
 
   cardTasks = () => (
     <div>
-      {this.state.tasks.map((tasks, index) => (
-        tasks.main_topic && tasks.order && tasks.main_topic.topic.topic_name == this.state.topic.topic_name ? (
-          <CardTask key={index} className="card mt-3">
-            {this.linkCard(tasks)}
-          </CardTask>
-        ) : null
-      ))}
+      {this.state.tasks.map(
+        (tasks, index) =>
+          tasks.main_topic &&
+          tasks.order &&
+          tasks.main_topic.topic.topic_name === this.state.topic.topic_name ? (
+            <CardTask key={index} className="card mt-3">
+              {this.linkCard(tasks)}
+            </CardTask>
+          ) : null
+      )}
     </div>
   )
 
@@ -190,30 +197,39 @@ class TaskListPage extends React.Component {
     return (
       <Layout>
         <BGColor>
-          <div className="container-fluid mb-5">
-            <div className="row">
-              <div className="col-sm-3"></div>
-              <div className="col-sm-6 mt-4 mb-3">
-                <div className="row mb-2">
-                  <div className="col-sm-2"></div>
-                  <div className="col-sm-3 pr-1">
-                    <TopicImage src={getImageFromType(this.state.topic.topic_name)} height="150" width="150" className="rounded" />
+          {!this.state.loading && (
+            <div className="container-fluid mb-5">
+              <div className="row">
+                <div className="col-sm-3" />
+                <div className="col-sm-6 mt-4 mb-3">
+                  <div className="row mb-2">
+                    <div className="col-sm-2" />
+                    <div className="col-sm-3 pr-1">
+                      <TopicImage
+                        src={getImageFromType(this.state.topic.topic_name)}
+                        height="150"
+                        width="150"
+                        className="rounded"
+                      />
+                    </div>
+                    <div className="col-sm-5 pt-5 pl-1">
+                      <Header className="mb-0 font-weight-bold">
+                        {this.state.topic.topic_name}
+                      </Header>
+                      <SubHeader>{this.state.topic.description}</SubHeader>
+                    </div>
                   </div>
-                  <div className="col-sm-5 pt-5 pl-1">
-                    <Header className="mb-0 font-weight-bold">{this.state.topic.topic_name}</Header>
-                    <SubHeader>Lorem Ipsum is not simply random text.</SubHeader>
-                  </div>
+                  <div className="col-sm-3" />
                 </div>
                 <div className="col-sm-3" />
               </div>
-              <div className="col-sm-3"></div>
+              <div className="row mb-4">
+                <div className="col-sm-3" />
+                <div className="col-sm-6">{this.cardTasks()}</div>
+                <div className="col-sm-3" />
+              </div>
             </div>
-            <div className="row mb-4">
-              <div className="col-sm-3" />
-              <div className="col-sm-6">{this.cardTasks()}</div>
-              <div className="col-sm-3" />
-            </div>
-          </div>
+          )}
         </BGColor>
       </Layout>
     )

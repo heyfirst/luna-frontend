@@ -5,6 +5,9 @@ import SolveService from '../../services/SolveService'
 
 class SolveStore {
   @observable
+  loading = true
+
+  @observable
   task = {}
 
   @observable
@@ -23,12 +26,24 @@ class SolveStore {
   duration = 0
 
   @action
-  fetchTask = async id => {
+  fetchTask = async (id, history) => {
     const task = await SolveService.getTaskByID(id)
       .then(resp => resp.data)
       .catch(err => {
-        console.log(err)
+        if (err.status === 403) {
+          console.log('hos')
+          notification['error']({
+            message: 'Forbidden!',
+            description: 'You must going to completed the before task.'
+          })
+        }
+        return { err }
       })
+
+    if (task.err) {
+      history.replace('/')
+      return
+    }
 
     const testcases = await SolveService.getTestcasesByTaskID(id)
       .then(resp => resp.data)
@@ -38,7 +53,24 @@ class SolveStore {
 
     this.task = task
     this.testcases = testcases
-    this.code = task.default_code
+
+    if (task.answer) {
+      this.code = task.answer.source_code
+    } else {
+      this.code = task.default_code
+    }
+
+    this.loading = false
+  }
+
+  @action
+  setDefaultState = () => {
+    this.task = {}
+    this.testcases = []
+    this.code = ``
+    this.result = []
+    this.error = {}
+    this.loading = true
   }
 
   @action

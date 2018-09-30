@@ -56,6 +56,7 @@ const SplitPanel = styled.div`
 
 let timeout = false
 
+@withRouter
 @requireAuth()
 @observer
 class SolvePage extends React.Component {
@@ -64,7 +65,7 @@ class SolvePage extends React.Component {
   }
 
   async componentWillMount() {
-    await SolveStore.fetchTask(this.props.match.params.taskID)
+    await SolveStore.fetchTask(this.props.match.params.taskID, this.props.history)
   }
 
   componentDidMount() {
@@ -72,6 +73,10 @@ class SolvePage extends React.Component {
     this.dragImg = new Image(0, 0)
     this.dragImg.src =
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+  }
+
+  async componentWillUnmount() {
+    await SolveStore.setDefaultState()
   }
 
   handleOnDragStart = e => {
@@ -99,20 +104,24 @@ class SolvePage extends React.Component {
       <div>
         <SolveNavbar />
         <Container>
-          <SplitPanel
-            draggable
-            onDragStart={e => this.handleOnDragStart(e)}
-            onDrag={e => this.onDragSplitPanel(e)}
-            size={this.state.size}
-          />
-          <Panel>
-            <LeftContainer size={this.state.size}>
-              <TaskDetail />
-            </LeftContainer>
-            <RightContainer size={this.state.size}>
-              <SolvePanel />
-            </RightContainer>
-          </Panel>
+          {!SolveStore.loading && (
+            <React.Fragment>
+              <SplitPanel
+                draggable
+                onDragStart={e => this.handleOnDragStart(e)}
+                onDrag={e => this.onDragSplitPanel(e)}
+                size={this.state.size}
+              />
+              <Panel>
+                <LeftContainer size={this.state.size}>
+                  <TaskDetail />
+                </LeftContainer>
+                <RightContainer size={this.state.size}>
+                  <SolvePanel />
+                </RightContainer>
+              </Panel>
+            </React.Fragment>
+          )}
         </Container>
         <ActionBar />
       </div>

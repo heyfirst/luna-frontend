@@ -78,20 +78,20 @@ const PTask = styled.div`
 
 const Lock = styled.div`
   position: absolute;
-  background-color: #29406B; 
-  width: 100%; 
-  height: 100%; 
+  background-color: #29406b;
+  width: 100%;
+  height: 100%;
   z-index: 99;
   border-radius: 0.625rem;
   opacity: 0.8;
 `
 
 const LockImage = styled.img`
-  position: absolute; 
+  position: absolute;
   margin: auto;
-  z-index: 100; 
-  top: 0; 
-  bottom: 0; 
+  z-index: 100;
+  top: 0;
+  bottom: 0;
   right: 0;
   left: 0;
 `
@@ -133,19 +133,26 @@ class Topic extends React.Component {
     return (
       <div className="row pt-2">
         <div className="col-sm-3 card-image">
-          <CardImage src={getImageFromType(topic.topic_name)} className="mx-auto d-block mt-2 mb-2" height="100" width="100" />
+          <CardImage
+            src={getImageFromType(topic.topic_name)}
+            className="mx-auto d-block mt-2 mb-2"
+            height="100"
+            width="100"
+          />
         </div>
         <CardBody className="col-sm-7 card-body">
           <TopicHeader className="mb-0 font-weight-bold">{topic.topic_name}</TopicHeader>
-          <p>Lorem Ipsum is not simply random text.</p>
+          <p>{topic.description}</p>
           <CardProgress className="progress">
-            <CardProgressBar percentage={percentage} className="progress-bar" />
+            <CardProgressBar
+              percentage={(topic.completed_tasks / topic.total_tasks) * 100}
+              classsName="progress-bar"
+            />
           </CardProgress>
         </CardBody>
         <CardBodyAlignCenter className="col-sm-2 card-body align-self-center">
           <PTask className="mb-0 task">
-            {this.state.userScore}
-            /150 {/* Mock คะแนนเต็มของ topic*/}
+            {topic.completed_tasks}/{topic.total_tasks}
           </PTask>
         </CardBodyAlignCenter>
       </div>
@@ -163,7 +170,7 @@ class Topic extends React.Component {
     } else {
       return (
         <div>
-          <Lock/>
+          <Lock />
           <LockImage src={Padlock} height="50" width="50" />
           {this.Card(topic, percentage)}
         </div>
@@ -180,8 +187,7 @@ class Topic extends React.Component {
           {this.linkCard(topic, percentage)}
         </DivCard>
       )
-    }
-    )
+    })
   }
 
   render() {
