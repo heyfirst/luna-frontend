@@ -3,15 +3,9 @@ import Card from '../Core/Card'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
 import ReactTooltip from 'react-tooltip'
+import UserService from '../../services/UserService'
 
 let today = new Date()
-
-const randomValues = getRange(200).map(index => {
-  return {
-    date: shiftDate(today, -index),
-    count: getRandomInt(1, 3)
-  }
-})
 
 function shiftDate(date, numDays) {
   const newDate = new Date(date)
@@ -19,24 +13,37 @@ function shiftDate(date, numDays) {
   return newDate
 }
 
-function getRange(count) {
-  return Array.from({ length: count }, (_, i) => i)
-}
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
 export default class CalendarHeatmapCard extends React.Component {
+  state = {
+    data: []
+  }
+
+  getFrequencyData = () => {
+    return this.state.data.map(data => {
+      return {
+        date: data.day,
+        count: data.total
+      }
+    })
+  }
+
+  async componentWillMount() {
+    let data = await UserService.getFrequencyPractics().then(resp => resp.data)
+
+    this.setState({
+      data
+    })
+  }
+
   render() {
     return (
       <Card>
         <h5>Your Frequency practics</h5>
         <hr />
         <CalendarHeatmap
-          startDate={shiftDate(today, -250)}
+          startDate={shiftDate(today, -200)}
           endDate={today}
-          values={randomValues}
+          values={this.getFrequencyData()}
           classForValue={value => {
             if (!value) {
               return 'color-empty'
@@ -45,7 +52,7 @@ export default class CalendarHeatmapCard extends React.Component {
           }}
           tooltipDataAttrs={value => {
             return {
-              'data-tip': `task completed: ${value.count}`
+              'data-tip': `Task completed: ${value.count}`
             }
           }}
           showWeekdayLabels
