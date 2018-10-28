@@ -25,6 +25,7 @@ injectGlobal`
   body {
     background: url(${Background});
     background-size: cover;
+    background-attachment: fixed;
   }
 `
 
