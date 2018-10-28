@@ -30,7 +30,6 @@ export default class ImprovementCard extends React.Component {
   }
 
   render() {
-    console.log(this.state.data)
     return (
       <Card>
         <h5>Your Skill Improvement</h5>
