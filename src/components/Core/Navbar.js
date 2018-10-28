@@ -78,7 +78,7 @@ class LunaNavbar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <Link className="nav-link" to="/topics/">
+                <Link className="nav-link" to="/practice/">
                   ฝึกฝน
                 </Link>
               </NavItem>
