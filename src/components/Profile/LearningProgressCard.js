@@ -1,12 +1,6 @@
 import React from 'react'
 import Card from '../Core/Card'
 import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
   BarChart,
   Bar,
   ReferenceLine,
