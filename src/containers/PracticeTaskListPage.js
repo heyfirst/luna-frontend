@@ -6,6 +6,8 @@ import { Link } from 'react-static'
 import Layout from '../components/Core/Layout'
 
 import TopicCard from '../components/Topic/TopicCard'
+import TaskItem from '../components/Task/TaskItem'
+import Card from '../components/Core/Card'
 
 const DivCard = styled.div`
   margin-left: auto;
@@ -15,10 +17,6 @@ const DivCard = styled.div`
   filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.1));
 `
 
-const CardTask = styled.div`
-  border-radius: 0.9375rem !important;
-  filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.1));
-`
 const CardBody = styled.div`
   padding: 0.5rem !important;
 `
@@ -111,21 +109,6 @@ class TaskListPage extends React.Component {
     }
   }
 
-  // ส่วนของตัวการ์ด Tasks
-  card = (tasks, isLock) => (
-    <CardBody className="card-body">
-      <div className="row">
-        <CardContent className="col-sm-10 pl-5">
-          <h6 className="mb-2 font-weight-bold"> {tasks.task_name} </h6>
-          <Difficulty className="card-text">
-            <SpanDiff>Difficulty : {tasks.main_topic.level.level_name}</SpanDiff>
-          </Difficulty>
-        </CardContent>
-        <div className="col-sm-2">{this.solve(tasks.answered, isLock)}</div>
-      </div>
-    </CardBody>
-  )
-
   // Function เช็ค Card ไหนต้องส้ราง Link
   linkCard = tasks => {
     const isLock = !(
@@ -134,31 +117,41 @@ class TaskListPage extends React.Component {
       this.state.tasks.find(t => t.answered && t.order === tasks.order - 1) !== undefined
     )
     if (!isLock) {
-      return <Link to={`/tasks/${tasks.id}`}>{this.card(tasks)}</Link>
+      return (
+        <Link to={`/tasks/${tasks.id}`}>
+          <TaskItem name={tasks.task_name} difficult={tasks.main_topic.level.level_name} />
+          {/* <CardBody className="card-body">
+            <div className="row">
+              <CardContent className="col-sm-10 pl-5">
+                <h6 className="mb-2 font-weight-bold"> {tasks.task_name} </h6>
+                <Difficulty className="card-text">
+                  <SpanDiff>Difficulty : {tasks.main_topic.level.level_name}</SpanDiff>
+                </Difficulty>
+              </CardContent>
+              <div className="col-sm-2">{this.solve(tasks.answered, isLock)}</div>
+            </div>
+          </CardBody> */}
+        </Link>
+      )
     } else {
       return (
         <div>
           <Lock />
-          {this.card(tasks, isLock)}
+          <CardBody className="card-body">
+            <div className="row">
+              <CardContent className="col-sm-10 pl-5">
+                <h6 className="mb-2 font-weight-bold"> {tasks.task_name} </h6>
+                <Difficulty className="card-text">
+                  <SpanDiff>Difficulty : {tasks.main_topic.level.level_name}</SpanDiff>
+                </Difficulty>
+              </CardContent>
+              <div className="col-sm-2">{this.solve(tasks.answered, isLock)}</div>
+            </div>
+          </CardBody>
         </div>
       )
     }
   }
-
-  cardTasks = () => (
-    <div>
-      {this.state.tasks.map(
-        (tasks, index) =>
-          tasks.main_topic &&
-          tasks.order &&
-          tasks.main_topic.topic.topic_name === this.state.topic.topic_name ? (
-            <CardTask key={index} className="card mt-3">
-              {this.linkCard(tasks)}
-            </CardTask>
-          ) : null
-      )}
-    </div>
-  )
 
   render() {
     return (
@@ -173,9 +166,21 @@ class TaskListPage extends React.Component {
               </div>
             </div>
             <div className="row mb-4">
-              <div className="col-sm-3" />
-              <div className="col-sm-6">{this.cardTasks()}</div>
-              <div className="col-sm-3" />
+              <div className="col-sm-6 offset-sm-3">
+                <div className="card">
+                  <div className="card-header">โจทย์ระดับง่าย</div>
+                  <div className="card-body">
+                    {this.state.tasks.map(
+                      (tasks, index) =>
+                        tasks.main_topic &&
+                        tasks.order &&
+                        tasks.main_topic.topic.topic_name === this.state.topic.topic_name && (
+                          <React.Fragment key={index}>{this.linkCard(tasks)}</React.Fragment>
+                        )
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
