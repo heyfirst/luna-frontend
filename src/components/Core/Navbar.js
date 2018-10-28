@@ -83,7 +83,7 @@ class LunaNavbar extends React.Component {
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link disabled" to="/challenge/" disabled>
+                <Link className="nav-link" to="/challenge/">
                   รวมโจทย์
                 </Link>
               </NavItem>
