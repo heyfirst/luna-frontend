@@ -13,17 +13,29 @@ import {
 import { NavLink as Link, withRouter } from 'react-static'
 import { observer, inject } from 'mobx-react'
 import styled from 'styled-components'
+import LoginModal from '../Auth/LoginModal'
 
 const NewNavbar = styled(Navbar)`
   height: 56px;
-  background-color: #29406b;
+  background-color: #fafafa;
   padding: 0;
   filter: drop-shadow(0rem 0.25rem 0.15rem rgba(0, 0, 0, 0.1));
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   z-index: 99;
 
+  .navbar-brand {
+    font-weight: 400;
+  }
+
+  .navbar-brand,
+  .nav-link,
   button {
     cursor: pointer;
+    color: #073466;
+  }
+
+  .nav-link.disabled {
+    text-decoration: line-through;
   }
 `
 
@@ -53,7 +65,7 @@ class LunaNavbar extends React.Component {
 
   render() {
     return (
-      <NewNavbar dark expand="md">
+      <NewNavbar expand="md">
         <div className="container">
           <Link className="navbar-brand" to="/">
             Luna
@@ -63,26 +75,32 @@ class LunaNavbar extends React.Component {
             <Nav className="mr-auto" navbar>
               <NavItem>
                 <Link className="nav-link" to="/topics/">
-                  Problems
+                  ฝึกฝน
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/challenge/" disabled>
-                  Challenge
+                <Link className="nav-link disabled" to="/challenge/" disabled>
+                  รวมโจทย์
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/Ranking/" disabled>
-                  Ranking
+                <Link className="nav-link disabled" to="/tournament/" disabled>
+                  การแข่งขัน
+                </Link>
+              </NavItem>
+              <NavItem>
+                <Link className="nav-link disabled" to="/ranking/" disabled>
+                  อันดับ
                 </Link>
               </NavItem>
             </Nav>
             <Nav className="ml-auto" navbar>
               {!this.props.user.authenticated ? (
                 <NavItem>
-                  <Link className="nav-link" to="/login/">
-                    Login
-                  </Link>
+                  <a className="nav-link" onClick={() => this.props.user.setLoginModal(true)}>
+                    เข้าสู่ระบบ
+                  </a>
+                  <LoginModal />
                 </NavItem>
               ) : (
                 <UncontrolledDropdown nav inNavbar>

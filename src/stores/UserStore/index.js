@@ -81,4 +81,13 @@ export default class UserStore {
 
   @action
   getUserName = () => `${this.user.first_name} ${this.user.last_name} (${this.user.role})`
+
+  // Login Modal
+  @observable
+  loginModalVisible = false
+
+  @action
+  setLoginModal = bool => {
+    this.loginModalVisible = bool
+  }
 }

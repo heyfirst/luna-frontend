@@ -5,9 +5,9 @@ import Particles from 'react-particles-js'
 import ParticleConfig from '../static/particle.config.json'
 
 import Layout from '../components/Core/Layout'
-import Foreground from '../static/images/foreground.png'
 import Astronaut from '../static/images/astronaut.png'
 import Moon from '../static/images/moon.png'
+import { inject, observer } from 'mobx-react'
 
 const FloatAstro = keyframes`
   0% {
@@ -24,13 +24,11 @@ const FloatAstro = keyframes`
 `
 
 const FrontLayout = styled.div`
-  background-color: #334a75;
   height: 100%;
 
   .foreground {
-    background-image: url('${Foreground}');
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
     left: 0;
     bottom: 0;
@@ -40,7 +38,8 @@ const FrontLayout = styled.div`
     z-index: 0;
   }
 
-  h1, h3 {
+  h1,
+  h3 {
     color: white;
   }
 
@@ -52,15 +51,14 @@ const FrontLayout = styled.div`
   .headline {
     position: absolute;
     top: 25%;
-    left: 10%;
 
     h1 {
       font-size: 7rem;
       margin: 0;
     }
 
-    h3{
-      white-space: pre-line
+    h3 {
+      white-space: pre-line;
     }
   }
 
@@ -86,9 +84,9 @@ const FrontLayout = styled.div`
     z-index: 1;
     width: 100%;
   }
-
 `
-
+@inject('user')
+@observer
 class Home extends React.Component {
   render() {
     return (
@@ -100,6 +98,9 @@ class Home extends React.Component {
             <div className="headline">
               <h1>Luna</h1>
               <h3>{`Web Applicaition for\n Improving Programming Skills`}</h3>
+              <button className="btn btn-luna" onClick={() => this.props.user.setLoginModal(true)}>
+                เริ่มต้นออกเดินทาง
+              </button>
             </div>
             <img src={Astronaut} alt="Luna Astronaut" className="astronaut" />
             <img src={Moon} alt="Luna Moon" className="moon" />
