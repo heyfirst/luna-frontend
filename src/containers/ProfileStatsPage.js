@@ -25,16 +25,18 @@ class ProfileStatsPage extends React.Component {
             </div>
             <div className="col-9">
               <div className="row mb-3">
-                <div className="col-5">
-                  <LearningProgressCard />
-                </div>
-                <div className="col-7">
+                <div className="col">
                   <CalendarHeatmapCard />
                 </div>
               </div>
               <div className="row mb-3">
                 <div className="col">
                   <ImprovementCard />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col">
+                  <LearningProgressCard />
                 </div>
               </div>
             </div>
