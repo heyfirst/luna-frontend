@@ -33,6 +33,10 @@ export default {
               href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
               rel="stylesheet"
             />
+            <link
+              href="https://fonts.googleapis.com/css?family=Kanit:300,400,700"
+              rel="stylesheet"
+            />
           </Head>
           <Body>
             {children}

@@ -1,15 +1,16 @@
 @import '~antd/dist/antd.css';
 
 body {
-  font-family: 'Lato', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+  font-family: 'Lato', 'Kanit', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
   font-size: 14px;
   margin: 0;
   padding: 0;
   height: 100%;
+  font-weight: 300;
 }
 
 .ant-table {
-  font-family: 'Lato', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+  font-family: 'Lato', 'Kanit', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
 }
 
 body {
@@ -25,6 +26,16 @@ body {
 
 #root {
   height: 100%;
+}
+
+.btn-luna {
+  background-color: #47c9d1;
+  border-color: #47c9d1;
+  color: white;
+}
+
+.btn {
+  border-radius: 10px;
 }
 
 .ant-input {
