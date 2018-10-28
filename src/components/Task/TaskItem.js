@@ -37,13 +37,13 @@ const TaskCard = styled.div`
     padding: 0.15rem 0.25rem;
     border-radius: 5px;
 
-    &.beginner {
+    &.Beginner {
       background-color: #47d1a8;
     }
-    &.intermediate {
+    &.Intermediate {
       background-color: #00cce8;
     }
-    &.advance {
+    &.Advance {
       background-color: #ff73ae;
     }
   }
@@ -59,14 +59,15 @@ const TaskCard = styled.div`
 `
 
 const Difficult = difficult => {
-  if (difficult === 'BEGINNER') {
-    return <span className="beginner">ง่าย</span>
+  console.log(difficult)
+  if (difficult === 'Beginner') {
+    return <span className="Beginner">ง่าย</span>
   }
-  if (difficult === 'INTERMEDIATE') {
-    return <span className="intermediate">ปานกลาง</span>
+  if (difficult === 'Intermediate') {
+    return <span className="Intermediate">ปานกลาง</span>
   }
-  if (difficult === 'ADVANCE') {
-    return <span className="advance">ยาก</span>
+  if (difficult === 'Advance') {
+    return <span className="Advance">ยาก</span>
   }
 }
 
@@ -84,11 +85,13 @@ class TaskItem extends React.Component {
               <div className="detail d-flex mx-1">
                 <div className="label">ความยาก: {Difficult(difficult)}</div>
               </div>
-              <div className="detail d-flex mx-1">
-                <div className="label">
-                  หัวข้อการเรียนรู้: <b>{topic}</b>
+              {topic && (
+                <div className="detail d-flex mx-1">
+                  <div className="label">
+                    หัวข้อการเรียนรู้: <b>{topic}</b>
+                  </div>
                 </div>
-              </div>
+              )}
               {passCount && (
                 <div className="detail d-flex mx-1">
                   <div className="label">

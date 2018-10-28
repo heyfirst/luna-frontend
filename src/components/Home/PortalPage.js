@@ -42,7 +42,7 @@ class ProtalPage extends React.Component {
                     <p className="px-4">
                       โจทย์ข้อนี้ยังทำไม่เสร็จเลย มาแก้โจทย์ปัญหานี้กันต่อดีกว่า
                     </p>
-                    <TaskItem name="Lorem..." difficult={`BEGINNER`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
                   </div>
                 </Card>
               </div>
@@ -52,9 +52,9 @@ class ProtalPage extends React.Component {
                 <Card>
                   <div className="text-center px-4">
                     <h3>ลองทำโจทย์ข้อนี้ดูสิ</h3>
-                    <TaskItem name="Lorem..." difficult={`INTERMEDIATE`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`BEGINNER`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`ADVANCE`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Advance`} topic={`String`} />
                   </div>
                 </Card>
               </div>
@@ -69,16 +69,16 @@ class ProtalPage extends React.Component {
                     </p>
                     <TaskItem
                       name="Lorem..."
-                      difficult={`BEGINNER`}
+                      difficult={`Beginner`}
                       topic={`String`}
                       passCount={12192}
                     />
-                    <TaskItem name="Lorem..." difficult={`INTERMEDIATE`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`INTERMEDIATE`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`BEGINNER`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`INTERMEDIATE`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`BEGINNER`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`INTERMEDIATE`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
+                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
                   </div>
                 </Card>
               </div>
