@@ -27,29 +27,32 @@ class ProfileEditPage extends React.Component {
                 <div className="col">
                   <Card>
                     <div className="row">
-                      <div className="col-12 text-center">
-                        <p>ยินดีต้อนรับเข้าสู่ Luna.Codes</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-12 text-center">
-                        <Avatar size={128} icon="user" />
-                        <h2 className="my-3">
-                          สวัสดี, {user.user.first_name} {user.user.last_name} 🌙
-                        </h2>
-                        <h6>
-                          สถานศึกษา: <u>King Mongkut's University of Technology Thonburi</u>
-                        </h6>
-                        <h6>
-                          อีเมล: <u>firstziiz.k@gmail.com</u>
-                        </h6>
-                        <h6 className="pt-2">เกี่ยวกับฉัน:</h6>
-                        <p className="px-4">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente velit
-                          facilis quia fugit repellendus? Optio quisquam quod velit fugit, assumenda
-                          nulla tenetur ipsam, aperiam blanditiis soluta distinctio maiores!
-                          Perferendis, maiores!
-                        </p>
+                      <div className="col-12">
+                        <h2 className="my-3">แก้ไขข้อมูลส่วนตัว</h2>
+                        <div className="text-center">
+                          <Avatar size={128} icon="user" />
+                        </div>
+                        <div className="form-group">
+                          <label>อีเมล:</label>
+                          <input type="text" className="form-control" readOnly />
+                        </div>
+                        <div className="form-group">
+                          <label>ชื่อจริง:</label>
+                          <input type="text" className="form-control" />
+                        </div>
+                        <div className="form-group">
+                          <label>นามสกุล:</label>
+                          <input type="text" className="form-control" />
+                        </div>
+                        <div className="form-group">
+                          <label>สถานศึกษา:</label>
+                          <input type="text" className="form-control" />
+                        </div>
+                        <div className="form-group">
+                          <label>เกี่ยวกับฉัน:</label>
+                          <textarea type="text" className="form-control" />
+                        </div>
+                        <button className="btn btn-luna btn-block">อัพเดทข้อมูล</button>
                       </div>
                     </div>
                   </Card>
