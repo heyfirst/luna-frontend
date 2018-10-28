@@ -2,13 +2,12 @@ import React from 'react'
 import requireAuth from '../utils/requireAuth'
 import { inject, observer } from 'mobx-react'
 import Layout from '../components/Core/Layout'
-import ProfileCard from '../components/Profile/ProfileCard'
 import ProfileSidebar from '../components/Profile/ProfileSidebar'
 
 @requireAuth()
 @inject('user')
 @observer
-class ProfilePage extends React.Component {
+class ProfileSubmissionPage extends React.Component {
   render() {
     return (
       <Layout>
@@ -17,15 +16,13 @@ class ProfilePage extends React.Component {
             <div className="col-3">
               <div className="row mb-3">
                 <div className="col">
-                  <ProfileSidebar active={'profile'} />
+                  <ProfileSidebar active={'profile-submission'} />
                 </div>
               </div>
             </div>
             <div className="col-9">
               <div className="row mb-3">
-                <div className="col">
-                  <ProfileCard user={this.props.user.user} />
-                </div>
+                <div className="col">Hi : 3</div>
               </div>
             </div>
           </div>
@@ -35,4 +32,4 @@ class ProfilePage extends React.Component {
   }
 }
 
-export default ProfilePage
+export default ProfileSubmissionPage

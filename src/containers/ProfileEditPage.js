@@ -8,7 +8,7 @@ import ProfileSidebar from '../components/Profile/ProfileSidebar'
 @requireAuth()
 @inject('user')
 @observer
-class ProfilePage extends React.Component {
+class ProfileEditPage extends React.Component {
   render() {
     return (
       <Layout>
@@ -17,7 +17,7 @@ class ProfilePage extends React.Component {
             <div className="col-3">
               <div className="row mb-3">
                 <div className="col">
-                  <ProfileSidebar active={'profile'} />
+                  <ProfileSidebar active={'profile-edit'} />
                 </div>
               </div>
             </div>
@@ -35,4 +35,4 @@ class ProfilePage extends React.Component {
   }
 }
 
-export default ProfilePage
+export default ProfileEditPage

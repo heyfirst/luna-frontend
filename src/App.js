@@ -17,6 +17,9 @@ import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 import Background from './static/images/bg.png'
+import ProfileEditPage from './containers/ProfileEditPage'
+import ProfileStatsPage from './containers/ProfileStatsPage'
+import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
 
 injectGlobal`
   body {
@@ -80,6 +83,9 @@ class App extends React.Component {
           <Route key={3} exact path="/topics" component={TopicPage} />
           <Route key={4} exact path="/topics/:topicID" component={TaskListPage} />
           <Route key={5} exact path="/tasks/:taskID" component={SolvePage} />
+          <Route key={6} exact path="/profile/edit" component={ProfileEditPage} />
+          <Route key={6} exact path="/profile/stats" component={ProfileStatsPage} />
+          <Route key={6} exact path="/profile/submissions" component={ProfileSubmissionPage} />
           <Route key={6} exact path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
