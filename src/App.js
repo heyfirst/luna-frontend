@@ -20,6 +20,7 @@ import Background from './static/images/bg.png'
 import ProfileEditPage from './containers/ProfileEditPage'
 import ProfileStatsPage from './containers/ProfileStatsPage'
 import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
+import ChallengePage from './containers/ChallangePage'
 
 injectGlobal`
   body {
@@ -80,14 +81,25 @@ class App extends React.Component {
           render={props => <Redirect to={`${props.location.pathname}/`} />}
         />
         <Switch>
-          <Route key={2} exact path="/" component={Home} />
-          <Route key={3} exact path="/practice" component={PracticePage} />
-          <Route key={4} exact path="/practice/:topicID" component={PracticeTaskListPage} />
-          <Route key={5} exact path="/tasks/:taskID" component={SolvePage} />
-          <Route key={6} exact path="/profile/edit" component={ProfileEditPage} />
-          <Route key={6} exact path="/profile/stats" component={ProfileStatsPage} />
-          <Route key={6} exact path="/profile/submissions" component={ProfileSubmissionPage} />
-          <Route key={6} exact path="/profile" component={ProfilePage} />
+          <Route key={`home`} exact path="/" component={Home} />
+          <Route key={`practice`} exact path="/practice" component={PracticePage} />
+          <Route
+            key={`practice-topic`}
+            exact
+            path="/practice/:topicID"
+            component={PracticeTaskListPage}
+          />
+          <Route key={`challange`} exact path="/challenge" component={ChallengePage} />
+          <Route key={`task`} exact path="/tasks/:taskID" component={SolvePage} />
+          <Route key={`profile-edit`} exact path="/profile/edit" component={ProfileEditPage} />
+          <Route key={`profile-stats`} exact path="/profile/stats" component={ProfileStatsPage} />
+          <Route
+            key={`profile-submission`}
+            exact
+            path="/profile/submissions"
+            component={ProfileSubmissionPage}
+          />
+          <Route key={`profile`} exact path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
       </React.Fragment>
