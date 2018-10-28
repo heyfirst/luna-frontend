@@ -27,6 +27,10 @@ const NewNavbar = styled(Navbar)`
     font-weight: 400;
   }
 
+  button {
+    font-weight: 300;
+  }
+
   .navbar-brand,
   .nav-link,
   button {
@@ -110,9 +114,9 @@ class LunaNavbar extends React.Component {
                   </DropdownToggle>
                   <DropdownMenu right>
                     <Link to="/profile/">
-                      <DropdownItem>My Profile</DropdownItem>
+                      <DropdownItem>โปรไฟล์ของตัวเอง</DropdownItem>
                     </Link>
-                    <DropdownItem onClick={() => this.logout()}>Logout</DropdownItem>
+                    <DropdownItem onClick={() => this.logout()}>ออกจากระบบ</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
