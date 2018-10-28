@@ -9,7 +9,14 @@ body {
   font-weight: 300;
 }
 
-.ant-table {
+.ant-table,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
   font-family: 'Lato', 'Kanit', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
 }
 
