@@ -5,29 +5,15 @@ import TopicService from '../services/TopicService'
 import { Link } from 'react-static'
 import Layout from '../components/Core/Layout'
 
-import DataTypeImage from '../static/images/data-type.png'
-import StringImage from '../static/images/string.png'
-import ArrayImage from '../static/images/array.png'
-import LoopImage from '../static/images/loop.png'
-import ConditionImage from '../static/images/condition.png'
-import DataStructureImage from '../static/images/data-structure.png'
+import TopicCard from '../components/Topic/TopicCard'
 
-const getImageFromType = type => {
-  switch (type) {
-    case 'Data Type':
-      return DataTypeImage
-    case 'String':
-      return StringImage
-    case 'Array':
-      return ArrayImage
-    case 'Loop':
-      return LoopImage
-    case 'Condition':
-      return ConditionImage
-    case 'Data Structure':
-      return DataStructureImage
-  }
-}
+const DivCard = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.625rem !important;
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.1));
+`
 
 const CardTask = styled.div`
   border-radius: 0.9375rem !important;
@@ -74,25 +60,6 @@ const SpanDiff = styled.span`
   font-size: 0.875rem;
 `
 
-const TopicImage = styled.img`
-  filter: drop-shadow(0rem 0.5rem 0.25rem rgba(0, 0, 0, 0.1));
-`
-
-const BGColor = styled.div`
-  width: 100%;
-  height: 15.5rem;
-  background-color: #29406b;
-  margin: 0;
-  padding: 0;
-`
-const Header = styled.div`
-  color: #fff;
-  font-size: 1.875rem;
-`
-const SubHeader = styled.div`
-  color: #fff;
-  font-size: 1rem;
-`
 const Lock = styled.div`
   position: absolute;
   background-color: #29406b;
@@ -196,41 +163,22 @@ class TaskListPage extends React.Component {
   render() {
     return (
       <Layout>
-        <BGColor>
-          {!this.state.loading && (
-            <div className="container-fluid mb-5">
-              <div className="row">
-                <div className="col-sm-3" />
-                <div className="col-sm-6 mt-4 mb-3">
-                  <div className="row mb-2">
-                    <div className="col-sm-2" />
-                    <div className="col-sm-3 pr-1">
-                      <TopicImage
-                        src={getImageFromType(this.state.topic.topic_name)}
-                        height="150"
-                        width="150"
-                        className="rounded"
-                      />
-                    </div>
-                    <div className="col-sm-5 pt-5 pl-1">
-                      <Header className="mb-0 font-weight-bold">
-                        {this.state.topic.topic_name}
-                      </Header>
-                      <SubHeader>{this.state.topic.description}</SubHeader>
-                    </div>
-                  </div>
-                  <div className="col-sm-3" />
-                </div>
-                <div className="col-sm-3" />
-              </div>
-              <div className="row mb-4">
-                <div className="col-sm-3" />
-                <div className="col-sm-6">{this.cardTasks()}</div>
-                <div className="col-sm-3" />
+        {!this.state.loading && (
+          <div className="container-fluid my-4">
+            <div className="row">
+              <div className="col">
+                <DivCard className="card w-50 border-0">
+                  <TopicCard topic={this.state.topic} />
+                </DivCard>
               </div>
             </div>
-          )}
-        </BGColor>
+            <div className="row mb-4">
+              <div className="col-sm-3" />
+              <div className="col-sm-6">{this.cardTasks()}</div>
+              <div className="col-sm-3" />
+            </div>
+          </div>
+        )}
       </Layout>
     )
   }

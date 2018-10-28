@@ -7,9 +7,9 @@ import { observer, inject } from 'mobx-react'
 
 import './App.css'
 import NotFound from './containers/404'
-import TopicPage from './containers/TopicPage'
+import PracticePage from './containers/PracticePage'
 import Home from './containers/Home'
-import TaskListPage from './containers/TaskListPage'
+import PracticeTaskListPage from './containers/PracticeTaskListPage'
 import SolvePage from './containers/SolvePage'
 import ProfilePage from './containers/ProfilePage'
 
@@ -81,8 +81,8 @@ class App extends React.Component {
         />
         <Switch>
           <Route key={2} exact path="/" component={Home} />
-          <Route key={3} exact path="/topics" component={TopicPage} />
-          <Route key={4} exact path="/topics/:topicID" component={TaskListPage} />
+          <Route key={3} exact path="/practice" component={PracticePage} />
+          <Route key={4} exact path="/practice/:topicID" component={PracticeTaskListPage} />
           <Route key={5} exact path="/tasks/:taskID" component={SolvePage} />
           <Route key={6} exact path="/profile/edit" component={ProfileEditPage} />
           <Route key={6} exact path="/profile/stats" component={ProfileStatsPage} />
