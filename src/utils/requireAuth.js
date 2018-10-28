@@ -7,7 +7,8 @@ const requireAuth = () => Component => {
   class RequireAuth extends React.Component {
     componentWillMount() {
       if (!this.props.user.authenticated) {
-        this.props.history.replace('/login')
+        this.props.history.replace('/')
+        this.props.user.setLoginModal(true)
       }
     }
 
