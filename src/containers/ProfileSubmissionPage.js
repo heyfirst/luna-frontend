@@ -3,6 +3,8 @@ import requireAuth from '../utils/requireAuth'
 import { inject, observer } from 'mobx-react'
 import Layout from '../components/Core/Layout'
 import ProfileSidebar from '../components/Profile/ProfileSidebar'
+import TaskItem from '../components/Task/TaskItem'
+import Card from '../components/Core/Card'
 
 @requireAuth()
 @inject('user')
@@ -22,7 +24,19 @@ class ProfileSubmissionPage extends React.Component {
             </div>
             <div className="col-9">
               <div className="row mb-3">
-                <div className="col">Hi : 3</div>
+                <div className="col">
+                  <Card>
+                    <p className="text-right">มีโจทย์ทั้งหมด 9 ข้อที่ทำสำเร็จแล้ว! 🎉</p>
+                    {[...Array(3)].map((_, index) => (
+                      <TaskItem
+                        key={index}
+                        name="Lorem..."
+                        difficult={`Beginner`}
+                        topic={`String`}
+                      />
+                    ))}
+                  </Card>
+                </div>
               </div>
             </div>
           </div>
