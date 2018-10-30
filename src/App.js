@@ -16,7 +16,6 @@ import ProfilePage from './containers/ProfilePage'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import Background from './static/images/bg.png'
 import ProfileEditPage from './containers/ProfileEditPage'
 import ProfileStatsPage from './containers/ProfileStatsPage'
 import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
@@ -24,7 +23,7 @@ import ChallengePage from './containers/ChallangePage'
 
 injectGlobal`
   body {
-    background: url(${Background});
+    background: linear-gradient(to bottom left, #13BCCA 0%,#2C4B6B 50%, #1B2E52 100%);
     background-size: cover;
     background-attachment: fixed;
   }
