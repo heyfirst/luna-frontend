@@ -58,7 +58,7 @@ class LunaNavbar extends React.Component {
 
   logout = async () => {
     await this.props.user.logout()
-    await window.location.replace('/login')
+    await window.location.replace('/')
   }
 
   toggle = () => {
