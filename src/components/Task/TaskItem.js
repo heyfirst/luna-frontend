@@ -3,7 +3,10 @@ import styled from 'styled-components'
 
 const TaskCard = styled.div`
   border-radius: 10px;
-  border-color: #47c9d1;
+
+  &.doing {
+    border-color: #47c9d1;
+  }
 
   .card-body {
     padding: 0.6rem;

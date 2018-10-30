@@ -9,9 +9,11 @@ import PortalPage from '../components/Home/PortalPage'
 class Home extends React.Component {
   render() {
     const { user } = this.props
+
     if (user.authenticated) {
       return <PortalPage />
     }
+
     return <LandingPage />
   }
 }

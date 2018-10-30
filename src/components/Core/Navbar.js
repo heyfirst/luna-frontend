@@ -36,6 +36,11 @@ const NewNavbar = styled(Navbar)`
   button {
     cursor: pointer;
     color: #073466;
+    transition: all 0.3s;
+  }
+
+  .nav-link.active {
+    font-weight: 500;
   }
 
   .nav-link.disabled {
@@ -58,7 +63,7 @@ class LunaNavbar extends React.Component {
 
   logout = async () => {
     await this.props.user.logout()
-    await window.location.replace('/login')
+    await window.location.replace('/')
   }
 
   toggle = () => {
