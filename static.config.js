@@ -22,7 +22,6 @@ export default {
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <title>Luna.Codes</title>
-            {renderMeta.styleTags}
             <link
               href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
               rel="stylesheet"
@@ -37,6 +36,7 @@ export default {
               href="https://fonts.googleapis.com/css?family=Kanit:300,400,700"
               rel="stylesheet"
             />
+            {renderMeta.styleTags}
           </Head>
           <Body>
             {children}

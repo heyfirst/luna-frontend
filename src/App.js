@@ -22,10 +22,70 @@ import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
 import ChallengePage from './containers/ChallangePage'
 
 injectGlobal`
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     background: linear-gradient(to bottom left, #13BCCA 0%,#2C4B6B 50%, #1B2E52 100%);
-    background-size: cover;
-    background-attachment: fixed;
+    font-family: 'Lato', 'Kanit', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-weight: 300;
+  }
+
+  .ant-table,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  button {
+    font-family: 'Lato', 'Kanit', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+  }
+
+  #root {
+    height: 100%;
+  }
+
+  .btn-luna {
+    background-color: #47c9d1;
+    border-color: #47c9d1;
+    color: white;
+  }
+
+  .btn {
+    border-radius: 10px;
+  }
+
+  .ant-input {
+    height: 36px;
+  }
+
+  .ant-form-explain {
+    margin-top: 2px;
+  }
+
+  /* Fix label overflow in mobile  */
+  @media screen and (max-width: 768px) {
+    .ant-form-item-label {
+      white-space: normal;
+    }
+  }
+
+  ::-moz-selection {
+    /* Code for Firefox */
+    color: white;
+    background: #00c0cc;
+  }
+
+  ::selection {
+    color: white;
+    background: #00c0cc;
   }
 `
 
