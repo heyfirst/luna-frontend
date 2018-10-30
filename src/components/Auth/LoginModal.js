@@ -1,11 +1,10 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Modal } from 'antd'
 import { inject, observer } from 'mobx-react'
-import Layout from '../components/Core/Layout'
 
 @inject('user')
 @observer
-class Login extends React.Component {
+class LoginModal extends React.Component {
   componentWillMount() {
     if (this.props.user.authenticated) {
       this.props.history.replace('/')
@@ -26,22 +25,22 @@ class Login extends React.Component {
       { scope: 'email,public_profile', auth_type: 'rerequest' }
     )
   }
+
   render() {
     return (
-      <Layout>
-        <div className="container pt-4">
-          <div className="row">
-            <div className="col-12 text-center">
-              <h2>Sign In</h2>
-              <Button type="primary" onClick={() => this.onLogin()}>
-                Sign In with Facebook
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Layout>
+      <Modal
+        title={null}
+        footer={null}
+        visible={this.props.user.loginModalVisible}
+        onOk={() => this.props.user.setLoginModal(false)}
+        onCancel={() => this.props.user.setLoginModal(false)}
+      >
+        <Button type="primary" onClick={() => this.onLogin()}>
+          Sign In with Facebook
+        </Button>
+      </Modal>
     )
   }
 }
 
-export default Login
+export default LoginModal

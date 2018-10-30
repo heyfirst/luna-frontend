@@ -1,4 +1,5 @@
 import React from 'react'
+import { injectGlobal } from 'styled-components'
 import { Route as ReactRoute, Switch, withRouter, Redirect } from 'react-static'
 import { hot } from 'react-hot-loader'
 import * as R from 'ramda'
@@ -6,15 +7,28 @@ import { observer, inject } from 'mobx-react'
 
 import './App.css'
 import NotFound from './containers/404'
-import Login from './containers/Login'
-import TopicPage from './containers/TopicPage'
+import PracticePage from './containers/PracticePage'
 import Home from './containers/Home'
-import TaskListPage from './containers/TaskListPage'
+import PracticeTaskListPage from './containers/PracticeTaskListPage'
 import SolvePage from './containers/SolvePage'
 import ProfilePage from './containers/ProfilePage'
 
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+
+import Background from './static/images/bg.png'
+import ProfileEditPage from './containers/ProfileEditPage'
+import ProfileStatsPage from './containers/ProfileStatsPage'
+import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
+import ChallengePage from './containers/ChallangePage'
+
+injectGlobal`
+  body {
+    background: url(${Background});
+    background-size: cover;
+    background-attachment: fixed;
+  }
+`
 
 class Route extends React.Component {
   componentWillMount() {
@@ -67,12 +81,25 @@ class App extends React.Component {
           render={props => <Redirect to={`${props.location.pathname}/`} />}
         />
         <Switch>
-          <Route key={1} exact path="/login" component={Login} />
-          <Route key={2} exact path="/" component={Home} />
-          <Route key={3} exact path="/topics" component={TopicPage} />
-          <Route key={4} exact path="/topics/:topicID" component={TaskListPage} />
-          <Route key={5} exact path="/tasks/:taskID" component={SolvePage} />
-          <Route key={6} exact path="/profile" component={ProfilePage} />
+          <Route key={`home`} exact path="/" component={Home} />
+          <Route key={`practice`} exact path="/practice" component={PracticePage} />
+          <Route
+            key={`practice-topic`}
+            exact
+            path="/practice/:topicID"
+            component={PracticeTaskListPage}
+          />
+          <Route key={`challange`} exact path="/challenge" component={ChallengePage} />
+          <Route key={`task`} exact path="/tasks/:taskID" component={SolvePage} />
+          <Route key={`profile-edit`} exact path="/profile/edit" component={ProfileEditPage} />
+          <Route key={`profile-stats`} exact path="/profile/stats" component={ProfileStatsPage} />
+          <Route
+            key={`profile-submission`}
+            exact
+            path="/profile/submissions"
+            component={ProfileSubmissionPage}
+          />
+          <Route key={`profile`} exact path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
       </React.Fragment>

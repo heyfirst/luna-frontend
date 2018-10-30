@@ -1,12 +1,14 @@
 import React from 'react'
 import Card from '../Core/Card'
 import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer
+  BarChart,
+  Bar,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
 } from 'recharts'
 import UserService from '../../services/UserService'
 
@@ -35,19 +37,22 @@ export default class LearningProgressCard extends React.Component {
       <Card>
         <h5>Your Learning Progress</h5>
         <hr />
-        <ResponsiveContainer width="100%" aspect={4.0 / 2.5}>
-          <RadarChart outerRadius={100} data={this.state.data}>
-            <PolarGrid />
-            <PolarAngleAxis dataKey="topic_name" />
-            <PolarRadiusAxis
-              domain={[0, 60]}
-              tickCount={4}
-              angle={90}
-              tickFormatter={tick => this.changeTickToText(tick)}
-            />
-            <Radar dataKey="stats" stroke="#00C0CC" fill="#00C0CC" fillOpacity={0.6} />
-          </RadarChart>
-        </ResponsiveContainer>
+        <BarChart
+          width={800}
+          height={250}
+          data={this.state.data}
+          stackOffset="sign"
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <ReferenceLine y={0} stroke="#000" />
+          <Bar dataKey="pv" fill="#8884d8" stackId="stack" />
+          <Bar dataKey="uv" fill="#82ca9d" stackId="stack" />
+        </BarChart>
       </Card>
     )
   }

@@ -41,7 +41,7 @@ export default class CalendarHeatmapCard extends React.Component {
         <h5>Your Frequency practics</h5>
         <hr />
         <CalendarHeatmap
-          startDate={shiftDate(today, -200)}
+          startDate={shiftDate(today, -300)}
           endDate={today}
           values={this.getFrequencyData()}
           classForValue={value => {
@@ -52,7 +52,7 @@ export default class CalendarHeatmapCard extends React.Component {
           }}
           tooltipDataAttrs={value => {
             return {
-              'data-tip': `Task completed: ${value.count}`
+              'data-tip': `Task completed: ${value.count || '-'}`
             }
           }}
           showWeekdayLabels
