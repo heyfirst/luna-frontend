@@ -44,7 +44,7 @@ class SolveStore {
       })
 
     if (task.err) {
-      history.replace('/')
+      history.goBack()
       return
     }
 
@@ -145,7 +145,7 @@ class SolveStore {
             title: `You've passed this task`,
             content: `You have passed this task, try a new task!`,
             onOk: () => {
-              history.push(`/practice/${this.task.main_topic.id}`)
+              history.push(`/practice/${this.task.main_topic.topic.id}`)
             }
           })
         } else {
@@ -153,7 +153,7 @@ class SolveStore {
             title: `Yeah! You're Pass`,
             content: `You're pass this task, Welcome!!`,
             onOk: () => {
-              history.push(`/practice/${this.task.main_topic.id}`)
+              history.push(`/practice/${this.task.main_topic.topic.id}`)
             }
           })
         }

@@ -37,10 +37,7 @@ export default class SolveNavbar extends React.Component {
   render() {
     return (
       <SolveNavbarContainer color="dark" dark expand="md">
-        <button
-          className="back-btn btn btn-link"
-          onClick={() => this.props.history.push(`/practice/${store.task.main_topic.id}`)}
-        >
+        <button className="back-btn btn btn-link" onClick={() => this.props.history.goBack()}>
           <Icon type="arrow-left" theme="outlined" />
           {` Back`}
         </button>
