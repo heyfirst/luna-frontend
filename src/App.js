@@ -19,7 +19,7 @@ import 'nprogress/nprogress.css'
 import ProfileEditPage from './containers/ProfileEditPage'
 import ProfileStatsPage from './containers/ProfileStatsPage'
 import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
-import ChallengePage from './containers/ChallangePage'
+import ChallengePage from './containers/ChallengePage'
 
 injectGlobal`
   * {
@@ -148,7 +148,7 @@ class App extends React.Component {
             path="/practice/:topicID"
             component={PracticeTaskListPage}
           />
-          <Route key={`challange`} exact path="/challenge" component={ChallengePage} />
+          <Route key={`chellange`} exact path="/challenge" component={ChallengePage} />
           <Route key={`task`} exact path="/tasks/:taskID" component={SolvePage} />
           <Route key={`profile-edit`} exact path="/profile/edit" component={ProfileEditPage} />
           <Route key={`profile-stats`} exact path="/profile/stats" component={ProfileStatsPage} />

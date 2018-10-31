@@ -1,5 +1,15 @@
 import React from 'react'
+import { Link } from 'react-static'
 import styled from 'styled-components'
+
+const TaskLisk = styled(Link)`
+  color: #666;
+
+  &:hover,
+  &:active {
+    color: #222;
+  }
+`
 
 const TaskCard = styled.div`
   border-radius: 10px;
@@ -33,6 +43,12 @@ const TaskCard = styled.div`
     border: 1px solid #47c9d1;
     padding: 0.4rem 1rem;
     border-radius: 10px;
+
+    &.solved {
+      background: #47c9d1;
+      color: white;
+      font-weight: 600;
+    }
   }
 
   span {
@@ -52,7 +68,7 @@ const TaskCard = styled.div`
   }
 
   cursor: pointer;
-  transition: all 0.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
   box-shadow: 0 2px 4px 0 rgba(120, 120, 120, 0.12), 0 2px 10px 0 rgba(120, 120, 120, 0.15);
 
   &:hover {
@@ -62,7 +78,6 @@ const TaskCard = styled.div`
 `
 
 const Difficult = difficult => {
-  console.log(difficult)
   if (difficult === 'Beginner') {
     return <span className="Beginner">ง่าย</span>
   }
@@ -76,39 +91,45 @@ const Difficult = difficult => {
 
 class TaskItem extends React.Component {
   render() {
-    const { name, difficult, topic, passCount } = this.props
+    const { taskID, name, difficult, topic, passCount, solved } = this.props
     return (
-      <TaskCard className="card text-left mb-3">
-        <div className="card-body d-flex align-items-center justify-content-between">
-          <div>
-            <div className="task-name mx-1">
-              <div className="value">{name}</div>
-            </div>
-            <div className="task-detail mt-1">
-              <div className="detail d-flex mx-1">
-                <div className="label">ความยาก: {Difficult(difficult)}</div>
+      <TaskLisk to={`/tasks/${taskID}`}>
+        <TaskCard className="card text-left mb-3">
+          <div className="card-body d-flex align-items-center justify-content-between">
+            <div>
+              <div className="task-name mx-1">
+                <div className="value">{name}</div>
               </div>
-              {topic && (
+              <div className="task-detail mt-1">
                 <div className="detail d-flex mx-1">
-                  <div className="label">
-                    หัวข้อการเรียนรู้: <b>{topic}</b>
-                  </div>
+                  <div className="label">ความยาก: {Difficult(difficult)}</div>
                 </div>
-              )}
-              {passCount && (
-                <div className="detail d-flex mx-1">
-                  <div className="label">
-                    จำนวนผู้ที่ผ่านโจทย์ข้อนี้: <b>{passCount} คน</b>
+                {topic && (
+                  <div className="detail d-flex mx-1">
+                    <div className="label">
+                      หัวข้อการเรียนรู้: <b>{topic}</b>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+                {passCount && (
+                  <div className="detail d-flex mx-1">
+                    <div className="label">
+                      จำนวนผู้ที่ผ่านโจทย์ข้อนี้: <b>{passCount} คน</b>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div>
+              <div className={`task-status ${solved && 'solved'}`}>
+                Solve
+                {solved && 'd'}
+                {/* Hard code ❣️ */}
+              </div>
             </div>
           </div>
-          <div>
-            <div className="task-status">Solve</div>
-          </div>
-        </div>
-      </TaskCard>
+        </TaskCard>
+      </TaskLisk>
     )
   }
 }

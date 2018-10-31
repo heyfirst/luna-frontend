@@ -65,7 +65,7 @@ class ProtalPage extends React.Component {
                   <div className="text-center px-4">
                     <h3>โจทย์มาใหม่ 🎉</h3>
                     <p>
-                      <Link to="/challange">ดูโจทย์ทั้งหมด</Link>
+                      <Link to="/chellange">ดูโจทย์ทั้งหมด</Link>
                     </p>
                     <TaskItem
                       name="Lorem..."
