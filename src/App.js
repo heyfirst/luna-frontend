@@ -29,6 +29,7 @@ injectGlobal`
 
   body {
     background: linear-gradient(to bottom left, #13BCCA 0%,#2C4B6B 50%, #1B2E52 100%);
+    background-attachment: fixed;
     font-family: 'Lato', 'Kanit', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
     font-size: 14px;
     margin: 0;
