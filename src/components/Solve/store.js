@@ -25,6 +25,9 @@ class SolveStore {
   @observable
   duration = 0
 
+  @observable
+  countingTime = null
+
   @action
   fetchTask = async (id, history) => {
     const task = await SolveService.getTaskByID(id)
@@ -70,7 +73,9 @@ class SolveStore {
     this.code = ``
     this.result = []
     this.error = {}
+    this.duration = 0
     this.loading = true
+    clearInterval(this.countingTime)
   }
 
   @action
@@ -166,7 +171,7 @@ class SolveStore {
 
   @action
   startDuration = () => {
-    setInterval(
+    this.countingTime = setInterval(
       () =>
         runInAction(() => {
           this.duration += 1
