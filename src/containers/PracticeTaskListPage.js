@@ -47,20 +47,33 @@ class TaskListPage extends React.Component {
   }
 
   // Function เช็ค Card ไหนต้องส้ราง Link
-  linkCard = tasks => {
+  linkCard = task => {
     const isLock = !(
-      tasks.answered ||
-      tasks.order === 1 ||
-      this.state.tasks.find(t => t.answered && t.order === tasks.order - 1) !== undefined
+      task.answered ||
+      task.order === 1 ||
+      this.state.tasks.find(t => t.answered && t.order === task.order - 1) !== undefined
     )
+
     if (!isLock) {
       return (
-        <Link to={`/tasks/${tasks.id}`}>
-          <TaskItem name={tasks.task_name} difficult={tasks.main_topic.level.level_name} />
-        </Link>
+        <TaskItem
+          name={task.task_name}
+          difficult={task.main_topic.level.level_name}
+          taskID={task.id}
+          topic={task.main_topic.topic.topic_name}
+          solved={task.answered}
+        />
       )
     } else {
-      return <TaskItem name={tasks.task_name} difficult={tasks.main_topic.level.level_name} />
+      return (
+        <TaskItem
+          name={task.task_name}
+          difficult={task.main_topic.level.level_name}
+          taskID={task.id}
+          topic={task.main_topic.topic.topic_name}
+          locked
+        />
+      )
     }
   }
 

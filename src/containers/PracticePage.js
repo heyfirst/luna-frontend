@@ -66,17 +66,9 @@ class Topic extends React.Component {
             <div className="col-sm-10 offset-1 mt-4">
               {this.state.topics.map(topic => (
                 <DivCard className="card w-50 border-0" key={topic.pk}>
-                  {this.isScoreOverNinetyNine(topic) || topic.pk === 1 ? (
-                    <Link to={`/practice/${topic.pk}`} key={topic.pk}>
-                      <TopicCard topic={topic} />
-                    </Link>
-                  ) : (
-                    <div>
-                      <Lock />
-                      <LockImage src={Padlock} height="50" width="50" />
-                      <TopicCard topic={topic} />
-                    </div>
-                  )}
+                  <Link to={`/practice/${topic.pk}`} key={topic.pk}>
+                    <TopicCard topic={topic} />
+                  </Link>
                 </DivCard>
               ))}
             </div>
