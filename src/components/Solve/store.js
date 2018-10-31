@@ -1,7 +1,7 @@
 import { observable, action, computed, runInAction } from 'mobx'
 import { notification, Modal } from 'antd'
 
-import SolveService from '../../services/SolveService'
+import SolveService from '../../services/TaskService'
 
 class SolveStore {
   @observable
