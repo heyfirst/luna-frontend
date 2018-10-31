@@ -23,7 +23,7 @@ export default class ImprovementCard extends React.Component {
 
     this.setState({
       data: Object.keys(data).map(key => ({
-        date: key,
+        date: moment(key).format('MMM DD'),
         ...data[key]
       }))
     })

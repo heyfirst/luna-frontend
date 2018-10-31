@@ -50,8 +50,9 @@ export default class LearningProgressCard extends React.Component {
           <Tooltip />
           <Legend />
           <ReferenceLine y={0} stroke="#000" />
-          <Bar dataKey="pv" fill="#8884d8" stackId="stack" />
-          <Bar dataKey="uv" fill="#82ca9d" stackId="stack" />
+          <Bar dataKey="Beginner" fill="#47D1A8" stackId="stack" />
+          <Bar dataKey="Intermediate" fill="#00CCE8" stackId="stack" />
+          <Bar dataKey="Advance" fill="#FF73AE" stackId="stack" />
         </BarChart>
       </Card>
     )
