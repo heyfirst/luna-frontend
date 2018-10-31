@@ -145,7 +145,7 @@ class SolveStore {
             title: `You've passed this task`,
             content: `You have passed this task, try a new task!`,
             onOk: () => {
-              history.push(`/practice/${this.task.main_topic.topic.id}`)
+              this.redirectToPreventPage(history, this.task)
             }
           })
         } else {
@@ -153,11 +153,19 @@ class SolveStore {
             title: `Yeah! You're Pass`,
             content: `You're pass this task, Welcome!!`,
             onOk: () => {
-              history.push(`/practice/${this.task.main_topic.topic.id}`)
+              this.redirectToPreventPage(history, this.task)
             }
           })
         }
       }
+    }
+  }
+
+  redirectToPreventPage = (history, task) => {
+    if (!task.order) {
+      history.push(`/challenge`)
+    } else {
+      history.push(`/practice/${task.main_topic.topic.id}`)
     }
   }
 
