@@ -9,6 +9,7 @@ const Container = styled.div`
   height: 100%;
   padding: 1rem;
   white-space: pre-wrap;
+  overflow: auto;
 `
 
 @observer
@@ -20,28 +21,35 @@ class TaskDetail extends React.Component {
           <h6>
             <u>Description:</u>
           </h6>
-          <p>{store.task.description}</p>
+          <p>{store.task.task_desc}</p>
           <hr />
         </div>
         <div>
           <h6>
             <u>Input:</u>
           </h6>
-          <p>{store.task.description}</p>
+          <p>{store.task.input_desc}</p>
           <hr />
         </div>
         <div>
           <h6>
             <u>Output:</u>
           </h6>
-          <p>{store.task.description}</p>
+          <p>{store.task.output_desc}</p>
           <hr />
         </div>
         <div>
           <h6>
+            <u>Constains:</u>
+          </h6>
+          <p>{store.task.constrain_desc}</p>
+        </div>
+        <hr />
+        <div>
+          <h6>
             <u>Example:</u>
           </h6>
-          <p>{store.task.description}</p>
+          <p>{store.task.examples}</p>
         </div>
       </Container>
     )
