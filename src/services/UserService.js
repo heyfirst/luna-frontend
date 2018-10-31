@@ -21,6 +21,9 @@ const UserService = {
         `/accounts/skill-improvement/?start_date=${startDate}&end_date=${endDate}&topicId=${topicId}`
       )
     }
+  },
+  getSuggestionTasks: () => {
+    return api.get(`/accounts/suggestion-tasks/`)
   }
 }
 

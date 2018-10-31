@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import Particles from 'react-particles-js'
 
 import Layout from '../Core/Layout'
@@ -8,6 +8,8 @@ import ParticleConfig from '../../static/particle.config.json'
 import Card from '../Core/Card'
 import TaskItem from '../Task/TaskItem'
 import { Link } from 'react-static'
+import ChallengeService from '../../services/ChallengeService'
+import UserService from '../../services/UserService'
 
 const FrontLayout = styled.div`
   height: 100%;
@@ -27,6 +29,26 @@ const FrontLayout = styled.div`
 @inject('user')
 @observer
 class ProtalPage extends React.Component {
+  state = {
+    taskLoading: true,
+    tasks: [],
+    suggestLoading: true,
+    suggests: [],
+    randomPosition: 0
+  }
+
+  componentDidMount() {
+    ChallengeService.getLatestChallangeTask().then(resp => {
+      this.setState({ tasks: resp.data, taskLoading: false })
+    })
+
+    UserService.getSuggestionTasks().then(resp => {
+      let suggests = resp.data
+      let randomPosition = Math.floor(Math.random() * suggests.length - 1)
+      this.setState({ suggests, randomPosition, suggestLoading: false })
+    })
+  }
+
   render() {
     return (
       <FrontLayout>
@@ -38,23 +60,21 @@ class ProtalPage extends React.Component {
               <div className="col">
                 <Card>
                   <div className="text-center px-4">
-                    <h3 className="mb-0">ทำโจทย์ข้อนี้ต่อไหม ?</h3>
-                    <p className="px-4">
-                      โจทย์ข้อนี้ยังทำไม่เสร็จเลย มาแก้โจทย์ปัญหานี้กันต่อดีกว่า
-                    </p>
-                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
-                  </div>
-                </Card>
-              </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col">
-                <Card>
-                  <div className="text-center px-4">
                     <h3>ลองทำโจทย์ข้อนี้ดูสิ</h3>
-                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Advance`} topic={`String`} />
+                    {!this.state.suggestLoading &&
+                      this.state.suggests
+                        .filter(t => !t.answered)
+                        .slice(this.state.randomPosition, this.state.randomPosition + 2)
+                        .map((task, index) => (
+                          <TaskItem
+                            key={index}
+                            taskID={task.id}
+                            name={task.task_name}
+                            difficult={task.main_topic.level.level_name}
+                            topic={task.main_topic.topic.topic_name}
+                            solved={task.answered}
+                          />
+                        ))}
                   </div>
                 </Card>
               </div>
@@ -65,20 +85,21 @@ class ProtalPage extends React.Component {
                   <div className="text-center px-4">
                     <h3>โจทย์มาใหม่ 🎉</h3>
                     <p>
-                      <Link to="/chellange">ดูโจทย์ทั้งหมด</Link>
+                      <Link to="/challenge">ดูโจทย์ทั้งหมด</Link>
                     </p>
-                    <TaskItem
-                      name="Lorem..."
-                      difficult={`Beginner`}
-                      topic={`String`}
-                      passCount={12192}
-                    />
-                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Beginner`} topic={`String`} />
-                    <TaskItem name="Lorem..." difficult={`Intermediate`} topic={`String`} />
+                    {!this.state.taskLoading &&
+                      this.state.tasks
+                        .slice(0, 10)
+                        .map((task, index) => (
+                          <TaskItem
+                            key={index}
+                            taskID={task.id}
+                            name={task.task_name}
+                            difficult={task.main_topic.level.level_name}
+                            topic={task.main_topic.topic.topic_name}
+                            solved={task.answered}
+                          />
+                        ))}
                   </div>
                 </Card>
               </div>
