@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-static'
 import styled from 'styled-components'
 
-const TaskLisk = styled(Link)`
+const TaskLink = styled(Link)`
   color: #666;
 
   &:hover,
@@ -49,6 +49,11 @@ const TaskCard = styled.div`
       color: white;
       font-weight: 600;
     }
+
+    &.locked {
+      border: 1px solid #ccc;
+      color: #ccc;
+    }
   }
 
   span {
@@ -91,10 +96,10 @@ const Difficult = difficult => {
 
 class TaskItem extends React.Component {
   render() {
-    const { taskID, name, difficult, topic, passCount, solved } = this.props
+    const { taskID, name, difficult, topic, passCount, solved, locked } = this.props
     return (
-      <TaskLisk to={`/tasks/${taskID}`}>
-        <TaskCard className="card text-left mb-3">
+      <TaskLink to={`/tasks/${taskID}`} disabled={locked}>
+        <TaskCard className={`card text-left mb-3 ${locked && 'locked'}`}>
           <div className="card-body d-flex align-items-center justify-content-between">
             <div>
               <div className="task-name mx-1">
@@ -121,15 +126,14 @@ class TaskItem extends React.Component {
               </div>
             </div>
             <div>
-              <div className={`task-status ${solved && 'solved'}`}>
-                Solve
-                {solved && 'd'}
+              <div className={`task-status ${locked ? 'locked' : solved ? 'solved' : 'solve'}`}>
+                {locked ? 'Locked' : solved ? 'Solved' : 'Solve'}
                 {/* Hard code ❣️ */}
               </div>
             </div>
           </div>
         </TaskCard>
-      </TaskLisk>
+      </TaskLink>
     )
   }
 }
