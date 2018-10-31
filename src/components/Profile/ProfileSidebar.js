@@ -32,6 +32,7 @@ class ProfileSidebar extends React.Component {
         <button
           className={`btn ${active === 'profile-submission' && 'btn-luna'} btn-block`}
           onClick={() => this.props.history.push('/profile/submissions')}
+          disabled
         >
           โจทย์ที่เคยทำ
         </button>
