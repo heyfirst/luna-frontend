@@ -46,6 +46,37 @@ class TaskListPage extends React.Component {
     })
   }
 
+  checkLastTaskInLevelIsSuccess = task => {
+    let level_index = this.state.level.indexOf(task.main_topic.level.level_name)
+    let level = this.state.level[level_index]
+
+    if (level === 'Beginner') {
+      return true
+    }
+
+    // Checking
+    let prevent_level = this.state.level[level_index - 1]
+    let prevent_level_task_length = this.state.tasks.filter(
+      t => t.main_topic.level.level_name === prevent_level
+    ).length
+
+    let prevent_level_task = this.state.tasks.filter(
+      t => t.main_topic.level.level_name === prevent_level
+    )[prevent_level_task_length - 1]
+
+    if (
+      prevent_level_task.answered &&
+      (task.order === 1 ||
+        this.state.tasks
+          .filter(t => t.main_topic.level.level_name === level)
+          .find(t => t.answered && t.order === task.order - 1) !== undefined)
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   // Function เช็ค Card ไหนต้องส้ราง Link
   linkCard = task => {
     const isLock = !(
@@ -54,10 +85,10 @@ class TaskListPage extends React.Component {
       this.state.tasks.find(t => t.answered && t.order === task.order - 1) !== undefined
     )
 
-    if (!isLock) {
+    if (!isLock && this.checkLastTaskInLevelIsSuccess(task)) {
       return (
         <TaskItem
-          name={task.task_name}
+          name={`${task.order}. ${task.task_name}`}
           difficult={task.main_topic.level.level_name}
           taskID={task.id}
           topic={task.main_topic.topic.topic_name}
@@ -67,7 +98,7 @@ class TaskListPage extends React.Component {
     } else {
       return (
         <TaskItem
-          name={task.task_name}
+          name={`${task.order}. ${task.task_name}`}
           difficult={task.main_topic.level.level_name}
           taskID={task.id}
           topic={task.main_topic.topic.topic_name}
@@ -96,18 +127,54 @@ class TaskListPage extends React.Component {
                     <h5 className="m-0">โจทย์ระดับง่าย</h5>
                   </div>
                   <div className="card-body">
-                    {this.state.tasks.map(
-                      (tasks, index) =>
-                        tasks.main_topic &&
-                        tasks.order &&
-                        tasks.main_topic.topic.topic_name === this.state.topic.topic_name && (
-                          <React.Fragment key={index}>{this.linkCard(tasks)}</React.Fragment>
-                        )
-                    )}
+                    {this.state.tasks
+                      .filter(t => t.main_topic.level.level_name === 'Beginner')
+                      .map((tasks, index) => (
+                        <React.Fragment key={index}>{this.linkCard(tasks)}</React.Fragment>
+                      ))}
                   </div>
                 </div>
               </div>
             </div>
+            {this.state.tasks.filter(t => t.main_topic.level.level_name === 'Intermediate').length >
+              0 && (
+              <div className="row mb-4">
+                <div className="col-sm-6 offset-sm-3">
+                  <div className="card">
+                    <div className="card-header">
+                      <h5 className="m-0">โจทย์ระดับปานกลาง</h5>
+                    </div>
+                    <div className="card-body">
+                      {this.state.tasks
+                        .filter(t => t.main_topic.level.level_name === 'Intermediate')
+                        .map((tasks, index) => (
+                          <React.Fragment key={index}>{this.linkCard(tasks)}</React.Fragment>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {this.state.tasks.filter(t => t.main_topic.level.level_name === 'Advance').length >
+              0 && (
+              <div className="row mb-4">
+                <div className="col-sm-6 offset-sm-3">
+                  <div className="card">
+                    <div className="card-header">
+                      <h5 className="m-0">โจทย์ระดับยาก</h5>
+                    </div>
+                    <div className="card-body">
+                      {this.state.tasks
+                        .filter(t => t.main_topic.level.level_name === 'Advance')
+                        .map((tasks, index) => (
+                          <React.Fragment key={index}>{this.linkCard(tasks)}</React.Fragment>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </Layout>

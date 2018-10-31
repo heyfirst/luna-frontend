@@ -29,7 +29,7 @@ class ChallengePage extends React.Component {
             </div>
             <div className="col-9">
               <Card>
-                <p className="text-right">มีโจทย์ทั้งหมด 9 ข้อ</p>
+                <p className="text-right">มีโจทย์ทั้งหมด {this.state.tasks.length || '-'} ข้อ</p>
                 {this.state.tasks.map((task, index) => (
                   <TaskItem
                     key={index}
