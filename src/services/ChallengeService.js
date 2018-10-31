@@ -2,7 +2,7 @@ import api from '../utils/api'
 
 const ChallengeService = {
   getAllTask: () => {
-    return api.get(`topics/challange_tasks/`)
+    return api.get(`topics/challenge_tasks/`)
   }
 }
 
