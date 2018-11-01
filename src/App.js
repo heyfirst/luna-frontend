@@ -88,6 +88,10 @@ injectGlobal`
     color: white;
     background: #00c0cc;
   }
+
+  a:hover {
+    text-decoration: none !important;
+  }
 `
 
 class Route extends React.Component {
