@@ -35,7 +35,7 @@ export default class LearningProgressCard extends React.Component {
   render() {
     return (
       <Card>
-        <h5>Your Learning Progress</h5>
+        <h5>ความก้าวหน้าของการฝึกฝน</h5>
         <hr />
         <BarChart
           width={800}

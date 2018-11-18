@@ -38,7 +38,7 @@ export default class CalendarHeatmapCard extends React.Component {
   render() {
     return (
       <Card>
-        <h5>Your Frequency practics</h5>
+        <h5>ความถี่ในการทำโจทย์</h5>
         <hr />
         <CalendarHeatmap
           startDate={shiftDate(today, -300)}

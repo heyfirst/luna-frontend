@@ -32,7 +32,7 @@ export default class ImprovementCard extends React.Component {
   render() {
     return (
       <Card>
-        <h5>Your Skill Improvement</h5>
+        <h5>พัฒนาการของการทำโจทย์</h5>
         <hr />
         <ResponsiveContainer width="100%" aspect={4.0 / 1.2}>
           <LineChart data={this.state.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -40,9 +40,9 @@ export default class ImprovementCard extends React.Component {
             <YAxis />
             <Tooltip />
             <Legend verticalAlign={`top`} align={'left'} height={36} />
-            <Line type="monotone" dataKey="Beginner" stroke="#47D165" />
-            <Line type="monotone" dataKey="Intermediate" stroke="#00CCE8" />
-            <Line type="monotone" dataKey="Advance" stroke="#FF4593" />
+            <Line type="monotone" dataKey="Beginner" stroke="#47D165" name="ระดับง่าย" />
+            <Line type="monotone" dataKey="Intermediate" stroke="#00CCE8" name="ระดับปานกลาง" />
+            <Line type="monotone" dataKey="Advance" stroke="#FF4593" name="ระดับยาก" />
           </LineChart>
         </ResponsiveContainer>
       </Card>
