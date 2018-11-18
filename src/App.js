@@ -20,6 +20,7 @@ import ProfileEditPage from './containers/ProfileEditPage'
 import ProfileStatsPage from './containers/ProfileStatsPage'
 import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
 import ChallengePage from './containers/ChallengePage'
+import PrivacyPolicy from './containers/PrivacyPolicy'
 
 injectGlobal`
   * {
@@ -164,6 +165,7 @@ class App extends React.Component {
             component={ProfileSubmissionPage}
           />
           <Route key={`profile`} exact path="/profile" component={ProfilePage} />
+          <Route key={`privacy-policy`} exact path="/privacy-policy" component={PrivacyPolicy} />
           <Route component={NotFound} />
         </Switch>
       </React.Fragment>
