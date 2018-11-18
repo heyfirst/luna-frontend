@@ -68,30 +68,29 @@ export default {
               }}
             />
 
-            {/* <script
-              src="https://cdn.ravenjs.com/3.26.4/raven.min.js"
+            <script
+              src="https://browser.sentry-cdn.com/4.3.2/bundle.min.js"
               crossOrigin="anonymous"
             />
             <script
               dangerouslySetInnerHTML={{
                 __html: `
-                Raven.config('https://7a8d4d33f145426d9eb80b930ac0ea8e@sentry.io/1264885').install()
+                Sentry.init({ dsn: 'https://dbd7cff4a55a453c96efb0c2d7df80ea@sentry.io/1325392' });
               `
               }}
             />
-            <script
-              async
-              src="https://www.googletagmanager.com/gtag/js?id=UA-82920412-5"
-            />
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129409022-1" />
             <script
               dangerouslySetInnerHTML={{
                 __html: `
-              window.dataLayer = window.dataLayer || []; function gtag()
-              {dataLayer.push(arguments)}
-              gtag('js', new Date()); gtag('config', 'UA-82920412-5');
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'UA-129409022-1');
               `
               }}
-            /> */}
+            />
           </Body>
         </Html>
       )
