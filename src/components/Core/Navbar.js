@@ -14,6 +14,7 @@ import { NavLink as Link, withRouter } from 'react-static'
 import { observer, inject } from 'mobx-react'
 import styled from 'styled-components'
 import LoginModal from '../Auth/LoginModal'
+import Avatar from './Avatar'
 
 const NewNavbar = styled(Navbar)`
   height: 56px;
@@ -113,8 +114,16 @@ class LunaNavbar extends React.Component {
                 </NavItem>
               ) : (
                 <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    <NewImg src="http://placehold.it/60x60" height="30" width="30" />{' '}
+                  <DropdownToggle
+                    nav
+                    caret
+                    className=" d-flex justify-content-center align-items-center"
+                  >
+                    <Avatar
+                      src={this.props.user.user.avatar}
+                      size={'38'}
+                      className="d-inline-block mr-1"
+                    />
                     {this.props.user.user.first_name} {this.props.user.user.last_name}
                   </DropdownToggle>
                   <DropdownMenu right>
