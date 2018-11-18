@@ -21,6 +21,8 @@ import ProfileStatsPage from './containers/ProfileStatsPage'
 import ProfileSubmissionPage from './containers/ProfileSubmissionPage'
 import ChallengePage from './containers/ChallengePage'
 import PrivacyPolicy from './containers/PrivacyPolicy'
+import Ranking from './containers/Ranking'
+import HowtoScore from './containers/HowtoScore'
 
 injectGlobal`
   * {
@@ -155,6 +157,8 @@ class App extends React.Component {
             component={PracticeTaskListPage}
           />
           <Route key={`chellange`} exact path="/challenge" component={ChallengePage} />
+          <Route key={`ranking`} exact path="/ranking" component={Ranking} />
+          <Route key={`/howto-score`} exact path="/howto-score" component={HowtoScore} />
           <Route key={`task`} exact path="/tasks/:taskID" component={SolvePage} />
           <Route key={`profile-edit`} exact path="/profile/edit" component={ProfileEditPage} />
           <Route key={`profile-stats`} exact path="/profile/stats" component={ProfileStatsPage} />
