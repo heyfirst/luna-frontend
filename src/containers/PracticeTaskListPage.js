@@ -116,7 +116,7 @@ class TaskListPage extends React.Component {
             <div className="row">
               <div className="col">
                 <DivCard className="card w-50 border-0">
-                  <TopicCard topic={this.state.topic} />
+                  <TopicCard topic={this.state.topic} isTopicPage />
                 </DivCard>
               </div>
             </div>
