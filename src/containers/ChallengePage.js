@@ -1,22 +1,22 @@
 import React from 'react'
+import { observer } from 'mobx-react'
+import ChallangeStore from '../components/Challenge/store'
 
 import requireAuth from '../utils/requireAuth'
 import Layout from '../components/Core/Layout'
 import Card from '../components/Core/Card'
 import TaskItem from '../components/Task/TaskItem'
 import FilterSidebar from '../components/Challenge/FilterSidebar'
-import ChallengeService from '../services/ChallengeService'
 
 @requireAuth()
+@observer
 class ChallengePage extends React.Component {
   state = {
     tasks: []
   }
 
-  componentDidMount() {
-    ChallengeService.getAllTask().then(resp => {
-      this.setState({ tasks: resp.data })
-    })
+  async componentDidMount() {
+    await ChallangeStore.getChallange()
   }
 
   render() {
@@ -29,8 +29,10 @@ class ChallengePage extends React.Component {
             </div>
             <div className="col-9">
               <Card>
-                <p className="text-right">มีโจทย์ทั้งหมด {this.state.tasks.length || '-'} ข้อ</p>
-                {this.state.tasks.map((task, index) => (
+                <p className="text-right">
+                  มีโจทย์ทั้งหมด {ChallangeStore.tasks.length || '-'} ข้อ
+                </p>
+                {ChallangeStore.tasks.map((task, index) => (
                   <TaskItem
                     key={index}
                     taskID={task.id}
