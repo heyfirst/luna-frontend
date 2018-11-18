@@ -93,13 +93,13 @@ class LunaNavbar extends React.Component {
                   รวมโจทย์
                 </Link>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <Link className="nav-link disabled" to="/tournament/" disabled>
                   การแข่งขัน
                 </Link>
-              </NavItem>
+              </NavItem> */}
               <NavItem>
-                <Link className="nav-link disabled" to="/ranking/" disabled>
+                <Link className="nav-link" to="/ranking/">
                   อันดับ
                 </Link>
               </NavItem>

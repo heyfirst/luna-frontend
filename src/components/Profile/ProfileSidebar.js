@@ -35,12 +35,12 @@ class ProfileSidebar extends React.Component {
         >
           โจทย์ที่เคยทำ
         </button>
-        <button
+        {/* <button
           className={`btn ${active === 'profile-tournaments' && 'btn-luna'} btn-block`}
           disabled
         >
           การแข่งขันที่เข้าร่วม
-        </button>
+        </button> */}
       </Card>
     )
   }
