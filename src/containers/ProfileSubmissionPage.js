@@ -5,11 +5,24 @@ import Layout from '../components/Core/Layout'
 import ProfileSidebar from '../components/Profile/ProfileSidebar'
 import TaskItem from '../components/Task/TaskItem'
 import Card from '../components/Core/Card'
+import TaskService from '../services/TaskService'
 
 @requireAuth()
 @inject('user')
 @observer
 class ProfileSubmissionPage extends React.Component {
+  state = {
+    tasks: []
+  }
+
+  async componentWillMount() {
+    await TaskService.getCompletedTasks().then(resp => {
+      this.setState({
+        tasks: resp.data
+      })
+    })
+  }
+
   render() {
     return (
       <Layout>
@@ -26,13 +39,17 @@ class ProfileSubmissionPage extends React.Component {
               <div className="row mb-3">
                 <div className="col">
                   <Card>
-                    <p className="text-right">มีโจทย์ทั้งหมด 9 ข้อที่ทำสำเร็จแล้ว! 🎉</p>
-                    {[...Array(3)].map((_, index) => (
+                    <p className="text-right">
+                      มีโจทย์ทั้งหมด {this.state.tasks.length || '-'} ข้อที่ทำสำเร็จแล้ว! 🎉
+                    </p>
+                    {this.state.tasks.map((task, index) => (
                       <TaskItem
                         key={index}
-                        name="Lorem..."
-                        difficult={`Beginner`}
-                        topic={`String`}
+                        taskID={task.id}
+                        name={task.task_name}
+                        difficult={task.main_topic.level.level_name}
+                        topic={task.main_topic.topic.topic_name}
+                        solved={task.answered}
                       />
                     ))}
                   </Card>

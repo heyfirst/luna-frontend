@@ -1,6 +1,9 @@
 import api from '../utils/api'
 
-const SolveService = {
+const TaskService = {
+  getCompletedTasks: () => {
+    return api.get(`tasks/completed/`)
+  },
   getTaskByID: id => {
     return api.get(`tasks/tasks/${id}`)
   },
@@ -15,4 +18,4 @@ const SolveService = {
   }
 }
 
-export default SolveService
+export default TaskService
