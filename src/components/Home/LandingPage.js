@@ -125,7 +125,7 @@ class LandingPage extends React.Component {
             <div className="container position-relative">
               <div className="headline">
                 <h1>Luna</h1>
-                <h3>{`เว็บแอปพลิเคชันสำหรับพัฒนาทักษะด้านการเขียนโปรแกรม`}</h3>
+                <h3>{`เว็บแอปพลิเคชันสำหรับ\nพัฒนาทักษะด้านการเขียนโปรแกรม`}</h3>
                 <button
                   className="btn btn-luna"
                   onClick={() => this.props.user.setLoginModal(true)}
