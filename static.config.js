@@ -12,6 +12,9 @@ export default {
     meta.styleTags = sheet.getStyleElement()
     return html
   },
+  devServer: {
+    https: true
+  },
   Document: class CustomHtml extends Component {
     render() {
       const { Html, Head, Body, children, renderMeta } = this.props
