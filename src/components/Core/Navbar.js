@@ -100,7 +100,7 @@ class LunaNavbar extends React.Component {
               </NavItem> */}
               <NavItem>
                 <Link className="nav-link" to="/ranking/">
-                  อันดับ
+                  จัดอันดับ
                 </Link>
               </NavItem>
             </Nav>
@@ -129,6 +129,9 @@ class LunaNavbar extends React.Component {
                   <DropdownMenu right>
                     <Link to="/profile/">
                       <DropdownItem>โปรไฟล์ของตัวเอง</DropdownItem>
+                    </Link>
+                    <Link to="/howto-score/">
+                      <DropdownItem>วิธีเก็บคะแนน</DropdownItem>
                     </Link>
                     <DropdownItem onClick={() => this.logout()}>ออกจากระบบ</DropdownItem>
                   </DropdownMenu>
