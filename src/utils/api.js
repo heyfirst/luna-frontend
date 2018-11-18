@@ -17,9 +17,13 @@ const handleResponse = response => {
 const catchError = e => Promise.reject(e.response)
 
 export default {
-  get: path =>
+  get: (path, params) =>
     createApiInstance()
-      .get(path)
+      .request({
+        url: path,
+        method: 'GET',
+        params
+      })
       .then(handleResponse)
       .catch(catchError),
   post: (path, body = {}, headers = {}) =>
