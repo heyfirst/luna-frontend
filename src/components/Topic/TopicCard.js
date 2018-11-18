@@ -70,9 +70,9 @@ class TopicCard extends React.Component {
   }
 
   render() {
-    const { topic } = this.props
+    const { topic, isTopicPage } = this.props
     return (
-      <div className="row pt-2">
+      <div className="row py-2">
         <div className="col-sm-3 card-image">
           <CardImage
             src={getImageFromType(topic.topic_name)}
@@ -84,18 +84,22 @@ class TopicCard extends React.Component {
         <CardBody className="col-sm-7 card-body">
           <TopicHeader className="mb-0 font-weight-bold">{topic.topic_name}</TopicHeader>
           <p>{topic.description}</p>
-          <CardProgress className="progress">
-            <CardProgressBar
-              percentage={this.percentageCalc(topic.completed_tasks, topic.total_tasks)}
-              classsName="progress-bar"
-            />
-          </CardProgress>
+          {!isTopicPage && (
+            <CardProgress className="progress">
+              <CardProgressBar
+                percentage={this.percentageCalc(topic.completed_tasks, topic.total_tasks)}
+                classsName="progress-bar"
+              />
+            </CardProgress>
+          )}
         </CardBody>
-        <CardBodyAlignCenter className="col-sm-2 card-body align-self-center">
-          <PTask className="mb-0 task">
-            {topic.completed_tasks}/{topic.total_tasks}
-          </PTask>
-        </CardBodyAlignCenter>
+        {!isTopicPage && (
+          <CardBodyAlignCenter className="col-sm-2 card-body align-self-center">
+            <PTask className="mb-0 task">
+              {topic.completed_tasks}/{topic.total_tasks}
+            </PTask>
+          </CardBodyAlignCenter>
+        )}
       </div>
     )
   }
