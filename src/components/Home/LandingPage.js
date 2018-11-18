@@ -51,15 +51,17 @@ const FrontLayout = styled.div`
 
   .headline {
     position: absolute;
-    top: 25%;
+    top: 20%;
+    left: 7%;
 
     h1 {
-      font-size: 7rem;
+      font-size: 10rem;
       margin: 0;
     }
 
     h3 {
       white-space: pre-line;
+      line-height: 2.2rem;
     }
   }
 
@@ -74,7 +76,7 @@ const FrontLayout = styled.div`
   .moon {
     position: absolute;
     height: 28rem;
-    right: 12%;
+    right: 0%;
     top: 8%;
     animation: ${FloatAstro} 10s infinite normal;
   }
