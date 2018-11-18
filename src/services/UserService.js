@@ -7,6 +7,12 @@ const UserService = {
   getProfile: () => {
     return api.get(`/accounts/me/`)
   },
+  updateProfile: body => {
+    return api.patch(`/accounts/me/`, { ...body })
+  },
+  uploadAvatar: data => {
+    return api.post(`/accounts/me/upload-avatar/`, data)
+  },
   getLearningProgress: () => {
     return api.get(`/accounts/learning-progress/`)
   },
