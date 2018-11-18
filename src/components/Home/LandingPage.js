@@ -4,8 +4,10 @@ import styled, { keyframes } from 'styled-components'
 import Particles from 'react-particles-js'
 
 import Layout from '../Core/Layout'
+import Star1 from '../../static/images/p1.png'
+import Star2 from '../../static/images/p2.png'
+import Star3 from '../../static/images/p3.png'
 import ParticleConfig from '../../static/particle.config.json'
-import Astronaut from '../../static/images/astronaut.png'
 import Moon from '../../static/images/moon.png'
 
 const FloatAstro = keyframes`
@@ -44,7 +46,7 @@ const FrontLayout = styled.div`
 
   .container {
     z-index: 2;
-    height: calc(100% - 56px);
+    height: calc(100vh - 56px);
   }
 
   .headline {
@@ -71,10 +73,10 @@ const FrontLayout = styled.div`
 
   .moon {
     position: absolute;
-    height: 15rem;
-    right: 20%;
-    top: 10%;
-    animation: ${FloatAstro} 10s infinite normal 3s;
+    height: 28rem;
+    right: 12%;
+    top: 8%;
+    animation: ${FloatAstro} 10s infinite normal;
   }
 
   .particle {
@@ -82,6 +84,28 @@ const FrontLayout = styled.div`
     position: absolute;
     z-index: 1;
     width: 100%;
+  }
+
+  .star-1 {
+    position: absolute;
+    width: 75px;
+    top: 14%;
+    left: 17%;
+    animation: ${FloatAstro} 12s infinite normal;
+  }
+  .star-2 {
+    position: absolute;
+    width: 185px;
+    top: 70%;
+    left: 25%;
+    animation: ${FloatAstro} 20s infinite normal;
+  }
+  .star-3 {
+    position: absolute;
+    width: 160px;
+    top: 80%;
+    left: 75%;
+    animation: ${FloatAstro} 7s infinite normal;
   }
 `
 
@@ -95,6 +119,9 @@ class LandingPage extends React.Component {
           <React.Fragment>
             <Particles className="particle" params={ParticleConfig} />
             <div className="foreground" />
+            <img src={Star1} className="star-1" alt="" />
+            <img src={Star2} className="star-2" alt="" />
+            <img src={Star3} className="star-3" alt="" />
             <div className="container position-relative">
               <div className="headline">
                 <h1>Luna</h1>
@@ -106,7 +133,6 @@ class LandingPage extends React.Component {
                   เริ่มต้นออกเดินทาง
                 </button>
               </div>
-              <img src={Astronaut} alt="Luna Astronaut" className="astronaut" />
               <img src={Moon} alt="Luna Moon" className="moon" />
             </div>
           </React.Fragment>
