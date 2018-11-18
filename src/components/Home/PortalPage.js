@@ -37,12 +37,14 @@ class ProtalPage extends React.Component {
     randomPosition: 0
   }
 
-  componentDidMount() {
-    ChallengeService.getLatestChallangeTask().then(resp => {
-      this.setState({ tasks: resp.data, taskLoading: false })
+  async componentDidMount() {
+    await ChallengeService.getAllTask('All', 'All', 'All').then(resp => {
+      let tasks = resp.data
+      tasks = [...tasks].slice(0, 10)
+      this.setState({ tasks: tasks, taskLoading: false })
     })
 
-    UserService.getSuggestionTasks().then(resp => {
+    await UserService.getSuggestionTasks().then(resp => {
       let suggests = resp.data
       let randomPosition = Math.floor(Math.random() * suggests.length - 1)
       this.setState({ suggests, randomPosition, suggestLoading: false })
@@ -88,18 +90,16 @@ class ProtalPage extends React.Component {
                       <Link to="/challenge">ดูโจทย์ทั้งหมด</Link>
                     </p>
                     {!this.state.taskLoading &&
-                      this.state.tasks
-                        .slice(0, 10)
-                        .map((task, index) => (
-                          <TaskItem
-                            key={index}
-                            taskID={task.id}
-                            name={task.task_name}
-                            difficult={task.main_topic.level.level_name}
-                            topic={task.main_topic.topic.topic_name}
-                            solved={task.answered}
-                          />
-                        ))}
+                      this.state.tasks.map((task, index) => (
+                        <TaskItem
+                          key={index}
+                          taskID={task.id}
+                          name={task.task_name}
+                          difficult={task.main_topic.level.level_name}
+                          topic={task.main_topic.topic.topic_name}
+                          solved={task.answered}
+                        />
+                      ))}
                   </div>
                 </Card>
               </div>
