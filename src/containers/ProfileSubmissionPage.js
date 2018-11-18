@@ -49,7 +49,7 @@ class ProfileSubmissionPage extends React.Component {
                         name={task.task_name}
                         difficult={task.main_topic.level.level_name}
                         topic={task.main_topic.topic.topic_name}
-                        solved={task.answered}
+                        solved
                       />
                     ))}
                   </Card>
