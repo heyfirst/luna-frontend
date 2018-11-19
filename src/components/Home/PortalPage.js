@@ -46,8 +46,7 @@ class ProtalPage extends React.Component {
 
     await UserService.getSuggestionTasks().then(resp => {
       let suggests = resp.data
-      let randomPosition = Math.floor(Math.random() * suggests.length - 1)
-      this.setState({ suggests, randomPosition, suggestLoading: false })
+      this.setState({ suggests, suggestLoading: false })
     })
   }
 
