@@ -23,6 +23,8 @@ import ChallengePage from './containers/ChallengePage'
 import PrivacyPolicy from './containers/PrivacyPolicy'
 import Ranking from './containers/Ranking'
 import HowtoScore from './containers/HowtoScore'
+import AdminProblems from './containers/AdminProblems'
+import AdminUsers from './containers/AdminUsers'
 
 injectGlobal`
   * {
@@ -170,6 +172,8 @@ class App extends React.Component {
           />
           <Route key={`profile`} exact path="/profile" component={ProfilePage} />
           <Route key={`privacy-policy`} exact path="/privacy-policy" component={PrivacyPolicy} />
+          <Route key={`admin-problems`} exact path="/admin/problems" component={AdminProblems} />
+          <Route key={`admin-users`} exact path="/admin/users" component={AdminUsers} />
           <Route component={NotFound} />
         </Switch>
       </React.Fragment>
