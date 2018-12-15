@@ -8,9 +8,6 @@ const ChallengeService = {
       topic,
       ordering: '-created'
     })
-  },
-  getLatestChallangeTask: () => {
-    return api.get(`topics/challenge_tasks/?ordering=-created`)
   }
 }
 
