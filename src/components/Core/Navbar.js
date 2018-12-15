@@ -127,6 +127,14 @@ class LunaNavbar extends React.Component {
                     {this.props.user.user.first_name} {this.props.user.user.last_name}
                   </DropdownToggle>
                   <DropdownMenu right>
+                    <DropdownItem header>ส่วนผู้ดูแลระบบ</DropdownItem>
+                    <Link to="/admin/problems">
+                      <DropdownItem>จัดการโจทย์</DropdownItem>
+                    </Link>
+                    <Link to="/admin/users">
+                      <DropdownItem>จัดการผู้ใช้</DropdownItem>
+                    </Link>
+                    <DropdownItem divider />
                     <Link to="/profile/">
                       <DropdownItem>โปรไฟล์ของตัวเอง</DropdownItem>
                     </Link>
