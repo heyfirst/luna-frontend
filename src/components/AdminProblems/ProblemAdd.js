@@ -10,6 +10,7 @@ const Option = Select.Option
 class ProblemAdd extends React.Component {
   async componentWillMount() {
     await store.initialData()
+    await store.resetTaskForm()
   }
 
   onSubmit = e => {
@@ -155,7 +156,7 @@ class ProblemAdd extends React.Component {
           <hr />
           <h5>Testcases</h5>
           {store.testcases.map((testcase, index) => (
-            <div className="row">
+            <div className="row" key={index}>
               <div className="col">
                 <div className="form-group">
                   <label htmlFor="">Test {index + 1}</label>
