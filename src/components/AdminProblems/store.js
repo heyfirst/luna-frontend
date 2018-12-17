@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx'
+import { message } from 'antd'
 import TaskService from '../../services/TaskService'
 import TopicService from '../../services/TopicService'
 
@@ -90,33 +91,62 @@ class AdminProblemsStore {
 
   @action
   addTask = async () => {
-    let topic_level = await TopicService.getAllTopicLevel(this.task.topic, this.task.level).then(
-      resp => resp.data[0]
-    )
+    try {
+      message.loading('กำลังเพิ่มโจทย์ กรุณารอสักครู่')
+      let topic_level = await TopicService.getAllTopicLevel(this.task.topic, this.task.level).then(
+        resp => resp.data[0]
+      )
 
-    let task = await TaskService.createTask({
-      task_name: this.task.task_name,
-      task_desc: this.task.task_desc,
-      input_desc: this.task.input_desc,
-      output_desc: this.task.output_desc,
-      constrain_desc: this.task.constrain_desc,
-      examples: this.task.examples,
-      default_code: this.task.default_code,
-      enable: true,
-      order: null,
-      main_topic: topic_level.pk,
-      secondary_topics: []
-    }).then(resp => resp.data)
+      let task = await TaskService.createTask({
+        task_name: this.task.task_name,
+        task_desc: this.task.task_desc,
+        input_desc: this.task.input_desc,
+        output_desc: this.task.output_desc,
+        constrain_desc: this.task.constrain_desc,
+        examples: this.task.examples,
+        default_code: this.task.default_code,
+        enable: true,
+        order: null,
+        main_topic: topic_level.pk,
+        secondary_topics: []
+      }).then(resp => resp.data)
 
-    await Promise.all(
-      this.testcases.map(async testcase => {
-        await TaskService.createTestcase({
-          ...testcase,
-          is_hidden: false,
-          task: task.id
+      await Promise.all(
+        this.testcases.map(async testcase => {
+          await TaskService.createTestcase({
+            ...testcase,
+            is_hidden: false,
+            task: task.id
+          })
         })
-      })
-    )
+      )
+
+      message.success('เพิ่มโจทย์สำเร็จแล้ว! กลับสู่หน้ารวมโจทย์เพื่อดูโจทย์ที่สร้าง')
+      this.testcases = [
+        {
+          test: '',
+          expected_output: ''
+        }
+      ]
+      this.task = {
+        task_name: '',
+        task_desc: '',
+        input_desc: '',
+        output_desc: '',
+        constrain_desc: '',
+        examples: '',
+        default_code: '',
+        enable: true,
+        order: null,
+        main_topic: null,
+        secondary_topics: [],
+        // ชั่วคราว
+        topic: null,
+        level: null
+      }
+    } catch (err) {
+      message.error('เกิดปัญหา! ไม่สามารถสร้างโจทย์ได้ กรุณาติดต่อแอดมิน')
+    }
   }
 }
 
