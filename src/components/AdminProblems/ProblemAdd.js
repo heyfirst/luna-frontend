@@ -5,7 +5,7 @@ class ProblemAdd extends React.Component {
   render() {
     return (
       <Card>
-        <h1>โจทย์ทั้งหมดในระบบ</h1>
+        <h1>เพิ่มโจทย์</h1>
       </Card>
     )
   }

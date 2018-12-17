@@ -1,23 +1,24 @@
 import React from 'react'
 import Card from '../Core/Card'
 import { withRouter } from 'react-static'
+import store from './store'
+import { observer } from 'mobx-react'
 
 @withRouter
+@observer
 class AdminSidebar extends React.Component {
   render() {
-    const { active } = this.props
-
     return (
       <Card>
         <button
-          className={`btn ${active === 'profile' && 'btn-luna'} btn-block`}
-          onClick={() => this.props.history.push('/profile/')}
+          className={`btn ${store.page === 'TASK_LIST' && 'btn-luna'} btn-block`}
+          onClick={() => store.setPage('TASK_LIST')}
         >
           โจทย์ทั้งหมด
         </button>
         <button
-          className={`btn ${active === 'profile-tournaments' && 'btn-luna'} btn-block`}
-          onClick={() => this.props.history.push('/profile/')}
+          className={`btn ${store.page === 'TASK_ADD' && 'btn-luna'} btn-block`}
+          onClick={() => store.setPage('TASK_ADD')}
         >
           เพิ่มโจทย์
         </button>

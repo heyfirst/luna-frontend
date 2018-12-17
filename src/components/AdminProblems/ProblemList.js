@@ -1,7 +1,14 @@
 import React from 'react'
 import Card from '../Core/Card'
+import store from './store'
+import { observer } from 'mobx-react'
 
+@observer
 class ProblemList extends React.Component {
+  async componentWillMount() {
+    await store.fetchAllTasks()
+  }
+
   render() {
     return (
       <Card>
