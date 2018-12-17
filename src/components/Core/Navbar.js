@@ -133,9 +133,6 @@ class LunaNavbar extends React.Component {
                         <Link to="/admin/problems">
                           <DropdownItem>จัดการโจทย์</DropdownItem>
                         </Link>
-                        <Link to="/admin/users">
-                          <DropdownItem>จัดการผู้ใช้</DropdownItem>
-                        </Link>
                         <DropdownItem divider />
                       </React.Fragment>
                     )}
