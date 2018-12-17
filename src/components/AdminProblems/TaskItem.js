@@ -104,7 +104,7 @@ class TaskItem extends React.Component {
   }
 
   render() {
-    const { name, difficult, topic, passCount } = this.props
+    const { name, difficult, topic, passCount, order } = this.props
     return (
       <TaskCard className={`card text-left mb-3`} onClick={() => this.gotoEditPage()}>
         <div className="card-body d-flex align-items-center justify-content-between">
@@ -115,6 +115,11 @@ class TaskItem extends React.Component {
             <div className="task-detail mt-1">
               <div className="detail d-flex mx-1">
                 <div className="label">ความยาก: {Difficult(difficult)}</div>
+              </div>
+              <div className="detail d-flex mx-1">
+                <div className="label">
+                  หมวดหมู่: <u>{order ? 'ฝึกฝน' : 'รวมโจทย์'}</u>,
+                </div>
               </div>
               {topic && (
                 <div className="detail d-flex mx-1">
