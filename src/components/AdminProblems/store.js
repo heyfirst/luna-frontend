@@ -38,9 +38,28 @@ class AdminProblemsStore {
   @observable
   tasks = []
 
+  @observable
+  filter = {
+    topic: 'All',
+    level: 'All',
+    task_type: 'All'
+  }
+
   @action
-  fetchAllTasks = async () => {
-    let tasks = await TaskService.getAllTasks().then(resp => resp.data)
+  setFilter = async (field, value) => {
+    this.filter[field] = value
+    let has_order = null
+    if (this.filter.task_type === 'PRACTICE') {
+      has_order = 'True'
+    } else if (this.filter.task_type === 'CHALLENGE') {
+      has_order = 'False'
+    }
+    await this.fetchAllTasks(this.filter.level, this.filter.topic, has_order)
+  }
+
+  @action
+  fetchAllTasks = async (level, topic, has_order) => {
+    let tasks = await TaskService.getAllTasks(level, topic, has_order).then(resp => resp.data)
     this.tasks = tasks
   }
 
