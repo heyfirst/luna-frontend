@@ -18,6 +18,12 @@ const TaskService = {
   },
   submitCode: data => {
     return api.post(`answers/solve/submit-code`, data)
+  },
+  createTask: data => {
+    return api.post(`tasks/tasks/`, data)
+  },
+  createTestcase: data => {
+    return api.post(`tasks/testcases/`, data)
   }
 }
 
