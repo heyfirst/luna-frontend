@@ -5,6 +5,7 @@ import ProblemList from '../components/AdminProblems/ProblemList'
 import ProblemAdd from '../components/AdminProblems/ProblemAdd'
 import store from '../components/AdminProblems/store'
 import { observer } from 'mobx-react'
+import ProblemEdit from '../components/AdminProblems/ProblemEdit'
 
 @observer
 class AdminProblems extends React.Component {
@@ -19,6 +20,7 @@ class AdminProblems extends React.Component {
             <div className="col-9">
               {store.page === 'TASK_LIST' && <ProblemList />}
               {store.page === 'TASK_ADD' && <ProblemAdd />}
+              {store.page === 'TASK_EDIT' && <ProblemEdit />}
             </div>
           </div>
         </div>

@@ -139,30 +139,95 @@ class AdminProblemsStore {
       )
 
       message.success('เพิ่มโจทย์สำเร็จแล้ว! กลับสู่หน้ารวมโจทย์เพื่อดูโจทย์ที่สร้าง')
-      this.testcases = [
-        {
-          test: '',
-          expected_output: ''
-        }
-      ]
-      this.task = {
-        task_name: '',
-        task_desc: '',
-        input_desc: '',
-        output_desc: '',
-        constrain_desc: '',
-        examples: '',
-        default_code: '',
-        enable: true,
-        order: null,
-        main_topic: null,
-        secondary_topics: [],
-        // ชั่วคราว
-        topic: null,
-        level: null
-      }
+      this.resetTaskForm()
     } catch (err) {
       message.error('เกิดปัญหา! ไม่สามารถสร้างโจทย์ได้ กรุณาติดต่อแอดมิน')
+    }
+  }
+
+  @action
+  resetTaskForm = () => {
+    this.testcases = [
+      {
+        test: '',
+        expected_output: ''
+      }
+    ]
+    this.task = {
+      task_name: '',
+      task_desc: '',
+      input_desc: '',
+      output_desc: '',
+      constrain_desc: '',
+      examples: '',
+      default_code: '',
+      enable: true,
+      order: null,
+      main_topic: null,
+      secondary_topics: [],
+      // ชั่วคราว
+      topic: null,
+      level: null
+    }
+  }
+
+  // Task EDIT
+  @observable
+  editTaskID = null
+
+  @action
+  setEditTaskID = id => {
+    this.editTaskID = id
+  }
+
+  @action
+  fetchEditTask = async () => {
+    this.loading = true
+    let task = await TaskService.getTaskByID(this.editTaskID).then(resp => resp.data)
+
+    this.task = {
+      ...task,
+      // ชั่วคราว
+      topic: task.main_topic.topic.id,
+      level: task.main_topic.level.id,
+      task_type: task.order ? 'PRACTICE' : 'CHALLENGE'
+    }
+
+    let testcases = await TaskService.getTestcasesByTaskID(this.editTaskID).then(resp => resp.data)
+    this.testcases = testcases
+
+    this.loading = false
+  }
+
+  @action
+  updateTask = async () => {
+    try {
+      message.loading('กำลังอัพเดทโจทย์ กรุณารอสักครู่')
+
+      await TaskService.updateTask(this.task.id, {
+        task_name: this.task.task_name,
+        task_desc: this.task.task_desc,
+        input_desc: this.task.input_desc,
+        output_desc: this.task.output_desc,
+        constrain_desc: this.task.constrain_desc,
+        examples: this.task.examples,
+        default_code: this.task.default_code
+      }).then(resp => resp.data)
+
+      await Promise.all(
+        this.testcases.map(async testcase => {
+          await TaskService.updateTestcase(testcase.id, {
+            test: testcase.test,
+            expected_output: testcase.expected_output,
+            task: this.task.id
+          })
+        })
+      )
+
+      message.success('อัพเดทโจทย์สำเร็จแล้ว! กลับสู่หน้ารวมโจทย์เพื่อดูโจทย์ที่อัพเดทแล้ว')
+      this.resetTaskForm()
+    } catch (err) {
+      message.error('เกิดปัญหา! ไม่สามารถอัพเดทโจทย์ได้ กรุณาติดต่อแอดมิน')
     }
   }
 }
