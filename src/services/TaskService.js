@@ -1,8 +1,12 @@
 import api from '../utils/api'
 
 const TaskService = {
-  getAllTasks: () => {
-    return api.get(`tasks/tasks/`)
+  getAllTasks: (level = 'All', topic = 'All', has_order) => {
+    return api.get(`tasks/tasks/`, {
+      level,
+      has_order,
+      topic
+    })
   },
   getCompletedTasks: () => {
     return api.get(`tasks/completed/`)
