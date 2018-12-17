@@ -24,7 +24,7 @@ const UserService = {
       return api.get(`/accounts/skill-improvement/?start_date=${startDate}&end_date=${endDate}`)
     } else {
       return api.get(
-        `/accounts/skill-improvement/?start_date=${startDate}&end_date=${endDate}&topicId=${topicId}`
+        `/accounts/skill-improvement/?start_date=${startDate}&end_date=${endDate}&topic_id=${topicId}`
       )
     }
   },
