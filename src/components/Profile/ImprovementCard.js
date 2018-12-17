@@ -4,9 +4,9 @@ import moment from 'moment'
 
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import UserService from '../../services/UserService'
+import TopicService from '../../services/TopicService'
 
 import { Select } from 'antd'
-import TopicService from '../../services/TopicService'
 const Option = Select.Option
 
 function shiftDate(date, numDays) {
