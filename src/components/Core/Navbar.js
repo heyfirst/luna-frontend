@@ -15,6 +15,7 @@ import { observer, inject } from 'mobx-react'
 import styled from 'styled-components'
 import LoginModal from '../Auth/LoginModal'
 import Avatar from './Avatar'
+import LunaLogo from '../../static/images/luna-logo.png'
 
 const NewNavbar = styled(Navbar)`
   height: 56px;
@@ -47,11 +48,10 @@ const NewNavbar = styled(Navbar)`
   .nav-link.disabled {
     text-decoration: line-through;
   }
-`
 
-const NewImg = styled.img`
-  border-radius: 50%;
-  margin-right: 0.3rem;
+  .logo {
+    height: 42px;
+  }
 `
 
 @withRouter
@@ -78,7 +78,7 @@ class LunaNavbar extends React.Component {
       <NewNavbar expand="md">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            Luna
+            <img src={LunaLogo} alt="Luna.Codes" className="logo" />
           </Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
