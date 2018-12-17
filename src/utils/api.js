@@ -36,11 +36,11 @@ export default {
       })
       .then(handleResponse)
       .catch(catchError),
-  patch: (path, body = {}) =>
+  put: (path, body = {}) =>
     createApiInstance()
       .request({
         url: path,
-        method: 'PATCH',
+        method: 'PUT',
         data: body
       })
       .then(handleResponse)

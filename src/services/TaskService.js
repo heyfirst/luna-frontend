@@ -28,6 +28,13 @@ const TaskService = {
   },
   getLastOfOrderInMainTopic: main_topic => {
     return api.get(`tasks/last-order/`, { main_topic })
+  },
+  // UPDATE Task
+  updateTask: (id, data) => {
+    return api.put(`tasks/tasks/${id}/`, data)
+  },
+  updateTestcase: (id, data) => {
+    return api.put(`tasks/testcases/${id}/`, data)
   }
 }
 
