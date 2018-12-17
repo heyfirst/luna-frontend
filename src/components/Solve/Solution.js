@@ -15,8 +15,8 @@ class Solution extends React.Component {
   render() {
     return (
       <Container>
-        <div>
-          <h4>Soution:</h4>
+        <div className="text-center mt-2">
+          <h4>Coming Soon!</h4>
         </div>
       </Container>
     )
