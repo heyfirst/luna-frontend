@@ -60,7 +60,8 @@ class AdminProblemsStore {
     secondary_topics: [],
     // ชั่วคราว
     topic: null,
-    level: null
+    level: null,
+    task_type: 'PRACTICE'
   }
 
   @action
@@ -85,6 +86,11 @@ class AdminProblemsStore {
   }
 
   @action
+  removeTestcase = () => {
+    this.testcases.pop()
+  }
+
+  @action
   setTestcase = (index, field, value) => {
     this.testcases[index][field] = value
   }
@@ -97,6 +103,17 @@ class AdminProblemsStore {
         resp => resp.data[0]
       )
 
+      let order = null
+      if (this.task.task_type === 'PRACTICE') {
+        order = await TaskService.getLastOfOrderInMainTopic(topic_level.pk).then(
+          resp => resp.data.order
+        )
+        // force to next
+        order = order + 1
+      } else {
+        order = null
+      }
+
       let task = await TaskService.createTask({
         task_name: this.task.task_name,
         task_desc: this.task.task_desc,
@@ -106,7 +123,7 @@ class AdminProblemsStore {
         examples: this.task.examples,
         default_code: this.task.default_code,
         enable: true,
-        order: null,
+        order: order,
         main_topic: topic_level.pk,
         secondary_topics: []
       }).then(resp => resp.data)

@@ -1,11 +1,10 @@
 import React from 'react'
 import Card from '../Core/Card'
 import store from './store'
-import { Select, Form } from 'antd'
+import { Select } from 'antd'
 import { observer } from 'mobx-react'
 
 const Option = Select.Option
-const FormItem = Form.Item
 
 @observer
 class ProblemAdd extends React.Component {
@@ -15,7 +14,6 @@ class ProblemAdd extends React.Component {
 
   onSubmit = e => {
     e.preventDefault()
-    console.log('hi')
     store.addTask()
   }
 
@@ -58,6 +56,19 @@ class ProblemAdd extends React.Component {
                       {level.level_name}
                     </Option>
                   ))}
+                </Select>
+              </div>
+            </div>
+            <div className="col">
+              <div className="form-group">
+                <label htmlFor="">หมวดหมู่</label>
+                <Select
+                  value={store.task.task_type}
+                  style={{ width: '100%' }}
+                  onChange={value => store.setTask('task_type', value)}
+                >
+                  <Option value={'PRACTICE'}>ฝึกฝน</Option>
+                  <Option value={'CHALLANGE'}>รวมโจทย์</Option>
                 </Select>
               </div>
             </div>
@@ -173,12 +184,21 @@ class ProblemAdd extends React.Component {
             <div className="col">
               <div className="form-group">
                 <button
-                  className="btn btn-success"
+                  className="btn btn-outline-success mr-2"
                   onClick={() => store.addTestcase()}
                   type="button"
                 >
                   เพิ่ม Testcases
                 </button>
+                {store.testcases.length !== 1 && (
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => store.removeTestcase()}
+                    type="button"
+                  >
+                    ลบ Testcases
+                  </button>
+                )}
               </div>
             </div>
           </div>

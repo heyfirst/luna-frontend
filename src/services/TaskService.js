@@ -19,11 +19,15 @@ const TaskService = {
   submitCode: data => {
     return api.post(`answers/solve/submit-code`, data)
   },
+  // CREATE Task
   createTask: data => {
     return api.post(`tasks/tasks/`, data)
   },
   createTestcase: data => {
     return api.post(`tasks/testcases/`, data)
+  },
+  getLastOfOrderInMainTopic: main_topic => {
+    return api.get(`tasks/last-order/`, { main_topic })
   }
 }
 
