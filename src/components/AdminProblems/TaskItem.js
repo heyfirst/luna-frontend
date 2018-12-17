@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-static'
 import styled from 'styled-components'
 import { Select } from 'antd'
+import store from './store'
 const Option = Select.Option
 
 const TaskLink = styled(Link)`
@@ -97,10 +98,15 @@ const Difficult = difficult => {
 }
 
 class TaskItem extends React.Component {
+  gotoEditPage = () => {
+    store.setPage('TASK_EDIT')
+    store.setEditTaskID(this.props.taskID)
+  }
+
   render() {
     const { name, difficult, topic, passCount } = this.props
     return (
-      <TaskCard className={`card text-left mb-3`}>
+      <TaskCard className={`card text-left mb-3`} onClick={() => this.gotoEditPage()}>
         <div className="card-body d-flex align-items-center justify-content-between">
           <div>
             <div className="task-name mx-1">
