@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import store from './store'
 
 const Container = styled.div`
-  background-color: #efefef;
+  background-color: #e8ebf3;
   height: 100%;
   padding: 1rem;
   white-space: pre-wrap;
@@ -18,37 +18,27 @@ class TaskDetail extends React.Component {
     return (
       <Container>
         <div>
-          <h6>
-            <u>Description:</u>
-          </h6>
+          <h6>รายละเอียดโจทย์:</h6>
           <p>{store.task.task_desc}</p>
           <hr />
         </div>
         <div>
-          <h6>
-            <u>Input:</u>
-          </h6>
+          <h6>ข้อมูล Input:</h6>
           <p>{store.task.input_desc}</p>
           <hr />
         </div>
         <div>
-          <h6>
-            <u>Output:</u>
-          </h6>
+          <h6>ข้อมูล Output:</h6>
           <p>{store.task.output_desc}</p>
           <hr />
         </div>
         <div>
-          <h6>
-            <u>Constains:</u>
-          </h6>
+          <h6>ข้อจำกัด:</h6>
           <p>{store.task.constrain_desc}</p>
         </div>
         <hr />
         <div>
-          <h6>
-            <u>Example:</u>
-          </h6>
+          <h6>ตัวอย่าง:</h6>
           <p>{store.task.examples}</p>
         </div>
       </Container>

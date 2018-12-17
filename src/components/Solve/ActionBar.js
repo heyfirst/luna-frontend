@@ -6,13 +6,16 @@ import SolveStore from './store'
 import { withRouter } from 'react-static'
 
 const ActionContainer = styled(Navbar)`
-  background-color: #29406b !important;
   display: flex;
   justify-content: center;
   position: relative;
   height: 56px;
   padding-bottom: 0;
   padding-top: 0;
+  background-color: white !important;
+  color: #29406b;
+  filter: drop-shadow(0rem 0.25rem 0.15rem rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
 
   .action-group {
     width: 100%;
@@ -22,13 +25,17 @@ const ActionContainer = styled(Navbar)`
 
     .menus {
       .panel {
-        font-weight: bold;
-        color: #00c0cc;
+        font-weight: 300;
+        color: #29406b;
         padding: 0 1.2rem;
         height: 100%;
         align-items: center;
         display: flex;
-        border-bottom: 4px solid #00c0cc;
+
+        &.active {
+          border-bottom: 4px solid #29406b;
+          font-weight: bold;
+        }
       }
     }
 
@@ -43,11 +50,13 @@ const ActionContainer = styled(Navbar)`
     font-size: 14px;
 
     &.btn-runtest {
-      background: #f2994a;
+      background: #7498e9;
+      color: white;
     }
 
     &.btn-submit {
       background: #47c9d1;
+      color: white;
     }
   }
 `
@@ -61,18 +70,19 @@ export default class ActionBar extends React.Component {
     return (
       <ActionContainer color="dark" dark expand="md">
         <div className="action-group">
-          <div className="menus">
-            <div className="panel">Task Detail</div>
+          <div className="menus d-flex">
+            <div className="panel active mr-2">รายละเอียด</div>
+            <div className="panel mr-2">คำตอบของเพื่อน</div>
           </div>
           <div className="action">
             <button
               className="btn btn-runtest mr-2"
               onClick={() => store.runTest(this.props.history)}
-            >{`Run Test`}</button>
+            >{`ทดสอบ`}</button>
             <button
               className="btn btn-submit"
               onClick={() => store.submit(this.props.history)}
-            >{`Submit Answer`}</button>
+            >{`ส่งคำตอบ`}</button>
           </div>
         </div>
       </ActionContainer>
