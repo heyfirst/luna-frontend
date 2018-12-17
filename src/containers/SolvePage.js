@@ -9,6 +9,7 @@ import ActionBar from '../components/Solve/ActionBar'
 import TaskDetail from '../components/Solve/TaskDetail'
 import SolvePanel from '../components/Solve/SolvePanel'
 import { withRouter } from 'react-static'
+import Solution from '../components/Solve/Solution'
 
 const Container = styled.div`
   display: flex;
@@ -114,7 +115,8 @@ class SolvePage extends React.Component {
               />
               <Panel>
                 <LeftContainer size={this.state.size}>
-                  <TaskDetail />
+                  {SolveStore.leftPanel === 'TASK_DETAIL' && <TaskDetail />}
+                  {SolveStore.leftPanel === 'SOLUTION' && <Solution />}
                 </LeftContainer>
                 <RightContainer size={this.state.size}>
                   <SolvePanel />

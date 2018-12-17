@@ -199,6 +199,19 @@ class SolveStore {
       return '00 : 00'
     }
   }
+
+  /*
+    1: TASK_DETAIL
+    2: SOLUTIONไ
+  */
+
+  @observable
+  leftPanel = 'TASK_DETAIL'
+
+  @action
+  setLeftPanel = state => {
+    this.leftPanel = state
+  }
 }
 
 export default new SolveStore()

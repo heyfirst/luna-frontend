@@ -31,6 +31,12 @@ const ActionContainer = styled(Navbar)`
         height: 100%;
         align-items: center;
         display: flex;
+        transition: all 0.2s;
+        cursor: pointer;
+
+        &:hover {
+          border-bottom: 4px solid #29406b;
+        }
 
         &.active {
           border-bottom: 4px solid #29406b;
@@ -71,8 +77,18 @@ export default class ActionBar extends React.Component {
       <ActionContainer color="dark" dark expand="md">
         <div className="action-group">
           <div className="menus d-flex">
-            <div className="panel active mr-2">รายละเอียด</div>
-            <div className="panel mr-2">คำตอบของเพื่อน</div>
+            <div
+              className={`panel mr-2 ${store.leftPanel === 'TASK_DETAIL' && 'active'}`}
+              onClick={() => store.setLeftPanel('TASK_DETAIL')}
+            >
+              รายละเอียด
+            </div>
+            <div
+              className={`panel mr-2 ${store.leftPanel === 'SOLUTION' && 'active'}`}
+              onClick={() => store.setLeftPanel('SOLUTION')}
+            >
+              คำตอบของเพื่อน
+            </div>
           </div>
           <div className="action">
             <button
