@@ -91,14 +91,18 @@ export default class ActionBar extends React.Component {
             </div>
           </div>
           <div className="action">
-            <button
-              className="btn btn-runtest mr-2"
-              onClick={() => store.runTest(this.props.history)}
-            >{`ทดสอบ`}</button>
-            <button
-              className="btn btn-submit"
-              onClick={() => store.submit(this.props.history)}
-            >{`ส่งคำตอบ`}</button>
+            {store.leftPanel === 'TASK_DETAIL' && (
+              <React.Fragment>
+                <button
+                  className="btn btn-runtest mr-2"
+                  onClick={() => store.runTest(this.props.history)}
+                >{`ทดสอบ`}</button>
+                <button
+                  className="btn btn-submit"
+                  onClick={() => store.submit(this.props.history)}
+                >{`ส่งคำตอบ`}</button>
+              </React.Fragment>
+            )}
           </div>
         </div>
       </ActionContainer>

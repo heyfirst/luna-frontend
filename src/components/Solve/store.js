@@ -2,6 +2,7 @@ import { observable, action, computed, runInAction } from 'mobx'
 import { notification, Modal } from 'antd'
 
 import SolveService from '../../services/TaskService'
+import TaskService from '../../services/TaskService'
 
 class SolveStore {
   @observable
@@ -211,6 +212,23 @@ class SolveStore {
   @action
   setLeftPanel = state => {
     this.leftPanel = state
+  }
+
+  @observable
+  solutions = []
+
+  @observable
+  solution_select = null
+
+  @action
+  setSolutionSelect = solution => {
+    this.solution_select = solution
+  }
+
+  @action
+  fetchAnswers = async () => {
+    let solutions = await TaskService.getAnswersByTaskID(this.task.id).then(resp => resp.data)
+    this.solutions = solutions
   }
 }
 
