@@ -17,6 +17,11 @@ const TaskService = {
   getTestcasesByTaskID: id => {
     return api.get(`tasks/tasks/${id}/testcases`)
   },
+  getAnswersByTaskID: (task = null) => {
+    return api.get(`answers/answers/`, {
+      task
+    })
+  },
   testCode: data => {
     return api.post(`answers/solve/test-code`, data)
   },
