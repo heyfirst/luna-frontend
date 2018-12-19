@@ -4,6 +4,9 @@ import CalendarHeatmap from 'react-calendar-heatmap'
 import 'react-calendar-heatmap/dist/styles.css'
 import ReactTooltip from 'react-tooltip'
 import UserService from '../../services/UserService'
+import { observer } from 'mobx-react'
+import { withRouter } from 'react-static'
+import store from './store'
 
 let today = new Date()
 
@@ -13,7 +16,9 @@ function shiftDate(date, numDays) {
   return newDate
 }
 
-export default class CalendarHeatmapCard extends React.Component {
+@withRouter
+@observer
+class CalendarHeatmapCard extends React.Component {
   state = {
     data: []
   }
@@ -28,7 +33,8 @@ export default class CalendarHeatmapCard extends React.Component {
   }
 
   async componentWillMount() {
-    let data = await UserService.getFrequencyPractics().then(resp => resp.data)
+    await store.fetchUser(this.props.match.params.id)
+    let data = await UserService.getFrequencyPractics(store.user.username).then(resp => resp.data)
 
     this.setState({
       data
@@ -52,7 +58,7 @@ export default class CalendarHeatmapCard extends React.Component {
           }}
           tooltipDataAttrs={value => {
             return {
-              'data-tip': `Task completed: ${value.count || '-'}`
+              'data-tip': `ทำสำเร็จทั้งหมด: ${value.count || '-'} ข้อ`
             }
           }}
           showWeekdayLabels
@@ -63,3 +69,5 @@ export default class CalendarHeatmapCard extends React.Component {
     )
   }
 }
+
+export default CalendarHeatmapCard

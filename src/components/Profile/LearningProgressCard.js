@@ -11,15 +11,20 @@ import {
   Legend
 } from 'recharts'
 import UserService from '../../services/UserService'
+import store from './store'
+import { observer } from 'mobx-react'
+import { withRouter } from 'react-static'
 
-export default class LearningProgressCard extends React.Component {
+@withRouter
+@observer
+class LearningProgressCard extends React.Component {
   state = {
     data: []
   }
 
   async componentWillMount() {
-    let data = await UserService.getLearningProgress().then(resp => resp.data)
-
+    await store.fetchUser(this.props.match.params.id)
+    let data = await UserService.getLearningProgress(store.user.username).then(resp => resp.data)
     this.setState({
       data: Object.keys(data).map(key => data[key])
     })
@@ -64,3 +69,5 @@ export default class LearningProgressCard extends React.Component {
     )
   }
 }
+
+export default LearningProgressCard

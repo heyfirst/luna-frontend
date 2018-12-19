@@ -5,8 +5,11 @@ import moment from 'moment'
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import UserService from '../../services/UserService'
 import TopicService from '../../services/TopicService'
-
+import store from './store'
 import { Select } from 'antd'
+import { withRouter } from 'react-static'
+import { observer } from 'mobx-react'
+
 const Option = Select.Option
 
 function shiftDate(date, numDays) {
@@ -15,7 +18,9 @@ function shiftDate(date, numDays) {
   return newDate
 }
 
-export default class ImprovementCard extends React.Component {
+@withRouter
+@observer
+class ImprovementCard extends React.Component {
   state = {
     data: [],
     topics: [],
@@ -23,10 +28,13 @@ export default class ImprovementCard extends React.Component {
   }
 
   async componentWillMount() {
+    await store.fetchUser(this.props.match.params.id)
     const today = moment(shiftDate(moment(), 1)).format('YYYY-MM-DD')
     const startDate = moment(shiftDate(moment(), -20)).format('YYYY-MM-DD')
     let topics = await TopicService.getAllTopic().then(resp => resp.data)
-    let data = await UserService.getSkillImprovement(startDate, today).then(resp => resp.data)
+    let data = await UserService.getSkillImprovement(store.user.username, startDate, today).then(
+      resp => resp.data
+    )
     this.setState({
       data: Object.keys(data).map(key => ({
         date: moment(key).format('MMM DD'),
@@ -46,9 +54,16 @@ export default class ImprovementCard extends React.Component {
 
     let data = []
     if (value === 'all') {
-      data = await UserService.getSkillImprovement(startDate, today).then(resp => resp.data)
+      data = await UserService.getSkillImprovement(store.user.username, startDate, today).then(
+        resp => resp.data
+      )
     } else {
-      data = await UserService.getSkillImprovement(startDate, today, value).then(resp => resp.data)
+      data = await UserService.getSkillImprovement(
+        store.user.username,
+        startDate,
+        today,
+        value
+      ).then(resp => resp.data)
     }
 
     this.setState({
@@ -97,3 +112,5 @@ export default class ImprovementCard extends React.Component {
     )
   }
 }
+
+export default ImprovementCard

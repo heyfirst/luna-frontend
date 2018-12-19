@@ -18,19 +18,26 @@ const UserService = {
   uploadAvatar: data => {
     return api.post(`/accounts/me/upload-avatar/`, data)
   },
-  getLearningProgress: () => {
-    return api.get(`/accounts/learning-progress/`)
+  getLearningProgress: username => {
+    return api.get(`/accounts/learning-progress/`, { username })
   },
-  getFrequencyPractics: () => {
-    return api.get(`/accounts/frequency-practics/`)
+  getFrequencyPractics: username => {
+    return api.get(`/accounts/frequency-practics/`, { username })
   },
-  getSkillImprovement: (startDate, endDate, topicId = null) => {
+  getSkillImprovement: (username, startDate, endDate, topicId = null) => {
     if (topicId === null) {
-      return api.get(`/accounts/skill-improvement/?start_date=${startDate}&end_date=${endDate}`)
+      return api.get(`/accounts/skill-improvement/`, {
+        start_date: startDate,
+        end_date: endDate,
+        username
+      })
     } else {
-      return api.get(
-        `/accounts/skill-improvement/?start_date=${startDate}&end_date=${endDate}&topic_id=${topicId}`
-      )
+      return api.get(`/accounts/skill-improvement/`, {
+        topic_id: topicId,
+        start_date: startDate,
+        end_date: endDate,
+        username
+      })
     }
   },
   getSuggestionTasks: () => {
