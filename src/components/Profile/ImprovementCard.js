@@ -2,7 +2,16 @@ import React from 'react'
 import Card from '../Core/Card'
 import moment from 'moment'
 
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  Label,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from 'recharts'
 import UserService from '../../services/UserService'
 import TopicService from '../../services/TopicService'
 import store from './store'
@@ -29,8 +38,8 @@ class ImprovementCard extends React.Component {
 
   async componentWillMount() {
     await store.fetchUser(this.props.match.params.id)
-    const today = moment(shiftDate(moment(), 1)).format('YYYY-MM-DD')
-    const startDate = moment(shiftDate(moment(), -20)).format('YYYY-MM-DD')
+    const today = moment(shiftDate(moment(), 0)).format('YYYY-MM-DD')
+    const startDate = moment(shiftDate(moment(), -10)).format('YYYY-MM-DD')
     let topics = await TopicService.getAllTopic().then(resp => resp.data)
     let data = await UserService.getSkillImprovement(store.user.username, startDate, today).then(
       resp => resp.data
@@ -99,8 +108,11 @@ class ImprovementCard extends React.Component {
         <hr />
         <ResponsiveContainer width="100%" aspect={4.0 / 1.2}>
           <LineChart data={this.state.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <XAxis dataKey="date" />
-            <YAxis />
+            <XAxis
+              dataKey="date"
+              label={{ value: 'วันที่', angle: 0, position: 'insideBottomRight', offset: -5 }}
+            />
+            <YAxis label={{ value: 'คะแนนสะสม', angle: -90, position: 'insideLeft', offset: 20 }} />
             <Tooltip />
             <Legend verticalAlign={`top`} align={'left'} height={36} />
             <Line type="monotone" dataKey="Beginner" stroke="#47D165" name="ระดับง่าย" />
