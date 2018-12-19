@@ -12,7 +12,11 @@ class ProfileStore {
   @action
   fetchUser = async id => {
     this.loading = true
-    let user = await UserService.getAccount(id).then(resp => resp.data)
+    let user = await UserService.getAccount(id)
+      .then(resp => resp.data)
+      .catch(_ => {
+        window.location.href = '/'
+      })
     this.user = user
     this.loading = false
   }
