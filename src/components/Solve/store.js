@@ -76,6 +76,9 @@ class SolveStore {
     this.error = {}
     this.duration = 0
     this.loading = true
+    this.leftPanel = 'TASK_DETAIL'
+    this.solution_select = null
+    this.solutions = []
     clearInterval(this.countingTime)
   }
 
