@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { observer } from 'mobx-react'
 import store from './store'
 import { Table } from 'reactstrap'
+import { Link } from 'react-static'
 
 const Container = styled.div`
   background-color: #e8ebf3;
@@ -24,6 +25,10 @@ const SolutionItem = styled.tr`
       font-weight: bold;
       color: white;
       background-color: #29406b !important;
+    }
+
+    a {
+      color: white;
     }
   }
 `
@@ -52,7 +57,11 @@ class Solution extends React.Component {
                   onClick={() => store.setSolutionSelect(solution.id)}
                 >
                   <th scope="row">{index + 1}</th>
-                  <td>{`${solution.owned_by.first_name} ${solution.owned_by.last_name}`}</td>
+                  <td>
+                    <Link to={`/profile/${solution.owned_by.username}/`}>{`${
+                      solution.owned_by.first_name
+                    } ${solution.owned_by.last_name}`}</Link>
+                  </td>
                 </SolutionItem>
               ))}
             </tbody>

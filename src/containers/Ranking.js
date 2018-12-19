@@ -4,6 +4,7 @@ import Layout from '../components/Core/Layout'
 import Card from '../components/Core/Card'
 import Avatar from '../components/Core/Avatar'
 import RankingService from '../services/RankingSevice'
+import { Link } from 'react-static'
 
 const Table = styled.table`
   .rank {
@@ -49,15 +50,16 @@ class Ranking extends React.Component {
                     <tr key={index + 1}>
                       <td scope="row">{index + 1}</td>
                       <td className="">
-                        <div className="d-flex align-items-center justify-content-start">
-                          {console.log()}
-                          <Avatar
-                            size={'38'}
-                            src={rank[0].avatar}
-                            className="d-inline-block mx-1"
-                          />
-                          {`${rank[0].first_name || '-'} ${rank[0].last_name || ''}`}
-                        </div>
+                        <Link to={`/profile/${rank[0].username}`}>
+                          <div className="d-flex align-items-center justify-content-start">
+                            <Avatar
+                              size={'38'}
+                              src={rank[0].avatar}
+                              className="d-inline-block mx-1"
+                            />
+                            {`${rank[0].first_name || '-'} ${rank[0].last_name || ''}`}
+                          </div>
+                        </Link>
                       </td>
                       <td>{rank[1]}</td>
                     </tr>
