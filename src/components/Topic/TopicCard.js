@@ -2,28 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import DataTypeImage from '../../static/images/data-type.png'
-import StringImage from '../../static/images/string.png'
-import ArrayImage from '../../static/images/array.png'
-import LoopImage from '../../static/images/loop.png'
-import ConditionImage from '../../static/images/condition.png'
-import DataStructureImage from '../../static/images/data-structure.png'
-
-const getImageFromType = type => {
-  switch (type) {
-    case 'Data Type':
-      return DataTypeImage
-    case 'String':
-      return StringImage
-    case 'Array':
-      return ArrayImage
-    case 'Loop':
-      return LoopImage
-    case 'Condition':
-      return ConditionImage
-    case 'Data Structure':
-      return DataStructureImage
-  }
-}
 
 const CardImage = styled.img`
   padding: 0rem;
@@ -75,7 +53,7 @@ class TopicCard extends React.Component {
       <div className="row py-2">
         <div className="col-sm-3 card-image">
           <CardImage
-            src={getImageFromType(topic.topic_name)}
+            src={topic.logo || DataTypeImage}
             className="mx-auto d-block mt-2 mb-2"
             height="100"
             width="100"
