@@ -5,13 +5,37 @@ import Layout from '../components/Core/Layout'
 import ProfileSidebar from '../components/Profile/ProfileSidebar'
 import Card from '../components/Core/Card'
 import Avatar from '../components/Core/Avatar'
+import store from '../components/Profile/store'
+import { withRouter } from 'react-static'
 
+@withRouter
 @requireAuth()
 @inject('user')
 @observer
 class ProfilePage extends React.Component {
+  state = {
+    user: {}
+  }
+  async componentWillMount() {
+    if (!this.props.match.params.id) {
+      this.props.history.replace(`/profile/${this.props.user.user.username}`)
+    } else {
+      await store.fetchUser(this.props.match.params.id)
+      this.setState({ user: store.user })
+    }
+  }
+
+  async componentWillReceiveProps(nextProps) {
+    if (!nextProps.match.params.id) {
+      this.props.history.replace(`/profile/${this.props.user.user.username}`)
+    } else {
+      await store.fetchUser(nextProps.match.params.id)
+      this.setState({ user: store.user })
+    }
+  }
+
   render() {
-    const { user } = this.props
+    const { user } = this.state
     return (
       <Layout>
         <div className="container mt-4">
@@ -34,18 +58,18 @@ class ProfilePage extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-12 text-center">
-                        <Avatar src={user.user.avatar} />
+                        <Avatar src={user.avatar} />
                         <h2 className="my-3">
-                          สวัสดี, {user.user.first_name || '-'} {user.user.last_name || '-'} 🌙
+                          สวัสดี, {user.first_name || '-'} {user.last_name || '-'} 🌙
                         </h2>
                         <h6>
-                          สถานศึกษา: <u>{user.user.school || '-'}</u>
+                          สถานศึกษา: <u>{user.school || '-'}</u>
                         </h6>
                         <h6>
-                          เมืองที่อยู่: <u>{user.user.city || '-'}</u>
+                          เมืองที่อยู่: <u>{user.city || '-'}</u>
                         </h6>
                         <h6 className="pt-2">เกี่ยวกับฉัน:</h6>
-                        <p className="px-4">{user.user.bio || '-'}</p>
+                        <p className="px-4">{user.bio || '-'}</p>
                       </div>
                     </div>
                   </Card>
