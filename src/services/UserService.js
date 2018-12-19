@@ -7,6 +7,11 @@ const UserService = {
   getProfile: () => {
     return api.get(`/accounts/me/`)
   },
+  getAccount: userID => {
+    return api.get(`/accounts/account/`, {
+      username: userID
+    })
+  },
   updateProfile: body => {
     return api.patch(`/accounts/me/`, { ...body })
   },
