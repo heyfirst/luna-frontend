@@ -60,8 +60,14 @@ class CalendarHeatmapCard extends React.Component {
             return `color-github-${value.count < 4 ? value.count : 4}`
           }}
           tooltipDataAttrs={value => {
-            return {
-              'data-tip': `วันที่ x | ทำสำเร็จทั้งหมด: ${value.count || '0'} ข้อ`
+            if (value.count) {
+              return {
+                'data-tip': `วันที่ ${value.date} | ทำสำเร็จทั้งหมด: ${value.count || '0'} ข้อ`
+              }
+            } else {
+              return {
+                'data-tip': `ไม่มีการทำโจทย์สำเร็จ`
+              }
             }
           }}
           showWeekdayLabels
