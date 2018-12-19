@@ -13,6 +13,7 @@ class AdminProblemsStore {
   @observable
   levels = []
 
+  @action
   initialData = async () => {
     this.loading = true
     let topics = await TopicService.getAllTopic().then(resp => resp.data)
