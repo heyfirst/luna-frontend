@@ -160,8 +160,9 @@ class App extends React.Component {
           />
           <Route key={`chellange`} exact path="/challenge" component={ChallengePage} />
           <Route key={`ranking`} exact path="/ranking" component={Ranking} />
-          <Route key={`/howto-score`} exact path="/howto-score" component={HowtoScore} />
           <Route key={`task`} exact path="/tasks/:taskID" component={SolvePage} />
+          <Route key={`/howto-score`} exact path="/howto-score" component={HowtoScore} />
+          {/* Profile */}
           <Route key={`profile-edit`} exact path="/profile/edit" component={ProfileEditPage} />
           <Route key={`profile-stats`} exact path="/profile/stats" component={ProfileStatsPage} />
           <Route
@@ -170,8 +171,11 @@ class App extends React.Component {
             path="/profile/submissions"
             component={ProfileSubmissionPage}
           />
+          <Route key={`profile`} exact path="/profile/:id" component={ProfilePage} />
           <Route key={`profile`} exact path="/profile" component={ProfilePage} />
+          {/* Extends */}
           <Route key={`privacy-policy`} exact path="/privacy-policy" component={PrivacyPolicy} />
+          {/* Admin */}
           <Route key={`admin-problems`} exact path="/admin/problems" component={AdminProblems} />
           <Route key={`admin-users`} exact path="/admin/users" component={AdminUsers} />
           <Route component={NotFound} />
