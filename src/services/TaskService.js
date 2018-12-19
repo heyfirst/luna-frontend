@@ -8,8 +8,8 @@ const TaskService = {
       topic
     })
   },
-  getCompletedTasks: () => {
-    return api.get(`tasks/completed/`)
+  getCompletedTasks: username => {
+    return api.get(`tasks/completed/`, { username })
   },
   getTaskByID: id => {
     return api.get(`tasks/tasks/${id}`)

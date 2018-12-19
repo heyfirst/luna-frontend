@@ -6,9 +6,12 @@ import ProfileSidebar from '../components/Profile/ProfileSidebar'
 import TaskItem from '../components/Task/TaskItem'
 import Card from '../components/Core/Card'
 import TaskService from '../services/TaskService'
+import { withRouter } from 'react-static'
+import store from '../components/Profile/store'
 
 @requireAuth()
 @inject('user')
+@withRouter
 @observer
 class ProfileSubmissionPage extends React.Component {
   state = {
@@ -16,7 +19,8 @@ class ProfileSubmissionPage extends React.Component {
   }
 
   async componentWillMount() {
-    await TaskService.getCompletedTasks().then(resp => {
+    await store.fetchUser(this.props.match.params.id)
+    await TaskService.getCompletedTasks(store.user.username).then(resp => {
       this.setState({
         tasks: resp.data
       })
@@ -40,7 +44,7 @@ class ProfileSubmissionPage extends React.Component {
                 <div className="col">
                   <Card>
                     <p className="text-right">
-                      มีโจทย์ทั้งหมด {this.state.tasks.length || '-'} ข้อที่ทำสำเร็จแล้ว! 🎉
+                      มีโจทย์ทั้งหมด {this.state.tasks.length || '0'} ข้อที่ทำสำเร็จแล้ว! 🎉
                     </p>
                     {this.state.tasks.map((task, index) => (
                       <TaskItem
