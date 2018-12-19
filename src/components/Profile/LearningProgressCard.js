@@ -50,8 +50,20 @@ class LearningProgressCard extends React.Component {
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="topic_name" />
-          <YAxis />
+          <XAxis
+            dataKey="topic_name"
+            label={{
+              value: 'หัวข้อการเรียนรู้',
+              angle: 0,
+              position: 'insideBottomRight',
+              offset: -5
+            }}
+          />
+          <YAxis
+            label={{ value: 'จำนวนข้อ', angle: -90, position: 'insideLeft', offset: 20 }}
+            type="number"
+            domain={[0, 'dataMax + 5']}
+          />
           <Tooltip />
           <Legend />
           <ReferenceLine y={0} stroke="#000" />
