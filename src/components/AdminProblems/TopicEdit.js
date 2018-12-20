@@ -31,7 +31,7 @@ class TopicEdit extends React.Component {
   onSubmit = async e => {
     e.preventDefault()
 
-    message.loading('กำลังอัพเดทหัวข้อการเรียนรู้..', 10)
+    message.loading('กำลังอัปเดตหัวข้อการเรียนรู้..', 10)
     await TopicService.updateTopic(
       this.props.topicId,
       this.state.topicName,
@@ -40,7 +40,7 @@ class TopicEdit extends React.Component {
     ).then(resp => resp.data)
 
     message.destroy()
-    message.success('อัพเดทหัวข้อการเรียนรู้เรียบร้อย')
+    message.success('อัปเดตหัวข้อการเรียนรู้เรียบร้อย')
     await this.props.fetchData()
     await this.props.onClose()
   }
@@ -83,7 +83,7 @@ class TopicEdit extends React.Component {
                   document.getElementById('upload-topic-logo-file').click()
                 }}
               >
-                <Icon type="upload" /> {this.state.loading ? 'กำลังอัพโหลด' : 'อัพโหลด'}
+                <Icon type="upload" /> {this.state.loading ? 'กำลังอัปโหลด' : 'อัปโหลด'}
               </button>
             </div>
           </div>
@@ -109,7 +109,7 @@ class TopicEdit extends React.Component {
               value={this.state.desc}
             />
           </div>
-          <button className="btn btn-luna btn-block">เพิ่มหัวข้อการเรียนรู้</button>
+          <button className="btn btn-luna btn-block">อัปเดตหัวข้อการเรียนรู้</button>
         </form>
       </div>
     )

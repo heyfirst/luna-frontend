@@ -72,7 +72,7 @@ class TopicAdd extends React.Component {
                   document.getElementById('upload-topic-logo-file').click()
                 }}
               >
-                <Icon type="upload" /> {this.state.loading ? 'กำลังอัพโหลด' : 'อัพโหลด'}
+                <Icon type="upload" /> {this.state.loading ? 'กำลังอัปโหลด' : 'อัปโหลด'}
               </button>
             </div>
           </div>

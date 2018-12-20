@@ -25,8 +25,8 @@ class ProfileEditPage extends React.Component {
     e.preventDefault()
     await UserService.updateProfile(this.state).then(resp => {
       notification['success']({
-        message: 'อัพเดทข้อมูลสำเร็จ',
-        description: 'อัพเดทข้อมูลส่วนตัวสำเร็จแล้ว'
+        message: 'อัปเดตข้อมูลสำเร็จ',
+        description: 'อัปเดตข้อมูลส่วนตัวสำเร็จแล้ว'
       })
       this.props.user.getProfile()
     })
@@ -44,7 +44,7 @@ class ProfileEditPage extends React.Component {
       avatar: null
     })
 
-    message.loading('กำลังอัพโหลดรูปของคุณ...')
+    message.loading('กำลังอัปโหลดรูปของคุณ...')
 
     const avatar = await UserService.uploadAvatar(data).then(resp => resp.data.avatar)
 
@@ -53,7 +53,7 @@ class ProfileEditPage extends React.Component {
       avatar
     })
 
-    message.success('อัพโหลดเรียบร้อย!')
+    message.success('อัปโหลดเรียบร้อย!')
     this.props.user.getProfile()
   }
 
@@ -96,7 +96,7 @@ class ProfileEditPage extends React.Component {
                                 }}
                               >
                                 <Icon type="upload" />{' '}
-                                {this.state.loading ? 'กำลังอัพโหลด' : 'อัพโหลด'}
+                                {this.state.loading ? 'กำลังอัปโหลด' : 'อัปโหลด'}
                               </button>
                             </div>
                           </div>
@@ -145,7 +145,7 @@ class ProfileEditPage extends React.Component {
                               onChange={e => this.setState({ bio: e.target.value })}
                             />
                           </div>
-                          <button className="btn btn-luna btn-block">อัพเดทข้อมูล</button>
+                          <button className="btn btn-luna btn-block">อัปเดตข้อมูล</button>
                         </form>
                       </div>
                     </div>

@@ -222,7 +222,7 @@ class AdminProblemsStore {
   @action
   updateTask = async () => {
     try {
-      message.loading('กำลังอัพเดทโจทย์ กรุณารอสักครู่')
+      message.loading('กำลังอัปเดตโจทย์ กรุณารอสักครู่')
 
       await TaskService.updateTask(this.task.id, {
         task_name: this.task.task_name,
@@ -244,10 +244,10 @@ class AdminProblemsStore {
         })
       )
 
-      message.success('อัพเดทโจทย์สำเร็จแล้ว! กลับสู่หน้ารวมโจทย์เพื่อดูโจทย์ที่อัพเดทแล้ว')
+      message.success('อัปเดตโจทย์สำเร็จแล้ว! กลับสู่หน้ารวมโจทย์เพื่อดูโจทย์ที่อัปเดตแล้ว')
       this.resetTaskForm()
     } catch (err) {
-      message.error('เกิดปัญหา! ไม่สามารถอัพเดทโจทย์ได้ กรุณาติดต่อแอดมิน')
+      message.error('เกิดปัญหา! ไม่สามารถอัปเดตโจทย์ได้ กรุณาติดต่อแอดมิน')
     }
   }
 

@@ -202,7 +202,7 @@ class ProblemEdit extends React.Component {
           </div>
           <div className="row">
             <div className="col">
-              <button className="btn btn-success btn-block btn-lg">อัพเดทโจทย์</button>
+              <button className="btn btn-success btn-block btn-lg">อัปเดตโจทย์</button>
             </div>
           </div>
         </form>
