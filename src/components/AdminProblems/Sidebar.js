@@ -22,6 +22,12 @@ class AdminSidebar extends React.Component {
         >
           เพิ่มโจทย์
         </button>
+        <button
+          className={`btn ${store.page === 'TOPIC_LIST' && 'btn-luna'} btn-block`}
+          onClick={() => store.setPage('TOPIC_LIST')}
+        >
+          หัวข้อการเรียนรู้
+        </button>
       </Card>
     )
   }

@@ -250,6 +250,26 @@ class AdminProblemsStore {
       message.error('เกิดปัญหา! ไม่สามารถอัพเดทโจทย์ได้ กรุณาติดต่อแอดมิน')
     }
   }
+
+  @observable
+  addModal = false
+
+  @action
+  setAddModal = bool => {
+    this.addModal = bool
+  }
+
+  @observable
+  editModal = false
+
+  @observable
+  topicId = null
+
+  @action
+  setEditModal = (bool, topicId) => {
+    this.editModal = bool
+    this.topicId = topicId
+  }
 }
 
 export default new AdminProblemsStore()
