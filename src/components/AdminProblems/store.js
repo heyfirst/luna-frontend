@@ -263,12 +263,12 @@ class AdminProblemsStore {
   editModal = false
 
   @observable
-  topicId = null
+  editTopicId = null
 
   @action
   setEditModal = (bool, topicId) => {
     this.editModal = bool
-    this.topicId = topicId
+    this.editTopicId = topicId
   }
 }
 

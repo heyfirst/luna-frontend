@@ -4,6 +4,7 @@ import TopicCard from '../Topic/TopicCard'
 import TopicService from '../../services/TopicService'
 import styled from 'styled-components'
 import { Modal } from 'antd'
+import TopicAdd from './TopicAdd'
 import TopicEdit from './TopicEdit'
 import store from './store'
 
@@ -22,6 +23,10 @@ class TopicList extends React.Component {
   }
 
   async componentWillMount() {
+    await this.fetchTopic()
+  }
+
+  fetchTopic = async () => {
     const topics = await TopicService.getAllTopic().then(resp => resp.data)
     this.setState({
       topics
@@ -62,11 +67,7 @@ class TopicList extends React.Component {
           footer={null}
         >
           {store.addModal && (
-            <TopicEdit
-              onClose={this.handleModalCancel}
-              solutionId={this.state.solutionId}
-              fetchData={this.fetchData}
-            />
+            <TopicAdd onClose={() => store.setAddModal(false)} fetchData={this.fetchTopic} />
           )}
         </Modal>
         <Modal
@@ -77,9 +78,9 @@ class TopicList extends React.Component {
         >
           {store.editModal && (
             <TopicEdit
-              onClose={this.handleModalCancel}
-              solutionId={this.state.solutionId}
-              fetchData={this.fetchData}
+              onClose={() => store.setEditModal(false, null)}
+              fetchData={this.fetchTopic}
+              topicId={store.editTopicId}
             />
           )}
         </Modal>
