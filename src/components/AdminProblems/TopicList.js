@@ -8,6 +8,11 @@ import TopicAdd from './TopicAdd'
 import TopicEdit from './TopicEdit'
 import store from './store'
 
+const Button = styled.button`
+  background-color: #00cce8;
+  border-color: #00cce8;
+`
+
 const DivCard = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -43,9 +48,9 @@ class TopicList extends React.Component {
             เพื่อแก้ไข
           </div>
           <div className="col text-right">
-            <button className="btn btn-luna" onClick={() => store.setAddModal(true)}>
+            <Button className="btn btn-luna" onClick={() => store.setAddModal(true)}>
               เพิ่มหัวข้อ
-            </button>
+            </Button>
           </div>
         </div>
         <div className="row">
